@@ -1,0 +1,17 @@
+* Hostname
+** Hardware
+   - CPU: 2
+   - RAM: 4GB
+   - Disk: 5GB
+** OS
+   - Distro: Arch
+   - Kernel: Hardened
+** Software
+*** Sources
+**** Archlinuxfr
+     - Server: http://repo.archlinux.fr/x86_64
+     - SigLevel: Never
+*** Packages
+    - yaourt
+    - git
+    - vim
