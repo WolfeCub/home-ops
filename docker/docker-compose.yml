@@ -57,6 +57,40 @@ services:
       - traefik.docker.network=webnet
       - traefik.port=32400
 
+  sonarr:
+    image:  linuxserver/sonarr:latest
+    ports:
+      - 8989:8989
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /storage/media/tv-shows:/tv
+      - /storage/homelab/sonarrconfig:/config
+      #- /storage/homelab/nzbgetdownloads:/downloads
+    labels:
+      - traefik.backend=sonarr
+      - traefik.frontend.rule=Host:sonarr.house20.ca
+      - traefik.docker.network=webnet
+      - traefik.port=8989
+
+  radarr:
+    image:  linuxserver/radarr:latest
+    ports:
+      - 7878:7878
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /storage/media/movies:/movies
+      - /storage/homelab/radarrconfig:/config
+      #- /storage/homelab/nzbgetdownloads:/downloads
+    labels:
+      - traefik.backend=radarr
+      - traefik.frontend.rule=Host:radarr.house20.ca
+      - traefik.docker.network=webnet
+      - traefik.port=7878
+
 networks:
   webnet:
     external: true
