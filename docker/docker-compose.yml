@@ -18,14 +18,26 @@ services:
       - 443:443
       - 8080:8080
 
+  heimdall:
+    image: linuxserver/heimdall:latest
+    volumes:
+        - /storage/homelab/heimdallconfig:/config
+    labels:
+        - traefik.backend=heimdall
+        - traefik.frontend.rule=Host:heimdall.house20.ca
+        - traefik.docker.network=webnet
+    environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=America/New_York
+    networks:
+      - webnet
+    ports:
+      - 1234:80
+      - 1235:443
+
   plex:
     image:  linuxserver/plex:latest
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "1"
-          memory: 512M
     ports:
       - 32400:32400
       - 32400:32400/udp
