@@ -26,6 +26,7 @@ services:
         - traefik.backend=heimdall
         - traefik.frontend.rule=Host:heimdall.house20.ca
         - traefik.docker.network=webnet
+        - traefik.port=80
     environment:
         - PUID=1000
         - PGID=1000
@@ -106,6 +107,30 @@ services:
       - traefik.frontend.rule=Host:jackett.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=9117
+ 
+  joshwolfe:
+    image: ${domain}:latest
+    ports:
+      - 1313:1313
+    networks:
+      - webnet
+    labels:
+      - traefik.backend=joshwolfe
+      - traefik.frontend.rule=Host:${domain}
+      - traefik.docker.network=webnet
+      - traefik.port=1313
+
+  utmmcss:
+    image: utmmcss.com:latest
+    ports:
+      - 1337:80
+    networks:
+      - webnet
+    labels:
+      - traefik.backend=utmmcss
+      - traefik.frontend.rule=Host:utmmcss.com
+      - traefik.docker.network=webnet
+      - traefik.port=80
 
 networks:
   webnet:
