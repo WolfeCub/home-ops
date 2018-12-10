@@ -18,6 +18,22 @@ services:
       - 443:443
       - 8080:8080
 
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /storage/homelab/portainerdata:/data
+    networks:
+      - webnet
+    ports:
+      - 9000:9000
+    labels:
+        - traefik.backend=portainer
+        - traefik.frontend.rule=Host:portainer.house20.ca
+        - traefik.docker.network=webnet
+        - traefik.port=9000
+
   heimdall:
     image: linuxserver/heimdall:latest
     volumes:
@@ -107,7 +123,7 @@ services:
       - traefik.frontend.rule=Host:jackett.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=9117
- 
+
   joshwolfe:
     image: ${domain}:latest
     ports:
