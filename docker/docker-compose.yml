@@ -91,6 +91,22 @@ services:
       - traefik.docker.network=webnet
       - traefik.port=7878
 
+  jackett:
+    image:  linuxserver/jackett:latest
+    ports:
+      - 9117:9117
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /storage/homelab/jackett/config:/config
+      - /storage/homelab/jackett/downloads:/downloads
+    labels:
+      - traefik.backend=jackett
+      - traefik.frontend.rule=Host:jackett.house20.ca
+      - traefik.docker.network=webnet
+      - traefik.port=9117
+
 networks:
   webnet:
     external: true
