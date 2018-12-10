@@ -1,5 +1,23 @@
-version: "3"
+version: "3.5"
 services:
+  traefik:
+    image: traefik:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /storage/homelab/traefikconfig/traefik.toml:/traefik.toml
+      - /storage/homelab/traefikconfig/acme.json:/acme.json
+    labels:
+        - traefik.backend=traefik
+        - traefik.frontend.rule=Host:traefik.house20.ca
+        - traefik.docker.network=webnet
+        - traefik.port=8080
+    networks:
+      - webnet
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+
   plex:
     image:  linuxserver/plex:latest
     deploy:
@@ -8,20 +26,25 @@ services:
         limits:
           cpus: "1"
           memory: 512M
-      restart_policy:
-        condition: on-failure
     ports:
-      - "32400:32400"
-      - "32400:32400/udp"
-      - "32469:32469"
-      - "32469:32469/udp"
-      - "5353:5353/udp"
-      - "1900:1900/udp"
+      - 32400:32400
+      - 32400:32400/udp
+      - 32469:32469
+      - 32469:32469/udp
+      - 5353:5353/udp
+      - 1900:1900/udp
     networks:
       - webnet
     volumes:
-      - /storage/plexconfig:/config \
+      - /storage/homelab/plexconfig:/config \
       - /storage/media/tv-shows:/data/tvshows \
       - /storage/media/movies:/data/movies \
+    labels:
+      - traefik.backend=plex
+      - traefik.frontend.rule=Host:plex.house20.ca
+      - traefik.docker.network=webnet
+      - traefik.port=32400
+
 networks:
   webnet:
+    external: true
