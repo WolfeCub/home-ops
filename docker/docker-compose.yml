@@ -6,6 +6,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /storage/homelab/traefikconfig/traefik.toml:/traefik.toml
       - /storage/homelab/traefikconfig/acme.json:/acme.json
+      - /etc/letsencrypt:/ssl
     labels:
         - traefik.backend=traefik
         - traefik.frontend.rule=Host:traefik.house20.ca
@@ -40,18 +41,16 @@ services:
         - /storage/homelab/heimdallconfig:/config
     labels:
         - traefik.backend=heimdall
-        - traefik.frontend.rule=Host:heimdall.house20.ca
+        - traefik.frontend.rule=Host:dashboard.house20.ca
         - traefik.docker.network=webnet
-        - traefik.port=80
+        - traefik.port=443
+        - traefik.protocol=https
     environment:
         - PUID=1000
         - PGID=1000
         - TZ=America/New_York
     networks:
       - webnet
-    ports:
-      - 1234:80
-      - 1235:443
 
   plex:
     image:  linuxserver/plex:latest
