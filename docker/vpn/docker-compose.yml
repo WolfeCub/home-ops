@@ -1,0 +1,48 @@
+version: "3"
+services:
+  vpn:
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    environment:
+      TZ: 'EST5EDT'
+    networks:
+      - webnet
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    dns: 1.1.1.1
+    volumes:
+      - /dev/net:/dev/net:z
+      - /home/wolfe/cryptostorm:/vpn
+
+  transmission:
+    image: linuxserver/transmission
+    depends_on:
+      - vpn
+    environment:
+      - PUID=1002
+      - PGID=1003
+      - TZ=America/New_York
+    network_mode: "service:vpn"
+    stdin_open: true
+    tty: true
+    volumes:
+      - /storage/homelab/transmission/config:/config:Z
+      - /storage/homelab/transmission/downloads:/downloads:Z
+      - /storage/homelab/transmission/watch:/watch:Z
+    labels:
+      - traefik.backend=transmission
+      - traefik.docker.network=webnet
+      - traefik.port=9091
+      - traefik.frontend.rule=Host:transmission.house20.ca
+
+networks:
+  webnet:
+    external: true

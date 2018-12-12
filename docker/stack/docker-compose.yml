@@ -46,14 +46,14 @@ services:
         - traefik.port=443
         - traefik.protocol=https
     environment:
-        - PUID=1000
-        - PGID=1000
+        - PUID=1002
+        - PGID=1003
         - TZ=America/New_York
     networks:
       - webnet
 
   plex:
-    image:  linuxserver/plex:latest
+    image: linuxserver/plex
     ports:
       - 32400:32400
       - 32400:32400/udp
@@ -64,14 +64,18 @@ services:
     networks:
       - webnet
     volumes:
-      - /storage/homelab/plexconfig:/config \
-      - /storage/media/tv-shows:/data/tvshows \
-      - /storage/media/movies:/data/movies \
+      - /plexconfig:/config:Z
+      - /storage/media/tv-shows:/data/tvshows:Z
+      - /storage/media/movies:/data/movies:Z
+      - /storage/homelab/plextranscode:/transcode:Z
     labels:
       - traefik.backend=plex
       - traefik.frontend.rule=Host:plex.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=32400
+    environment:
+      - PUID=1002
+      - PGID=1003
 
   sonarr:
     image:  linuxserver/sonarr:latest
@@ -89,6 +93,9 @@ services:
       - traefik.frontend.rule=Host:sonarr.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=8989
+    environment:
+      - PUID=1002
+      - PGID=1003
 
   radarr:
     image:  linuxserver/radarr:latest
@@ -106,6 +113,9 @@ services:
       - traefik.frontend.rule=Host:radarr.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=7878
+    environment:
+      - PUID=1002
+      - PGID=1003
 
   jackett:
     image:  linuxserver/jackett:latest
