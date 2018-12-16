@@ -38,7 +38,7 @@ services:
   heimdall:
     image: linuxserver/heimdall:latest
     volumes:
-        - /storage/homelab/heimdallconfig:/config
+        - /heimdallconfig:/config
     labels:
         - traefik.backend=heimdall
         - traefik.frontend.rule=Host:dashboard.house20.ca
@@ -87,6 +87,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /storage/media/tv-shows:/tv
       - /storage/homelab/sonarrconfig:/config
+      - /storage/homelab/transmission/downloads/complete:/downloads
       #- /storage/homelab/nzbgetdownloads:/downloads
     labels:
       - traefik.backend=sonarr
@@ -107,6 +108,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /storage/media/movies:/movies
       - /storage/homelab/radarrconfig:/config
+      - /storage/homelab/transmission/downloads/complete:/downloads
       #- /storage/homelab/nzbgetdownloads:/downloads
     labels:
       - traefik.backend=radarr
@@ -132,6 +134,9 @@ services:
       - traefik.frontend.rule=Host:jackett.house20.ca
       - traefik.docker.network=webnet
       - traefik.port=9117
+    environment:
+      - PUID=1002
+      - PGID=1003
 
   joshwolfe:
     image: ${domain}:latest
