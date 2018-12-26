@@ -1,0 +1,44 @@
+version: "3.5"
+services:
+  registry:
+    image: registry:2
+    ports:
+      - 5000:5000
+    volumes:
+      - /storage/homelab/dockerregistry:/var/lib/registry
+    networks:
+      - webnet
+
+  joshwolfe:
+    image: 127.0.0.1:5000/${domain}:latest
+    depends_on:
+      - registry
+    ports:
+      - 1313:1313
+    networks:
+      - webnet
+    labels:
+      - traefik.backend=joshwolfe
+      - traefik.frontend.rule=Host:${domain}
+      - traefik.port=1313
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+
+  utmmcss:
+    image: 127.0.0.1:5000/utmmcss.com:latest
+    depends_on:
+      - registry
+    ports:
+      - 1337:80
+    networks:
+      - webnet
+    labels:
+      - traefik.backend=utmmcss
+      - traefik.frontend.rule=Host:utmmcss.com
+      - traefik.port=80
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+
+networks:
+  webnet:
+    external: true
