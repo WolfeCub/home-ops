@@ -10,8 +10,9 @@ services:
     labels:
         - traefik.backend=traefik
         - traefik.frontend.rule=Host:traefik.house20.ca
-        - traefik.docker.network=webnet
         - traefik.port=8080
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
     networks:
       - webnet
     ports:
@@ -32,8 +33,9 @@ services:
     labels:
         - traefik.backend=portainer
         - traefik.frontend.rule=Host:portainer.house20.ca
-        - traefik.docker.network=webnet
         - traefik.port=9000
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
 
   heimdall:
     image: linuxserver/heimdall:latest
@@ -71,8 +73,9 @@ services:
     labels:
       - traefik.backend=plex
       - traefik.frontend.rule=Host:plex.house20.ca
-      - traefik.docker.network=webnet
       - traefik.port=32400
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
     environment:
       - PUID=1002
       - PGID=1003
@@ -89,8 +92,9 @@ services:
     labels:
       - traefik.backend=tautulli
       - traefik.frontend.rule=Host:tautulli.house20.ca
-      - traefik.docker.network=webnet
       - traefik.port=8181
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
     environment:
       - PUID=1002
       - PGID=1003
@@ -110,8 +114,9 @@ services:
     labels:
       - traefik.backend=sonarr
       - traefik.frontend.rule=Host:sonarr.house20.ca
-      - traefik.docker.network=webnet
       - traefik.port=8989
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
     environment:
       - PUID=1002
       - PGID=1003
@@ -131,8 +136,9 @@ services:
     labels:
       - traefik.backend=radarr
       - traefik.frontend.rule=Host:radarr.house20.ca
-      - traefik.docker.network=webnet
       - traefik.port=7878
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
     environment:
       - PUID=1002
       - PGID=1003
@@ -150,11 +156,24 @@ services:
     labels:
       - traefik.backend=jackett
       - traefik.frontend.rule=Host:jackett.house20.ca
-      - traefik.docker.network=webnet
       - traefik.port=9117
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
     environment:
       - PUID=1002
       - PGID=1003
+
+  file-server:
+    image: halverneus/static-file-server
+    volumes:
+      - /staticwww:/web
+    networks:
+      - webnet
+    labels:
+      - traefik.backend=file-server
+      - traefik.frontend.rule=Host:static.house20.ca
+      - traefik.port=8080
+      - traefik.docker.network=webnet
 
   joshwolfe:
     image: joshwolfe.ca:latest
@@ -165,8 +184,9 @@ services:
     labels:
       - traefik.backend=joshwolfe
       - traefik.frontend.rule=Host:joshwolfe.ca
-      - traefik.docker.network=webnet
       - traefik.port=1313
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
 
   utmmcss:
     image: utmmcss.com:latest
@@ -177,8 +197,9 @@ services:
     labels:
       - traefik.backend=utmmcss
       - traefik.frontend.rule=Host:utmmcss.com
-      - traefik.docker.network=webnet
       - traefik.port=80
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
 
 networks:
   webnet:
