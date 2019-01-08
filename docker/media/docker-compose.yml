@@ -28,8 +28,6 @@ services:
       - /storage/homelab/portainerdata:/data
     networks:
       - webnet
-    ports:
-      - 9000:9000
     labels:
         - traefik.backend=portainer
         - traefik.frontend.rule=Host:portainer.house20.ca
