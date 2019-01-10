@@ -4,7 +4,7 @@ services:
     image: itzg/minecraft-server
     command: "dos2unix /start* && chmod +x /start* --noconsole"
     volumes:
-      - /home/wolfe/mcdata:/data
+      - /storage/homelab/mcdata:/data
     networks:
       - webnet
     ports:
