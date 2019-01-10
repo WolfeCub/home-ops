@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  server:
+    image: itzg/minecraft-server
+    command: "dos2unix /start* && chmod +x /start* --noconsole"
+    volumes:
+      - /home/wolfe/mcdata:/data
+    networks:
+      - webnet
+    ports:
+      - 25565:25565
+    environment:
+      - EULA=TRUE
+      - TYPE=SPIGOT
+      - UID=1002
+      - GID=1003
+
+networks:
+  webnet:
+    external: true

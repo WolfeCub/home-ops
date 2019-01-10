@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+  apache:
+    image: php:7.3-apache
+    volumes:
+      - /apache:/var/www/html
+    networks:
+      - webnet
+    labels:
+        - traefik.backend=apache
+        - traefik.frontend.rule=Host:php.house20.ca
+        - traefik.port=80
+        - traefik.docker.network=webnet
+
+networks:
+  webnet:
+    external: true
