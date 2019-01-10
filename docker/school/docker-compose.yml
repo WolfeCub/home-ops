@@ -3,7 +3,7 @@ services:
   apache:
     image: php:7.3-apache
     volumes:
-      - /apache:/var/www/html
+      - /storage/homelab/apache:/var/www/html
     networks:
       - webnet
     labels:
