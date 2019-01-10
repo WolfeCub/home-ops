@@ -43,25 +43,25 @@ services:
       - traefik.port=9091
       - traefik.frontend.rule=Host:transmission.house20.ca
 
-  nzbget:
-    image: linuxserver/nzbget
-    depends_on:
-      - vpn
-    environment:
-      - PUID=1002
-      - PGID=1003
-      - TZ=America/New_York
-    network_mode: "service:vpn"
-    stdin_open: true
-    tty: true
-    volumes:
-      - /storage/homelab/nzbget/config:/config:Z
-      - /storage/homelab/nzbget/downloads:/downloads:Z
-    labels:
-      - traefik.backend=nzbget
-      - traefik.docker.network=webnet
-      - traefik.port=6789
-      - traefik.frontend.rule=Host:nzbget.house20.ca
+  #nzbget:
+  #  image: linuxserver/nzbget
+  #  depends_on:
+  #    - vpn
+  #  environment:
+  #    - PUID=1002
+  #    - PGID=1003
+  #    - TZ=America/New_York
+  #  network_mode: "service:vpn"
+  #  stdin_open: true
+  #  tty: true
+  #  volumes:
+  #    - /storage/homelab/nzbget/config:/config:Z
+  #    - /storage/homelab/nzbget/downloads:/downloads:Z
+  #  labels:
+  #    - traefik.backend=nzbget
+  #    - traefik.docker.network=webnet
+  #    - traefik.port=6789
+  #    - traefik.frontend.rule=Host:nzbget.house20.ca
 
 networks:
   webnet:
