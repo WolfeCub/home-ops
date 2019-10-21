@@ -4,7 +4,7 @@ services:
     image: itzg/minecraft-server
     command: "dos2unix /start* && chmod +x /start* --noconsole"
     volumes:
-      - /storage/homelab/mcdata:/data
+      - /homelab/mcdata:/data
     networks:
       - webnet
     ports:
@@ -14,6 +14,7 @@ services:
       - TYPE=SPIGOT
       - UID=1002
       - GID=1003
+      - MAX_MEMORY=12G
 
 networks:
   webnet:
