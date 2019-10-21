@@ -4,12 +4,12 @@ services:
     image: traefik:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /storage/homelab/traefikconfig/traefik.toml:/traefik.toml
-      - /storage/homelab/traefikconfig/acme.json:/acme.json
+      - /homelab/traefikconfig/traefik.toml:/traefik.toml
+      - /homelab/traefikconfig/acme.json:/acme.json
       - /etc/letsencrypt:/ssl
     labels:
         - traefik.backend=traefik
-        - traefik.frontend.rule=Host:traefik.house20.ca
+        - traefik.frontend.rule=Host:traefik.${domain}
         - traefik.port=8080
         - traefik.docker.network=webnet
         - traefik.frontend.redirect.entryPoint=https
@@ -18,51 +18,21 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
 
   portainer:
     image: portainer/portainer
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /storage/homelab/portainerdata:/data
+      - /homelab/portainerdata:/data
     networks:
       - webnet
     labels:
         - traefik.backend=portainer
-        - traefik.frontend.rule=Host:portainer.house20.ca
+        - traefik.frontend.rule=Host:portainer.${domain}
         - traefik.port=9000
         - traefik.docker.network=webnet
         - traefik.frontend.redirect.entryPoint=https
-
-  heimdall:
-    image: linuxserver/heimdall:latest
-    volumes:
-        - /heimdallconfig:/config
-    labels:
-        - traefik.backend=heimdall
-        - traefik.frontend.rule=Host:dashboard.house20.ca
-        - traefik.docker.network=webnet
-        - traefik.port=443
-        - traefik.protocol=https
-    environment:
-        - PUID=1002
-        - PGID=1003
-        - TZ=America/New_York
-    networks:
-      - webnet
-
-  file-server:
-    image: halverneus/static-file-server
-    volumes:
-      - /staticwww:/web
-    networks:
-      - webnet
-    labels:
-      - traefik.backend=file-server
-      - traefik.frontend.rule=Host:static.house20.ca
-      - traefik.port=8080
-      - traefik.docker.network=webnet
 
 networks:
   webnet:

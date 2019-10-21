@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  static-file-server:
+    image: halverneus/static-file-server
+    networks:
+      - webnet
+    volumes:
+      - /homelab/staticfiles:/content
+    labels:
+      - traefik.backend=nextcloud
+      - traefik.frontend.rule=Host:storage.${domain}
+      - traefik.port=8080
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - FOLDER=/content
+      - SHOW_LISTING=true
+
+networks:
+  webnet:
+    external: true

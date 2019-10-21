@@ -5,7 +5,7 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - /storage/homelab/dockerregistry:/var/lib/registry
+      - /homelab/dockerregistry:/var/lib/registry
     networks:
       - webnet
 
@@ -13,8 +13,6 @@ services:
     image: 127.0.0.1:5000/${domain}:latest
     depends_on:
       - registry
-    ports:
-      - 1313:1313
     networks:
       - webnet
     labels:
@@ -28,8 +26,6 @@ services:
     image: 127.0.0.1:5000/utmmcss.com:latest
     depends_on:
       - registry
-    ports:
-      - 1337:80
     networks:
       - webnet
     labels:
