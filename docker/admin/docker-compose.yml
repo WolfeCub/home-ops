@@ -1,20 +1,17 @@
 version: "3.5"
 services:
   traefik:
-    image: traefik:latest
+    image: traefik:v1.7
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /homelab/traefikconfig/traefik.toml:/traefik.toml
-      - /homelab/traefikconfig/acme.json:/acme.json
-      - /etc/letsencrypt:/ssl
+      - /dockerdata/traefik/traefik.toml:/traefik.toml
     labels:
         - traefik.backend=traefik
-        - traefik.frontend.rule=Host:traefik.joshwolfe.ca
+        - traefik.frontend.rule=Host:traefik.homeland.ad
         - traefik.port=8080
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.docker.network=vmnet
     networks:
-      - webnet
+      - vmnet
     ports:
       - 80:80
       - 443:443
@@ -24,16 +21,23 @@ services:
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /homelab/portainerdata:/data
+      - /dockerdata/portainer:/data
     networks:
-      - webnet
+      - vmnet
     labels:
         - traefik.backend=portainer
-        - traefik.frontend.rule=Host:portainer.joshwolfe.ca
+        - traefik.frontend.rule=Host:portainer.homeland.ad
         - traefik.port=9000
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.docker.network=vmnet
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=120
 
 networks:
-  webnet:
+  vmnet:
     external: true
