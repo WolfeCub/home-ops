@@ -1,48 +1,102 @@
-version: "3"
+version: "3.5"
 services:
   vpn:
-    image: dperson/openvpn-client
+    image: dperson/openvpn-client:latest
     cap_add:
       - net_admin
     environment:
-      TZ: 'EST5EDT'
+      TZ: America/Toronto
     networks:
-      - webnet
-    read_only: true
+      - vmnet
+    restart: always
     tmpfs:
       - /run
       - /tmp
-    restart: unless-stopped
-    security_opt:
-      - label:disable
-    stdin_open: true
     tty: true
-    dns: 1.1.1.1
+    stdin_open: true
+    devices:
+      - /dev/net/tun:/dev/net/tun
     volumes:
-      - /dev/net:/dev/net:z
-      - /home/wolfe/cryptostorm:/vpn
+      - /dockerdata/openvpn:/vpn
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    labels:
+      - autoheal=true
 
-  transmission:
-    image: linuxserver/transmission
+  deluge:
+    image: linuxserver/deluge
     depends_on:
       - vpn
     environment:
       - PUID=1001
       - PGID=1001
-      - TZ=America/New_York
+      - TZ=America/Toronto
     network_mode: "service:vpn"
-    stdin_open: true
-    tty: true
     volumes:
-      - /homelab/transmission/config:/config:Z
-      - /homelab/transmission/downloads:/downloads:Z
-      - /homelab/transmission/watch:/watch:Z
+      - /dockerdata/deluge:/config
+      - /storage/tmp/downloads:/downloads
     labels:
-      - traefik.backend=transmission
-      - traefik.docker.network=webnet
-      - traefik.port=9091
-      - traefik.frontend.rule=Host:transmission.joshwolfe.ca
-      - traefik.frontend.redirect.entryPoint=https
+      - traefik.backend=deluge
+      - traefik.docker.network=vmnet
+      - traefik.port=8112
+      - traefik.frontend.rule=Host:deluge.homeland.ad
+
+  sonarr:
+    image: linuxserver/sonarr
+    depends_on:
+      - vpn
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Toronto
+    network_mode: "service:vpn"
+    volumes:
+      - /dockerdata/sonarr:/config
+      - /storage/media/tv-shows:/tv
+      - /storage/tmp/downloads:/downloads
+    labels:
+      - traefik.backend=sonarr
+      - traefik.docker.network=vmnet
+      - traefik.port=8989
+      - traefik.frontend.rule=Host:sonarr.homeland.ad
+
+  radarr:
+    image: linuxserver/radarr
+    depends_on:
+      - vpn
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Toronto
+    network_mode: "service:vpn"
+    volumes:
+      - /dockerdata/radarr:/config
+      - /storage/media/movies:/movies
+      - /storage/tmp/downloads:/downloads
+    labels:
+      - traefik.backend=radarr
+      - traefik.docker.network=vmnet
+      - traefik.port=7878
+      - traefik.frontend.rule=Host:radarr.homeland.ad
+
+  jackett:
+    image: linuxserver/jackett
+    depends_on:
+      - vpn
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Toronto
+    network_mode: "service:vpn"
+    volumes:
+      - /dockerdata/jackett:/config
+      - /storage/tmp/downloads:/downloads
+    labels:
+      - traefik.backend=jackett
+      - traefik.docker.network=vmnet
+      - traefik.port=9117
+      - traefik.frontend.rule=Host:jackett.homeland.ad
 
   #nzbget:
   #  image: linuxserver/nzbget
@@ -65,5 +119,5 @@ services:
   #    - traefik.frontend.rule=Host:nzbget.joshwolfe.ca
 
 networks:
-  webnet:
+  vmnet:
     external: true
