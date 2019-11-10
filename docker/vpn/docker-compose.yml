@@ -1,102 +1,48 @@
-version: "3.5"
+version: "3"
 services:
   vpn:
-    image: dperson/openvpn-client:latest
+    image: dperson/openvpn-client
     cap_add:
       - net_admin
     environment:
-      TZ: America/Toronto
+      TZ: 'EST5EDT'
     networks:
-      - vmnet
-    restart: always
+      - webnet
+    read_only: true
     tmpfs:
       - /run
       - /tmp
-    tty: true
+    restart: unless-stopped
+    security_opt:
+      - label:disable
     stdin_open: true
-    devices:
-      - /dev/net/tun:/dev/net/tun
+    tty: true
+    dns: 1.1.1.1
     volumes:
-      - /dockerdata/openvpn:/vpn
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-    labels:
-      - autoheal=true
+      - /dev/net:/dev/net:z
+      - /home/wolfe/cryptostorm:/vpn
 
-  deluge:
-    image: linuxserver/deluge
+  transmission:
+    image: linuxserver/transmission
     depends_on:
       - vpn
     environment:
       - PUID=1001
       - PGID=1001
-      - TZ=America/Toronto
+      - TZ=America/New_York
     network_mode: "service:vpn"
+    stdin_open: true
+    tty: true
     volumes:
-      - /dockerdata/deluge:/config
-      - /storage/tmp/downloads:/downloads
+      - /homelab/transmission/config:/config:Z
+      - /homelab/transmission/downloads:/downloads:Z
+      - /homelab/transmission/watch:/watch:Z
     labels:
-      - traefik.backend=deluge
-      - traefik.docker.network=vmnet
-      - traefik.port=8112
-      - traefik.frontend.rule=Host:deluge.homeland.ad
-
-  sonarr:
-    image: linuxserver/sonarr
-    depends_on:
-      - vpn
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/Toronto
-    network_mode: "service:vpn"
-    volumes:
-      - /dockerdata/sonarr:/config
-      - /storage/media/tv-shows:/tv
-      - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=sonarr
-      - traefik.docker.network=vmnet
-      - traefik.port=8989
-      - traefik.frontend.rule=Host:sonarr.homeland.ad
-
-  radarr:
-    image: linuxserver/radarr
-    depends_on:
-      - vpn
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/Toronto
-    network_mode: "service:vpn"
-    volumes:
-      - /dockerdata/radarr:/config
-      - /storage/media/movies:/movies
-      - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=radarr
-      - traefik.docker.network=vmnet
-      - traefik.port=7878
-      - traefik.frontend.rule=Host:radarr.homeland.ad
-
-  jackett:
-    image: linuxserver/jackett
-    depends_on:
-      - vpn
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/Toronto
-    network_mode: "service:vpn"
-    volumes:
-      - /dockerdata/jackett:/config
-      - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=jackett
-      - traefik.docker.network=vmnet
-      - traefik.port=9117
-      - traefik.frontend.rule=Host:jackett.homeland.ad
+      - traefik.backend=transmission
+      - traefik.docker.network=webnet
+      - traefik.port=9091
+      - traefik.frontend.rule=Host:transmission.joshwolfe.ca
+      - traefik.frontend.redirect.entryPoint=https
 
   #nzbget:
   #  image: linuxserver/nzbget
@@ -119,5 +65,5 @@ services:
   #    - traefik.frontend.rule=Host:nzbget.joshwolfe.ca
 
 networks:
-  vmnet:
+  webnet:
     external: true

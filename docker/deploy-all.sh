@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if ! docker network inspect vmnet > /dev/null; then
-    docker network create -d overlay vmnet --attachable
+if ! docker network inspect webnet > /dev/null; then
+    docker network create -d overlay webnet --attachable
 fi
 
-for dir in admin vpn; do
+for dir in admin registry vpn media; do
     cd $dir
     ./deploy.sh
     cd ..

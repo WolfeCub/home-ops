@@ -1,0 +1,121 @@
+version: "3.5"
+services:
+  plex:
+    image: linuxserver/plex
+    networks:
+      - hostnet
+    volumes:
+      - /homelab/plex/config:/config:Z
+      - /storage/TV-shows:/data/tvshows-new:Z
+      - /storage/Movies:/data/movies-new:Z
+      - /storage/external-drive/TV-shows:/data/tvshows:Z
+      - /storage/external-drive/Movies:/data/movies:Z
+      - /storage/external-drive/PW:/data/pw:Z
+      - /homelab/plex/transcode:/transcode:Z
+    labels:
+      - traefik.backend=plex
+      - traefik.frontend.rule=Host:plex.joshwolfe.ca
+      - traefik.port=32400
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - ADVERTISE_IP=http://192.168.0.100:32400
+
+  tautulli:
+    image: linuxserver/tautulli
+    networks:
+      - webnet
+    volumes:
+      - "/homelab/plex/config/Library/Application Support/Plex Media Server/Logs:/logs:ro"
+      - /homelab/tautulliconfig:/config:Z
+    labels:
+      - traefik.backend=tautulli
+      - traefik.frontend.rule=Host:tautulli.joshwolfe.ca
+      - traefik.port=8181
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - PUID=1002
+      - PGID=1003
+      - TZ=America/Toronto
+
+  sonarr:
+    image:  linuxserver/sonarr:latest
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /storage/TV-shows:/tv
+      - /homelab/sonarrconfig:/config
+      - /homelab/transmission/downloads/complete:/downloads
+    labels:
+      - traefik.backend=sonarr
+      - traefik.frontend.rule=Host:sonarr.joshwolfe.ca
+      - traefik.port=8989
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - PUID=1001
+      - PGID=1001
+
+  radarr:
+    image:  linuxserver/radarr:latest
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /storage/Movies:/movies
+      - /homelab/radarrconfig:/config
+      - /homelab/transmission/downloads/complete:/downloads
+    labels:
+      - traefik.backend=radarr
+      - traefik.frontend.rule=Host:radarr.joshwolfe.ca
+      - traefik.port=7878
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - PUID=1001
+      - PGID=1001
+
+  jackett:
+    image:  linuxserver/jackett:latest
+    networks:
+      - webnet
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /homelab/jackett/config:/config
+      - /homelab/jackett/downloads:/downloads
+    labels:
+      - traefik.backend=jackett
+      - traefik.frontend.rule=Host:jackett.joshwolfe.ca
+      - traefik.port=9117
+      - traefik.docker.network=webnet
+      - traefik.frontend.redirect.entryPoint=https
+    environment:
+      - PUID=1002
+      - PGID=1003
+
+  #hydra2:
+  #  image: linuxserver/hydra2
+  #  networks:
+  #    - webnet
+  #  volumes:
+  #    - /homelab/hydra/config:/config
+  #    - /homelab/hydra/downloads:/downloads
+  #  labels:
+  #    - traefik.backend=hydra2
+  #    - traefik.frontend.rule=Host:hydra.joshwolfe.ca
+  #    - traefik.port=5076
+  #    - traefik.docker.network=webnet
+  #  environment:
+  #    - PUID=1002
+  #    - PGID=1003
+
+networks:
+  hostnet:
+    name: "host"
+    external: true
+  webnet:
+    external: true
