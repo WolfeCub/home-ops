@@ -15,25 +15,13 @@ services:
       - registry
     networks:
       - webnet
-    labels:
-      - traefik.backend=joshwolfe
-      - traefik.frontend.rule=Host:${domain}
-      - traefik.port=1313
-      - traefik.docker.network=webnet
-      - traefik.frontend.redirect.entryPoint=https
-
-  utmmcss:
-    image: 127.0.0.1:5000/utmmcss.com:latest
-    depends_on:
-      - registry
-    networks:
-      - webnet
-    labels:
-      - traefik.backend=utmmcss
-      - traefik.frontend.rule=Host:utmmcss.com
-      - traefik.port=80
-      - traefik.docker.network=webnet
-      - traefik.frontend.redirect.entryPoint=https
+    deploy:
+      labels:
+        - traefik.backend=joshwolfe
+        - traefik.frontend.rule=Host:${domain}
+        - traefik.port=1313
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
 
 networks:
   webnet:

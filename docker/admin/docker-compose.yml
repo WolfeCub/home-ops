@@ -1,23 +1,24 @@
 version: "3.5"
 services:
   traefik:
-    image: traefik:latest
+    image: traefik:1.7
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /homelab/traefikconfig/traefik.toml:/traefik.toml
       - /homelab/traefikconfig/acme.json:/acme.json
       - /etc/letsencrypt:/ssl
-    labels:
-        - traefik.backend=traefik
-        - traefik.frontend.rule=Host:traefik.${domain}
-        - traefik.port=8080
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
     networks:
       - webnet
     ports:
       - 80:80
       - 443:443
+    deploy:
+      labels:
+        - traefik.backend=traefik
+        - traefik.frontend.rule=Host:traefik.${domain}
+        - traefik.port=8080
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
 
   portainer:
     image: portainer/portainer
@@ -27,7 +28,8 @@ services:
       - /homelab/portainerdata:/data
     networks:
       - webnet
-    labels:
+    deploy:
+      labels:
         - traefik.backend=portainer
         - traefik.frontend.rule=Host:portainer.${domain}
         - traefik.port=9000

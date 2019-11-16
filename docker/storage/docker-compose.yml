@@ -1,20 +1,25 @@
 version: "3.5"
 services:
-  static-file-server:
-    image: halverneus/static-file-server
+  nextcloud:
+    image: linuxserver/nextcloud
     networks:
       - webnet
-    volumes:
-      - /homelab/staticfiles:/content
-    labels:
-      - traefik.backend=nextcloud
-      - traefik.frontend.rule=Host:storage.${domain}
-      - traefik.port=8080
-      - traefik.docker.network=webnet
-      - traefik.frontend.redirect.entryPoint=https
     environment:
-      - FOLDER=/content
-      - SHOW_LISTING=true
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Toronto
+    volumes:
+      - /storage/nextcloud/config:/config
+      - /storage/nextcloud/data:/data
+    deploy:
+      placement:
+        constraints: [node.hostname == appletini]
+      labels:
+        - traefik.backend=nextcloud
+        - traefik.frontend.rule=Host:storage.${domain}
+        - traefik.port=80
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
 
 networks:
   webnet:
