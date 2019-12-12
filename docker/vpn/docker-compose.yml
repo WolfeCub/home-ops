@@ -32,7 +32,7 @@ services:
       - 192.168.10.119:9117:9117
 
   rtorrent:
-    image: anthonytam/rtorrent-flood-rpc
+    image: atam96/rtorrent-flood-rpc
     depends_on:
       - vpn
     environment:
@@ -52,7 +52,7 @@ services:
       - traefik.frontend.rule=Host:flood.homeland.ad
 
   xmlrpc:
-    image: anthonytam/nginxuid:latest
+    image: atam96/nginxuid:latest
     depends_on:
       - rtorrent
     network_mode: "service:vpn"
