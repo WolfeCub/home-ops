@@ -23,24 +23,42 @@ services:
       - 1.0.0.1
     labels:
       - autoheal=true
+    ports:
+      - 192.168.10.119:3000:3000
+      - 192.168.10.119:5001:5001
+      - 192.168.10.119:49184:49184
+      - 192.168.10.119:8989:8989
+      - 192.168.10.119:7878:7878
+      - 192.168.10.119:9117:9117
 
-  deluge:
-    image: linuxserver/deluge
+  rtorrent:
+    image: anthonytam/rtorrent-flood-rpc
     depends_on:
       - vpn
     environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/Toronto
+      - UID=1001
+      - GID=1001
+      - FLOOD_SECRET="admin"
+    network_mode: "service:vpn"
+    tty: true
+    volumes:
+      - /storage/tmp/downloads:/data
+      - /dockerdata/rtorrent/flooddb:/flood-db
+      - /dockerdata/rtorrent/config:/config
+    labels:
+      - traefik.backend=rtorrent
+      - traefik.docker.network=vmnet
+      - traefik.port=3000
+      - traefik.frontend.rule=Host:flood.homeland.ad
+
+  xmlrpc:
+    image: anthonytam/nginxuid:latest
+    depends_on:
+      - rtorrent
     network_mode: "service:vpn"
     volumes:
-      - /dockerdata/deluge:/config
-      - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=deluge
-      - traefik.docker.network=vmnet
-      - traefik.port=8112
-      - traefik.frontend.rule=Host:deluge.homeland.ad
+      - /dockerdata/xmlrpc/nginx.conf:/etc/nginx/nginx.conf
+      - /dockerdata/rtorrent/config:/socket
 
   sonarr:
     image: linuxserver/sonarr
