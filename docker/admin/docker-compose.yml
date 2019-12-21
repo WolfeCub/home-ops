@@ -2,6 +2,7 @@ version: "3.5"
 services:
   traefik:
     image: traefik:v1.7
+    user: 0:1001
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /dockerdata/traefik/traefik.toml:/traefik.toml
@@ -14,10 +15,10 @@ services:
       - vmnet
     ports:
       - 80:80
-      - 443:443
 
   portainer:
     image: portainer/portainer
+    user: 1001:999
     command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -32,6 +33,7 @@ services:
 
   autoheal:
     image: willfarrell/autoheal:latest
+    user: 1001:999
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:

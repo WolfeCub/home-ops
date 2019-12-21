@@ -14,6 +14,8 @@ services:
       - /tmp
     tty: true
     stdin_open: true
+    ports:
+      - 9898:8989
     devices:
       - /dev/net/tun:/dev/net/tun
     volumes:
@@ -23,13 +25,22 @@ services:
       - 1.0.0.1
     labels:
       - autoheal=true
-    ports:
-      - 192.168.10.119:3000:3000
-      - 192.168.10.119:5001:5001
-      - 192.168.10.119:49184:49184
-      - 192.168.10.119:8989:8989
-      - 192.168.10.119:7878:7878
-      - 192.168.10.119:9117:9117
+      - traefik.rtorrent.backend=rtorrent
+      - traefik.rtorrent.docker.network=vmnet
+      - traefik.rtorrent.port=3000
+      - traefik.rtorrent.frontend.rule=Host:flood.homeland.ad
+      - traefik.sonarr.backend=sonarr
+      - traefik.sonarr.docker.network=vmnet
+      - traefik.sonarr.port=8989
+      - traefik.sonarr.frontend.rule=Host:sonarr.homeland.ad
+      - traefik.radarr.backend=radarr
+      - traefik.radarr.docker.network=vmnet
+      - traefik.radarr.port=7878
+      - traefik.radarr.frontend.rule=Host:radarr.homeland.ad
+      - traefik.jackett.backend=jackett
+      - traefik.jackett.docker.network=vmnet
+      - traefik.jackett.port=9117
+      - traefik.jackett.frontend.rule=Host:jackett.homeland.ad
 
   rtorrent:
     image: atam96/rtorrent-flood-rpc
@@ -45,11 +56,6 @@ services:
       - /storage/tmp/downloads:/data
       - /dockerdata/rtorrent/flooddb:/flood-db
       - /dockerdata/rtorrent/config:/config
-    labels:
-      - traefik.backend=rtorrent
-      - traefik.docker.network=vmnet
-      - traefik.port=3000
-      - traefik.frontend.rule=Host:flood.homeland.ad
 
   xmlrpc:
     image: atam96/nginxuid:latest
@@ -73,11 +79,6 @@ services:
       - /dockerdata/sonarr:/config
       - /storage/media/tv-shows:/tv
       - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=sonarr
-      - traefik.docker.network=vmnet
-      - traefik.port=8989
-      - traefik.frontend.rule=Host:sonarr.homeland.ad
 
   radarr:
     image: linuxserver/radarr
@@ -92,11 +93,6 @@ services:
       - /dockerdata/radarr:/config
       - /storage/media/movies:/movies
       - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=radarr
-      - traefik.docker.network=vmnet
-      - traefik.port=7878
-      - traefik.frontend.rule=Host:radarr.homeland.ad
 
   jackett:
     image: linuxserver/jackett
@@ -110,11 +106,6 @@ services:
     volumes:
       - /dockerdata/jackett:/config
       - /storage/tmp/downloads:/downloads
-    labels:
-      - traefik.backend=jackett
-      - traefik.docker.network=vmnet
-      - traefik.port=9117
-      - traefik.frontend.rule=Host:jackett.homeland.ad
 
   #nzbget:
   #  image: linuxserver/nzbget

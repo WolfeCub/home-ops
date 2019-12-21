@@ -1,0 +1,30 @@
+version: "3.5"
+services:
+  mariadb:
+    image: mariadb
+    user: 1001:1001
+    volumes:
+      - /dockerdata/storagedb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretrootpassword
+      - MYSQL_PASSWORD=mysecretpassword
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    networks:
+      - vmnet
+
+  nextcloud:
+    image: nextcloud
+    user: 0:999
+    ports:
+      - 10001:80
+    volumes:
+      - /dockerdata/storageapp:/var/www/html
+      - /storage/personal/nextcloud:/var/www/html/data
+      - /storage/software:/var/www/html/data/storage/files/software
+    networks:
+      - vmnet
+
+networks:
+  vmnet:
+    external: true
