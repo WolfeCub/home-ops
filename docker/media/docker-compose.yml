@@ -3,7 +3,7 @@ services:
   plex:
     image: linuxserver/plex
     networks:
-      - hostnet
+      - webnet
     volumes:
       - /homelab/plex/config:/config:Z
       - /storage/TV-shows:/data/tvshows:Z

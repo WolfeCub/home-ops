@@ -36,6 +36,24 @@ services:
         - traefik.docker.network=webnet
         - traefik.frontend.redirect.entryPoint=https
 
+  grocy:
+    image: linuxserver/grocy
+    networks:
+      - webnet
+    volumes:
+      - /homelab/grocy/config:/config
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Toronto
+    deploy:
+      labels:
+        - traefik.backend=grocy
+        - traefik.frontend.rule=Host:grocy.joshwolfe.ca
+        - traefik.port=80
+        - traefik.docker.network=webnet
+        - traefik.frontend.redirect.entryPoint=https
+
 networks:
   webnet:
     external: true
