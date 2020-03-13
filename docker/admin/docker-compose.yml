@@ -1,10 +1,11 @@
 version: "3.5"
 services:
   traefik:
-    image: traefik:1.7
+    image: traefik:v2.2
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /homelab/traefikconfig/traefik.toml:/traefik.toml
+      - /homelab/traefikconfig/dynamic.toml:/dynamic.toml
       - /homelab/traefikconfig/acme.json:/acme.json
       - /etc/letsencrypt:/ssl
     networks:
@@ -13,12 +14,9 @@ services:
       - 80:80
       - 443:443
     deploy:
-      labels:
-        - traefik.backend=traefik
-        - traefik.frontend.rule=Host:traefik.joshwolfe.ca
-        - traefik.port=8080
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   portainer:
     image: portainer/portainer
@@ -30,11 +28,12 @@ services:
       - webnet
     deploy:
       labels:
-        - traefik.backend=portainer
-        - traefik.frontend.rule=Host:portainer.joshwolfe.ca
-        - traefik.port=9000
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.portainer.rule=Host(`portainer.joshwolfe.ca`)
+        - traefik.http.routers.portainer.tls=true
+        - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   grocy:
     image: linuxserver/grocy
@@ -48,11 +47,12 @@ services:
       - TZ=America/Toronto
     deploy:
       labels:
-        - traefik.backend=grocy
-        - traefik.frontend.rule=Host:grocy.joshwolfe.ca
-        - traefik.port=80
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.grocy.rule=Host(`grocy.joshwolfe.ca`)
+        - traefik.http.routers.grocy.tls=true
+        - traefik.http.services.grocy-service.loadbalancer.server.port=80
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
 networks:
   webnet:

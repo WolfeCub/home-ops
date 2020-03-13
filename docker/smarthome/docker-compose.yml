@@ -1,0 +1,41 @@
+version: "3.5"
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:stable
+    networks:
+      - hostnet
+    volumes:
+      - /homelab/homeassistant:/config
+    environment:
+      - TZ=America/New_York
+    deploy:
+      labels:
+        - traefik.http.routers.hass.rule=Host(`hass.joshwolfe.ca`)
+        - traefik.http.routers.hass.tls=true
+        - traefik.http.services.hass-service.loadbalancer.server.port=8123
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+  #assisstantrelay:
+  #  image: apipa169/assistant-relay
+  #  networks:
+  #    - webnet
+  #  ports:
+  #    - "3000:3000"
+  #  environment:
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /homelab/assisstantrelay/config.json:/assistant_relay/bin/config.json:rw
+  #    - /homelab/assisstantrelay/audio-responses:/assistant_relay/bin/audio-responses:rw
+  #  deploy:
+  #    placement:
+  #      constraints:
+  #        - node.hostname == shirleytemple
+
+networks:
+  hostnet:
+    name: "host"
+    external: true
+  webnet:
+    external: true

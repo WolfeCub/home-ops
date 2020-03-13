@@ -10,18 +10,16 @@ services:
       - webnet
 
   joshwolfe:
-    image: 127.0.0.1:5000/joshwolfe.ca:latest
+    image: 127.0.0.1:5000/joshwolfe.ca
     depends_on:
       - registry
     networks:
       - webnet
     deploy:
       labels:
-        - traefik.backend=joshwolfe
-        - traefik.frontend.rule=Host:joshwolfe.ca
-        - traefik.port=1313
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.joshwolfe.rule=Host(`joshwolfe.ca`)
+        - traefik.http.routers.joshwolfe.tls=true
+        - traefik.http.services.joshwolfe-service.loadbalancer.server.port=1313
 
 networks:
   webnet:
