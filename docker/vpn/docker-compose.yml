@@ -41,12 +41,6 @@ services:
       - /homelab/transmission/config:/config:Z
       - /homelab/transmission/downloads:/downloads:Z
       - /homelab/transmission/watch:/watch:Z
-    labels:
-      - traefik.backend=transmission
-      - traefik.docker.network=webnet
-      - traefik.port=9091
-      - traefik.frontend.rule=Host:transmission.${domain}
-      - traefik.frontend.redirect.entryPoint=https
 
   #nzbget:
   #  image: linuxserver/nzbget

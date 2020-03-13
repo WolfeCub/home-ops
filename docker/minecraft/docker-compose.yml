@@ -15,6 +15,10 @@ services:
       - UID=1002
       - GID=1003
       - MAX_MEMORY=12G
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
 networks:
   webnet:

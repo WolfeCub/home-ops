@@ -3,7 +3,7 @@ services:
   plex:
     image: linuxserver/plex
     networks:
-      - webnet
+      - hostnet
     volumes:
       - /homelab/plex/config:/config:Z
       - /storage/TV-shows:/data/tvshows:Z
@@ -15,31 +15,9 @@ services:
       - PGID=1001
       - ADVERTISE_IP=http://192.168.0.100:32400
     deploy:
-      labels:
-        - traefik.backend=plex
-        - traefik.frontend.rule=Host:plex.${domain}
-        - traefik.port=32400
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
-
-  tautulli:
-    image: linuxserver/tautulli
-    networks:
-      - webnet
-    volumes:
-      - "/homelab/plex/config/Library/Application Support/Plex Media Server/Logs:/logs:ro"
-      - /homelab/tautulliconfig:/config:Z
-    environment:
-      - PUID=1002
-      - PGID=1003
-      - TZ=America/Toronto
-    deploy:
-      labels:
-        - traefik.backend=tautulli
-        - traefik.frontend.rule=Host:tautulli.${domain}
-        - traefik.port=8181
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   sonarr:
     image:  linuxserver/sonarr:latest
@@ -55,11 +33,12 @@ services:
       - PGID=1001
     deploy:
       labels:
-        - traefik.backend=sonarr
-        - traefik.frontend.rule=Host:sonarr.${domain}
-        - traefik.port=8989
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.sonarr.rule=Host(`sonarr.${domain}`)
+        - traefik.http.routers.sonarr.tls=true
+        - traefik.http.services.sonarr-service.loadbalancer.server.port=8989
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   radarr:
     image:  linuxserver/radarr:latest
@@ -75,11 +54,12 @@ services:
       - PGID=1001
     deploy:
       labels:
-        - traefik.backend=radarr
-        - traefik.frontend.rule=Host:radarr.${domain}
-        - traefik.port=7878
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.radarr.rule=Host(`radarr.${domain}`)
+        - traefik.http.routers.radarr.tls=true
+        - traefik.http.services.radarr-service.loadbalancer.server.port=7878
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   jackett:
     image:  linuxserver/jackett:latest
@@ -94,11 +74,12 @@ services:
       - PGID=1003
     deploy:
       labels:
-        - traefik.backend=jackett
-        - traefik.frontend.rule=Host:jackett.${domain}
-        - traefik.port=9117
-        - traefik.docker.network=webnet
-        - traefik.frontend.redirect.entryPoint=https
+        - traefik.http.routers.jackett.rule=Host(`jackett.${domain}`)
+        - traefik.http.routers.jackett.tls=true
+        - traefik.http.services.jackett-service.loadbalancer.server.port=9117
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
   #hydra2:
   #  image: linuxserver/hydra2
