@@ -1,0 +1,25 @@
+version: "3.5"
+services:
+  bitwardenrs:
+    image: bitwardenrs/server
+    env_file: /home/wolfe/.yubikey-api.env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /homelab/bitwardenrs:/data:rw
+    networks:
+      - webnet
+    environment:
+      - DOMAIN=https://bw.joshwolfe.ca
+        #- SIGNUPS_ALLOWED=false
+    deploy:
+      labels:
+        - traefik.http.routers.bitwardenrs.rule=Host(`bw.joshwolfe.ca`)
+        - traefik.http.routers.bitwardenrs.tls=true
+        - traefik.http.services.bitwardenrs-service.loadbalancer.server.port=80
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+networks:
+  webnet:
+    external: true
