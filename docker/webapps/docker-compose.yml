@@ -1,0 +1,55 @@
+version: "3.5"
+services:
+  teedy:
+    image: jdreinhardt/teedy:latest
+    volumes:
+      - /storage/personal/anthony/teedy:/data
+    labels:
+        - traefik.backend=teedy
+        - traefik.frontend.rule=Host:teedy.homeland.ad
+        - traefik.port=8080
+        - traefik.docker.network=vmnet
+    networks:
+      - vmnet
+
+  mattermost:
+    image: mattermost/mattermost-team-edition:latest
+    environment:
+        - MM_USERNAME=mattermost
+        - MM_PASSWORD=mysecretpassword
+        - MM_DBNAME=mattermost
+        - DB_HOST=mariadb
+        - DB_PORT_NUMBER=3306
+        - MM_SQLSETTINGS_DRIVERNAME=mysql
+        - MM_SQLSETTINGS_DATASOURCE=mattermost:mysecretpassword@tcp(mariadb:3306)/mattermost?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s
+        - APP_HOST=mm.homeland.farm
+    labels:
+        - traefik.backend=mattermost
+        - traefik.frontend.rule=Host:mm.homeland.ad
+        - traefik.port=8065
+        - traefik.docker.network=vmnet
+    networks:
+      - vmnet
+
+  bitwarden:
+    image: bitwardenrs/server-mysql
+    user: 1001:999
+    volumes:
+      - /dockerdata/bitwarden:/data
+    environment:
+      - DOMAIN=https://bw.homeland.farm
+      - ROCKET_PORT=8080
+      - SIGNUPS_ALLOWED=true
+      - WEBSOCKET_ENABLED=true
+      - DATABASE_URL=mysql://bitwarden:mysecretpassword@mariadb/bitwarden
+    labels:
+      - traefik.backend=bitwarden
+      - traefik.frontend.rule=Host:bw.homeland.ad
+      - traefik.port=8080
+      - traefik.docker.network=vmnet
+    networks:
+      - vmnet
+
+networks:
+  vmnet:
+    external: true

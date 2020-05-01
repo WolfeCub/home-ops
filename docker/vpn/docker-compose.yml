@@ -15,7 +15,10 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - 9898:8989
+      - 9117:9117
+      - 8989:8989
+      - 7878:7878
+      - 3000:3000
     devices:
       - /dev/net/tun:/dev/net/tun
     volumes:
@@ -25,46 +28,6 @@ services:
       - 1.0.0.1
     labels:
       - autoheal=true
-      - traefik.rtorrent.backend=rtorrent
-      - traefik.rtorrent.docker.network=vmnet
-      - traefik.rtorrent.port=3000
-      - traefik.rtorrent.frontend.rule=Host:flood.homeland.ad
-      - traefik.sonarr.backend=sonarr
-      - traefik.sonarr.docker.network=vmnet
-      - traefik.sonarr.port=8989
-      - traefik.sonarr.frontend.rule=Host:sonarr.homeland.ad
-      - traefik.radarr.backend=radarr
-      - traefik.radarr.docker.network=vmnet
-      - traefik.radarr.port=7878
-      - traefik.radarr.frontend.rule=Host:radarr.homeland.ad
-      - traefik.jackett.backend=jackett
-      - traefik.jackett.docker.network=vmnet
-      - traefik.jackett.port=9117
-      - traefik.jackett.frontend.rule=Host:jackett.homeland.ad
-
-  rtorrent:
-    image: atam96/rtorrent-flood-rpc
-    depends_on:
-      - vpn
-    environment:
-      - UID=1001
-      - GID=1001
-      - FLOOD_SECRET="admin"
-    network_mode: "service:vpn"
-    tty: true
-    volumes:
-      - /storage/tmp/downloads:/data
-      - /dockerdata/rtorrent/flooddb:/flood-db
-      - /dockerdata/rtorrent/config:/config
-
-  xmlrpc:
-    image: atam96/nginxuid:latest
-    depends_on:
-      - rtorrent
-    network_mode: "service:vpn"
-    volumes:
-      - /dockerdata/xmlrpc/nginx.conf:/etc/nginx/nginx.conf
-      - /dockerdata/rtorrent/config:/socket
 
   sonarr:
     image: linuxserver/sonarr
