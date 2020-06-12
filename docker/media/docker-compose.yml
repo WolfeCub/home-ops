@@ -61,6 +61,27 @@ services:
         constraints:
           - node.hostname == shirleytemple
 
+  bazarr:
+    image: linuxserver/bazarr:latest
+    networks:
+      - webnet
+    volumes:
+      - /homelab/bazarr:/config
+      - /storage/Movies:/movies
+      - /storage/TV-shows:/tv
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    deploy:
+      labels:
+        - traefik.http.routers.bazarr.rule=Host(`bazarr.${domain}`)
+        - traefik.http.routers.bazarr.tls=true
+        - traefik.http.services.bazarr-service.loadbalancer.server.port=6767
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
   jackett:
     image:  linuxserver/jackett:latest
     networks:

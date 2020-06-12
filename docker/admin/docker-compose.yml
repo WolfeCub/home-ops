@@ -18,6 +18,42 @@ services:
         constraints:
           - node.hostname == shirleytemple
 
+  traefik-forward-auth:
+    image: thomseddon/traefik-forward-auth
+    env_file: /home/wolfe/.traefik-forward-auth.env
+    networks:
+      - webnet
+    deploy:
+      labels:
+        - traefik.http.routers.forward-auth.rule=Host(`login.${domain}`)
+        - traefik.http.routers.forward-auth.tls=true
+        - traefik.http.routers.forward-auth.middlewares=keycloak@docker
+        - traefik.http.services.forward-auth-service.loadbalancer.server.port=4181
+        - 'traefik.http.middlewares.keycloak.forwardauth.address=http://traefik-forward-auth:4181'
+        - 'traefik.http.middlewares.keycloak.forwardauth.trustForwardHeader=true'
+        - 'traefik.http.middlewares.keycloak.forwardauth.authResponseHeaders=X-Forwarded-User'
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:10.0.2
+    volumes:
+      - /homelab/keycloak/realm-config:/opt/jboss/keycloak/realm-config
+      - /homelab/keycloak/database:/opt/jboss/keycloak/standalone/data
+    networks:
+      - webnet
+    environment:
+      - PROXY_ADDRESS_FORWARDING=true
+    deploy:
+      labels:
+        - traefik.http.routers.keycloak.rule=Host(`keycloak.${domain}`)
+        - traefik.http.routers.keycloak.tls=true
+        - traefik.http.services.keycloak-service.loadbalancer.server.port=8080
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
   portainer:
     image: portainer/portainer
     command: -H unix:///var/run/docker.sock
@@ -31,6 +67,7 @@ services:
         - traefik.http.routers.portainer.rule=Host(`portainer.${domain}`)
         - traefik.http.routers.portainer.tls=true
         - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+        - traefik.http.routers.portainer.middlewares=keycloak@docker
       placement:
         constraints:
           - node.hostname == shirleytemple

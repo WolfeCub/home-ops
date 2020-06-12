@@ -37,6 +37,7 @@ services:
     network_mode: "service:vpn"
     stdin_open: true
     tty: true
+    restart: unless-stopped
     volumes:
       - /homelab/transmission/config:/config:Z
       - /homelab/transmission/downloads:/downloads:Z

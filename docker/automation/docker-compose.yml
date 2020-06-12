@@ -1,0 +1,25 @@
+version: "3.5"
+services:
+  huginn:
+    image: huginn/huginn
+    networks:
+      - webnet
+    volumes:
+      - /homelab/huginn:/var/lib/mysql
+    environment:
+      - TZ=America/New_York
+    deploy:
+      labels:
+      - traefik.http.routers.huginn.rule=Host(`huginn.${domain}`)
+      - traefik.http.routers.huginn.tls=true
+      - traefik.http.services.huginn-service.loadbalancer.server.port=3000
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+networks:
+  hostnet:
+    name: "host"
+    external: true
+  webnet:
+    external: true

@@ -10,7 +10,7 @@ services:
       - webnet
     environment:
       - DOMAIN=https://bw.${domain}
-        #- SIGNUPS_ALLOWED=false
+      - SIGNUPS_ALLOWED=false
     deploy:
       labels:
         - traefik.http.routers.bitwardenrs.rule=Host(`bw.${domain}`)
