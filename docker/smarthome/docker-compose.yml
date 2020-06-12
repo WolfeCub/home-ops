@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   homeassistant:
-    image: homeassistant/home-assistant:stable
+    image: homeassistant/home-assistant:latest
     networks:
       - hostnet
     volumes:
@@ -9,29 +9,64 @@ services:
     environment:
       - TZ=America/New_York
     deploy:
-      labels:
-        - traefik.http.routers.hass.rule=Host(`hass.joshwolfe.ca`)
-        - traefik.http.routers.hass.tls=true
-        - traefik.http.services.hass-service.loadbalancer.server.port=8123
       placement:
         constraints:
           - node.hostname == shirleytemple
 
-  #assisstantrelay:
-  #  image: apipa169/assistant-relay
+  hassconfigurator:
+    image: causticlab/hass-configurator-docker:x86_64
+    networks:
+      - webnet
+    volumes:
+      - /homelab/hassconfigurator:/config
+      - /homelab/homeassistant:/hass-config
+    environment:
+      - TZ=America/New_York
+    deploy:
+      labels:
+      - traefik.http.routers.hassconfig.rule=Host(`hassconfig.joshwolfe.ca`)
+      - traefik.http.routers.hassconfig.tls=true
+      - traefik.http.services.hassconfig-service.loadbalancer.server.port=3218
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+  #mosquitto:
+  #  image: eclipse-mosquitto
   #  networks:
-  #    - webnet
-  #  ports:
-  #    - "3000:3000"
-  #  environment:
-  #    - TZ=America/New_York
+  #    - hostnet
   #  volumes:
-  #    - /homelab/assisstantrelay/config.json:/assistant_relay/bin/config.json:rw
-  #    - /homelab/assisstantrelay/audio-responses:/assistant_relay/bin/audio-responses:rw
+  #    - /homelab/mosquitto:/mosquitto
   #  deploy:
   #    placement:
   #      constraints:
   #        - node.hostname == shirleytemple
+
+  nodered:
+    image: nodered/node-red:latest
+    networks:
+      - hostnet
+    volumes:
+      - /homelab/nodered:/data
+    environment:
+      - TZ=America/New_York
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+  esphome:
+    image: esphome/esphome
+    networks:
+      - hostnet
+    volumes:
+      - /homelab/esphome:/config
+    environment:
+      - TZ=America/New_York
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
 
 networks:
   hostnet:
