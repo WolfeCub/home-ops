@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  duplicati:
+    image: linuxserver/duplicati
+    networks:
+      - webnet
+    volumes:
+      - /homelab/duplicati:/config
+      - /homelab:/source
+    deploy:
+      labels:
+        - traefik.http.routers.duplicati.rule=Host(`backup.${domain}`)
+        - traefik.http.routers.duplicati.tls=true
+        - traefik.http.services.duplicati-service.loadbalancer.server.port=8200
+        - traefik.http.routers.duplicati.middlewares=authelia@docker
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+networks:
+  webnet:
+    external: true
