@@ -2,11 +2,12 @@ version: "3.5"
 services:
   traefik:
     image: traefik:v2.2
+    depends_on:
+      - authelia
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /homelab/traefikconfig/traefik.toml:/traefik.toml
       - /homelab/traefikconfig/dynamic.toml:/dynamic.toml
-      - /homelab/traefikconfig/acme.json:/acme.json
       - /etc/letsencrypt:/ssl
     networks:
       - webnet
@@ -14,42 +15,6 @@ services:
       - 80:80
       - 443:443
     deploy:
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
-
-  traefik-forward-auth:
-    image: thomseddon/traefik-forward-auth
-    env_file: /home/wolfe/.traefik-forward-auth.env
-    networks:
-      - webnet
-    deploy:
-      labels:
-        - traefik.http.routers.forward-auth.rule=Host(`login.joshwolfe.ca`)
-        - traefik.http.routers.forward-auth.tls=true
-        - traefik.http.routers.forward-auth.middlewares=keycloak@docker
-        - traefik.http.services.forward-auth-service.loadbalancer.server.port=4181
-        - 'traefik.http.middlewares.keycloak.forwardauth.address=http://traefik-forward-auth:4181'
-        - 'traefik.http.middlewares.keycloak.forwardauth.trustForwardHeader=true'
-        - 'traefik.http.middlewares.keycloak.forwardauth.authResponseHeaders=X-Forwarded-User'
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
-
-  keycloak:
-    image: quay.io/keycloak/keycloak:10.0.2
-    volumes:
-      - /homelab/keycloak/realm-config:/opt/jboss/keycloak/realm-config
-      - /homelab/keycloak/database:/opt/jboss/keycloak/standalone/data
-    networks:
-      - webnet
-    environment:
-      - PROXY_ADDRESS_FORWARDING=true
-    deploy:
-      labels:
-        - traefik.http.routers.keycloak.rule=Host(`keycloak.joshwolfe.ca`)
-        - traefik.http.routers.keycloak.tls=true
-        - traefik.http.services.keycloak-service.loadbalancer.server.port=8080
       placement:
         constraints:
           - node.hostname == shirleytemple
@@ -67,7 +32,7 @@ services:
         - traefik.http.routers.portainer.rule=Host(`portainer.joshwolfe.ca`)
         - traefik.http.routers.portainer.tls=true
         - traefik.http.services.portainer-service.loadbalancer.server.port=9000
-        - traefik.http.routers.portainer.middlewares=keycloak@docker
+        - traefik.http.routers.portainer.middlewares=authelia@docker
       placement:
         constraints:
           - node.hostname == shirleytemple

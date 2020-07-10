@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  ghost:
+    image: ghost
+    networks:
+      - webnet
+    volumes:
+      - /homelab/ghost:/var/lib/ghost/content
+    environment:
+      url: https://joshwolfe.ca
+    deploy:
+      labels:
+        - traefik.http.routers.joshwolfe.rule=Host(`joshwolfe.ca`)
+        - traefik.http.routers.joshwolfe.tls=true
+        - traefik.http.services.joshwolfe-service.loadbalancer.server.port=2368
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+networks:
+  webnet:
+    external: true
