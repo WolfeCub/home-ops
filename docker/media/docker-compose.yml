@@ -36,7 +36,7 @@ services:
         - traefik.http.routers.sonarr.rule=Host(`sonarr.${domain}`)
         - traefik.http.routers.sonarr.tls=true
         - traefik.http.services.sonarr-service.loadbalancer.server.port=8989
-        - traefik.http.routers.sonarr.middlewares=authelia@docker
+        - traefik.http.routers.sonarr.middlewares=authelia@file
       placement:
         constraints:
           - node.hostname == shirleytemple
@@ -58,7 +58,7 @@ services:
         - traefik.http.routers.radarr.rule=Host(`radarr.${domain}`)
         - traefik.http.routers.radarr.tls=true
         - traefik.http.services.radarr-service.loadbalancer.server.port=7878
-        - traefik.http.routers.radarr.middlewares=authelia@docker
+        - traefik.http.routers.radarr.middlewares=authelia@file
       placement:
         constraints:
           - node.hostname == shirleytemple
@@ -80,7 +80,7 @@ services:
         - traefik.http.routers.bazarr.rule=Host(`bazarr.${domain}`)
         - traefik.http.routers.bazarr.tls=true
         - traefik.http.services.bazarr-service.loadbalancer.server.port=6767
-        - traefik.http.routers.bazarr.middlewares=authelia@docker
+        - traefik.http.routers.bazarr.middlewares=authelia@file
       placement:
         constraints:
           - node.hostname == shirleytemple
@@ -101,7 +101,7 @@ services:
         - traefik.http.routers.jackett.rule=Host(`jackett.${domain}`)
         - traefik.http.routers.jackett.tls=true
         - traefik.http.services.jackett-service.loadbalancer.server.port=9117
-        - traefik.http.routers.jackett.middlewares=authelia@docker
+        - traefik.http.routers.jackett.middlewares=authelia@file
       placement:
         constraints:
           - node.hostname == shirleytemple

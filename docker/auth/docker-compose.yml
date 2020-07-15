@@ -11,9 +11,6 @@ services:
         - traefik.http.routers.authelia.rule=Host(`login.${domain}`)
         - traefik.http.routers.authelia.tls=true
         - traefik.http.services.authelia-service.loadbalancer.server.port=9091
-        - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://login.${domain}/'
-        - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
-        - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User, Remote-Groups'
       placement:
         constraints:
           - node.hostname == shirleytemple

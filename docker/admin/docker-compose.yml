@@ -1,13 +1,12 @@
 version: "3.5"
 services:
   traefik:
-    image: traefik:v2.2
+    image: traefik:v2.2.1
     depends_on:
       - authelia
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /homelab/traefikconfig/traefik.toml:/traefik.toml
-      - /homelab/traefikconfig/dynamic.toml:/dynamic.toml
+      - /homelab/traefikconfig:/etc/traefik
       - /etc/letsencrypt:/ssl
     networks:
       - webnet
@@ -32,7 +31,7 @@ services:
         - traefik.http.routers.portainer.rule=Host(`portainer.${domain}`)
         - traefik.http.routers.portainer.tls=true
         - traefik.http.services.portainer-service.loadbalancer.server.port=9000
-        - traefik.http.routers.portainer.middlewares=authelia@docker
+        - traefik.http.routers.portainer.middlewares=authelia@file
       placement:
         constraints:
           - node.hostname == shirleytemple
@@ -52,6 +51,21 @@ services:
         - traefik.http.routers.grocy.rule=Host(`grocy.${domain}`)
         - traefik.http.routers.grocy.tls=true
         - traefik.http.services.grocy-service.loadbalancer.server.port=80
+      placement:
+        constraints:
+          - node.hostname == shirleytemple
+
+  dashmachine:
+    image: rmountjoy/dashmachine
+    networks:
+      - webnet
+    volumes:
+      - /homelab/dashmachine:/dashmachine/dashmachine/user_data
+    deploy:
+      labels:
+        - traefik.http.routers.dashmachine.rule=Host(`dash.${domain}`)
+        - traefik.http.routers.dashmachine.tls=true
+        - traefik.http.services.dashmachine-service.loadbalancer.server.port=5000
       placement:
         constraints:
           - node.hostname == shirleytemple
