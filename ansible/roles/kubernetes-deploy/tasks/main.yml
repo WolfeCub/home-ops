@@ -2,32 +2,19 @@
 - name: Copy kubernetes templates
   copy:
     src: '{{ base_dir }}/kubernetes'
-    dest: '{{ base_dir }}/kubernetes-tmp/'
-
-- name: Debug
-  debug:
-    msg: '{{ base_dir }}'
-
-- name: Ansible check file exists
-  stat:
-    path: '{{ base_dir }}/kubernetes-tmp/kubernetes'
-  register: file_details
-
-- name: Debug
-  debug:
-    msg: '{{ file_details }}'
+    dest: '{{ base_dir }}'
 
 - name: Debug
   debug:
     msg: '{{ item }}'
-  with_filetree: '{{ base_dir }}'
+  with_filetree: '{{ base_dir/kubernetes }}'
 
 - name: Template files
   template:
     src: '{{ item.src }}'
     dest: '{{ item.src }}'
-  with_filetree: '{{ base_dir }}/kubernetes-tmp/kubernetes'
+  with_filetree: '{{ base_dir }}/kubernetes'
   when: item.state == 'file'
 
 - name: Apply templated deployment to cluster
-  command: 'kubectl apply -R --prune -f {{ base_dir }}/kubernetes-tmp/kubernetes --all'
+  command: 'kubectl apply -R --prune -f {{ base_dir }}/kubernetes --all'
