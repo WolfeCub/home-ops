@@ -2,14 +2,14 @@
 - name: Copy kubernetes templates
   copy:
     src: '{{ base_dir }}/kubernetes'
-    dest: '{{ base_dir }}/.kubernetes'
+    dest: '{{ base_dir }}/kubernetes-tmp/'
 
 - name: Template files
   template:
     src: '{{ item.src }}'
     dest: '{{ item.src }}'
-  with_filetree: '{{ base_dir }}/.kubernetes'
+  with_filetree: '{{ base_dir }}/kubernetes-tmp/kubernetes'
   when: item.state == 'file'
 
 - name: Apply templated deployment to cluster
-  command: 'kubectl apply -R --prune -f {{ base_dir }}/.kubernetes --all'
+  command: 'kubectl apply -R --prune -f {{ base_dir }}/kubernetes-tmp/kubernetes --all'
