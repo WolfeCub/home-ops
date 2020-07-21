@@ -1,5 +1,4 @@
 ---
-- name: Read definition file from the Ansible controller file system after Jinja templating
-  k8s:
-    state: present
-    definition: "{{ lookup('template', '{{ base_dir }}/kubernetes/testing/testing.yml') }}"
+- name: Apply templated deployment to cluster
+  command: kubectl apply -f -
+  stdin: "{{ lookup('template', '{{ base_dir }}/kubernetes/testing/testing.yml') }}"
