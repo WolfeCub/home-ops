@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-api-token-secret
+type: Opaque
+stringData:
+  api-token: {{ cloudflare.secret }}
+
+---
+
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: {{ cloudflare.email }}
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+      - dns01:
+          cloudflare:
+            email: {{ cloudflare.email }}
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token

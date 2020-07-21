@@ -1,0 +1,9 @@
+---
+- name: Homelab
+  hosts: all
+  vars:
+    homelab_dest_folder: '/testing'
+    base_dir: '{{ playbook_dir }}/..'
+    config_src: '{{ base_dir }}/configs'
+  roles:
+      - kubernetes-deploy
