@@ -1,4 +1,5 @@
 ---
 - name: Apply templated deployment to cluster
   command: kubectl apply -f -
-  stdin: "{{ lookup('template', '{{ base_dir }}/kubernetes/testing/testing.yml') }}"
+  args:
+    stdin: "{{ lookup('template', '{{ base_dir }}/kubernetes/testing/testing.yml') }}"
