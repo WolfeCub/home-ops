@@ -8,6 +8,15 @@
   debug:
     msg: '{{ base_dir }}'
 
+- name: Ansible check file exists
+  stat:
+    path: '{{ base_dir }}/kubernetes-tmp/kubernetes'
+  register: file_details
+
+- name: Debug
+  debug:
+    msg: '{{ file_details }}'
+
 - name: Debug
   debug:
     msg: '{{ item.src }}'
