@@ -1,14 +1,4 @@
 ---
-- name: Copy kubernetes templates
-  copy:
-    src: '{{ base_dir }}/kubernetes'
-    dest: '{{ base_dir }}'
-
-- name: Debug
-  debug:
-    msg: '{{ item }}'
-  with_filetree: '{{ base_dir }}/kubernetes'
-
 - name: Template files
   template:
     src: '{{ item.src }}'
