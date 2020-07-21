@@ -21,7 +21,6 @@
   debug:
     msg: '{{ item.src }}'
   with_filetree: '{{ base_dir }}/kubernetes-tmp/kubernetes'
-  when: item.state == 'file'
 
 - name: Template files
   template:
