@@ -1,16 +1,10 @@
 ---
 - name: Homelab
   hosts: all
-  vars_files:
-      - secrets.yml
   vars:
     homelab_dest_folder: '/testing'
     base_dir: '{{ playbook_dir }}/..'
     config_src: '{{ base_dir }}/configs'
-    docker_root: '{{ base_dir }}/docker'
-    docker_templates: '{{ base_dir }}/docker-templates'
-    docker_stacks:
-        - test
+    testing: FOOBAR
   roles:
-      - role: docker-config-setup
-        become: true
+      - kubernetes-deploy

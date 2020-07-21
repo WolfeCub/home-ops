@@ -1,0 +1,14 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+  - name: apply ansible playbook
+    image: plugins/ansible:1
+    settings:
+      playbook: ansible/playbook.yml
+      inventory: ansible/dev-inventory
+      private_key:
+        from_secret: ansible_private_key
+        #vault_password:
+        #  from_secret: ansible_vault_password
