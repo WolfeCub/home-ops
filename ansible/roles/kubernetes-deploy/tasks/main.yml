@@ -7,7 +7,7 @@
 - name: Debug
   debug:
     msg: '{{ item }}'
-  with_filetree: '{{ base_dir/kubernetes }}'
+  with_filetree: '{{ base_dir }}/kubernetes'
 
 - name: Template files
   template:
