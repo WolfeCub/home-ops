@@ -1,7 +1,15 @@
 ---
-- name: Apply templated deployment to cluster
-  command: kubectl apply -f -
-  args:
-    stdin: "{{ lookup('template', '{{ base_dir }}/kubernetes/{{ item.path }}') }}"
-  with_filetree: '{{ base_dir }}/kubernetes'
+- name: Copy kubernetes templates
+  copy:
+    src: '{{ base_dir }}/kubernetes'
+    dest: '{{ base_dir }}/.kubernetes'
+
+- name: Template files
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.src }}'
+  with_filetree: '{{ base_dir }}/.kubernetes'
   when: item.state == 'file'
+
+- name: Apply templated deployment to cluster
+  command: 'kubectl apply -R --prune -f {{ base_dir }}/.kubernetes --all'
