@@ -4,4 +4,4 @@
   args:
     stdin: "{{ lookup('template', '{{ base_dir }}/kubernetes/{{ item.path }}') }}"
   with_filetree: '{{ base_dir }}/kubernetes'
-  when: item.state == 'directory'
+  when: item.state == 'file'
