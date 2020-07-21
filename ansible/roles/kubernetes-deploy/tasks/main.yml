@@ -19,8 +19,8 @@
 
 - name: Debug
   debug:
-    msg: '{{ item.src }}'
-  with_filetree: '{{ base_dir }}/kubernetes-tmp'
+    msg: '{{ item }}'
+  with_filetree: '{{ base_dir }}'
 
 - name: Template files
   template:
