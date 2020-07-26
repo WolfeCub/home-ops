@@ -1,7 +1,0 @@
----
-- name: Branch filter
-  hosts: all
-  tasks:
-    - fail:
-        msg: 'Branch {{ tower_webhook_payload.ref }} does not match filter {{ accepted_branch }}'
-      when: tower_webhook_payload.ref != accepted_branch

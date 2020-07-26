@@ -1,0 +1,8 @@
+---
+- name: Kube apply manifests
+  hosts: all
+  vars:
+    base_dir: '{{ playbook_dir }}/..'
+    config_src: '{{ base_dir }}/configs'
+  roles:
+      - kubernetes-deploy
