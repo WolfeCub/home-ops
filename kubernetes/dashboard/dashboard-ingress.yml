@@ -16,7 +16,7 @@ metadata:
 
 spec:
   rules:
-    - host: dashboard.dev.${domain}
+    - host: dashboard.{{ domain }}
       http:
         paths:
           - backend:

@@ -9,7 +9,7 @@ metadata:
 
 spec:
   rules:
-    - host: traefik.dev.${domain}
+    - host: traefik.{{ domain }}
       http:
         paths:
           - backend:
