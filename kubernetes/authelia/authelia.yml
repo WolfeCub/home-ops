@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authelia
+  labels:
+    app: authelia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authelia
+  template:
+    metadata:
+      labels:
+        app: authelia
+    spec:
+      containers:
+      - name: authelia
+        image: authelia/authelia
+        ports:
+        - containerPort: 9091
+        volumeMounts:
+          - name: authelia-config
+            mountPath: /config
+      volumes:
+        - name: authelia-config
+          nfs:
+            path: /config/dev/authelia
+            server: appletini
+  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authelia
+spec:
+  selector:
+    app: authelia
+  ports:
+  - port: 80
+    targetPort: 9091

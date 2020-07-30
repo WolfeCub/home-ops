@@ -1,25 +1,26 @@
 ---
 - name: Create root directory config
   file:
-      path: '{{ homelab_dest_folder }}'
+      path: '{{ config_dest_location }}'
       state: directory
       mode: '0755'
 
 - name: Create directory structure for configs
   file:
-      path: '{{ homelab_dest_folder }}/{{ item.path }}'
+      path: '{{ config_dest_location }}/{{ item.path }}'
       state: directory
-      mode: '0755'
-      owner: docker-default
-      group: docker-default
+      mode: '0700'
+      owner: nobody
+      group: nogroup
   with_filetree: '{{ config_src }}'
   when: item.state == 'directory'
 
 - name: Template config files
   template:
       src: '{{ item.src }}'
-      dest: '{{ homelab_dest_folder }}/{{ item.path }}'
-      owner: docker-default
-      group: docker-default
+      dest: '{{ config_dest_location }}/{{ item.path }}'
+      mode: '0600'
+      owner: nobody
+      group: nogroup
   with_filetree: '{{ config_src }}'
   when: item.state == 'file'

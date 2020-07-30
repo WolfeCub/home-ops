@@ -80,7 +80,6 @@
       copy:
         content: |
                  nameserver 192.168.0.100
-                 search ${domain}
         dest: /etc/resolv.conf
 
     - name: Disable swap

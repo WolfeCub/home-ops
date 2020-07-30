@@ -1,8 +1,6 @@
 ---
 - name: Kube apply manifests
   hosts: all
-  vars:
-    base_dir: '{{ playbook_dir }}/..'
-    config_src: '{{ base_dir }}/configs'
+  vars_files: /home/wolfe/vault.yml
   roles:
       - kubernetes-deploy
