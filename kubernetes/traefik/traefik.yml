@@ -34,6 +34,8 @@ spec:
             - --entrypoints.web.http.redirections.entryPoint.to=websecure
             - --entrypoints.websecure.http.tls.certResolver=default
             - --providers.kubernetesingress
+            - --providers.file.filename=/etc/traefik/dynamic.toml
+            - --providers.file.watch=true
           ports:
             - name: web
               containerPort: 80
@@ -41,6 +43,14 @@ spec:
               containerPort: 443
             - name: admin
               containerPort: 8080
+          volumeMounts:
+            - name: traefik-config
+              mountPath: /etc/traefik
+      volumes:
+        - name: traefik-config
+          nfs:
+            path: /config/dev/traefik
+            server: appletini
 
 ---
 apiVersion: v1
