@@ -8,7 +8,7 @@ metadata:
 
 spec:
   rules:
-    - host: login.dev.joshwolfe.ca
+    - host: login.{{ domain }}
       http:
         paths:
           - backend:
