@@ -1,1 +1,0 @@
-config_src: '{{ base_dir }}/configs'

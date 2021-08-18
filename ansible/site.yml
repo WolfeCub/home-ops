@@ -1,8 +1,0 @@
----
-- name: Run all
-  hosts: all
-  vars_files: /home/wolfe/vault.yml
-  roles:
-    - role: config-transform
-      become: true
-    - role: kubernetes-deploy
