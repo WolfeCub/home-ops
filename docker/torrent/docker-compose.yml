@@ -10,6 +10,7 @@ services:
       - 51413:51413/udp
     environment:
       TZ: 'EST5EDT'
+      OTHER_ARGS: '--ping-exit 60'
     networks:
       - webnet
     read_only: true
@@ -24,7 +25,9 @@ services:
     dns: 1.1.1.1
     volumes:
       - /dev/net:/dev/net:z
-      - /home/wolfe/cryptostorm:/vpn
+      - /home/wolfe/surfshark/nl-ams.prod.surfshark.com_udp.ovpn:/vpn/config.ovpn
+    env_file:
+      - ~/.torrent.env
 
   transmission:
     image: linuxserver/transmission
