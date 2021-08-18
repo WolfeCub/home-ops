@@ -7,6 +7,10 @@ services:
     volumes:
       - /homelab/duplicati:/config
       - /homelab:/source
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
     deploy:
       labels:
         - traefik.http.routers.duplicati.rule=Host(`backup.joshwolfe.ca`)
