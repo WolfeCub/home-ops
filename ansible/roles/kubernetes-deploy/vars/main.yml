@@ -1,1 +1,0 @@
-template_target_dir: '{{ ansible_env.HOME }}/k8s-generated'
