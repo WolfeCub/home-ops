@@ -15,24 +15,6 @@ services:
         constraints:
           - node.hostname == shirleytemple
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:10.0.2
-    volumes:
-      - /homelab/keycloak/realm-config:/opt/jboss/keycloak/realm-config
-      - /homelab/keycloak/database:/opt/jboss/keycloak/standalone/data
-    networks:
-      - webnet
-    environment:
-      - PROXY_ADDRESS_FORWARDING=true
-    deploy:
-      labels:
-        - traefik.http.routers.keycloak.rule=Host(`keycloak.joshwolfe.ca`)
-        - traefik.http.routers.keycloak.tls=true
-        - traefik.http.services.keycloak-service.loadbalancer.server.port=8080
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
-
 networks:
   webnet:
     external: true
