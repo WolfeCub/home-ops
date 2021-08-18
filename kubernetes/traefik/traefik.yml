@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: traefik
+  labels:
+    app: traefik
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      containers:
+        - name: traefik
+          image: traefik:v2.2
+          args:
+            - --log.level=DEBUG
+            - --api
+            - --api.insecure
+            - --entrypoints.web.address=:80
+            - --entrypoints.websecure.address=:443
+            - --entrypoints.web.http.redirections.entryPoint.to=websecure
+            - --entrypoints.websecure.http.tls.certResolver=acmeResolver
+            - --providers.kubernetesingress
+            - --providers.file.filename=/etc/traefik/dynamic.toml
+            - --providers.file.watch=true
+            - --certificatesresolvers.acmeResolver.acme.email={{ traefik.acme_email }}
+            - --certificatesresolvers.acmeResolver.acme.storage=/etc/traefik/acme.json
+            - --certificatesresolvers.acmeResolver.acme.dnschallenge.provider=cloudflare
+            - --certificatesresolvers.acmeResolver.acme.dnschallenge.delaybeforecheck=0
+            - --certificatesresolvers.acmeResolver.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
+          env:
+            - name: CF_API_EMAIL
+              value: {{ traefik.acme_email }}
+            - name: CF_API_KEY
+              value: {{ traefik.cf_key }}
+          ports:
+            - name: web
+              containerPort: 80
+            - name: websecure
+              containerPort: 443
+            - name: admin
+              containerPort: 8080
+          volumeMounts:
+            - name: traefik-config
+              mountPath: /etc/traefik
+      volumes:
+        - name: traefik-config
+          nfs:
+            path: /config/dev/traefik
+            server: appletini
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+spec:
+  type: LoadBalancer
+  selector:
+    app: traefik
+  externalIPs:
+    - 192.168.0.250
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+      targetPort: 80
+    - protocol: TCP
+      name: websecure
+      port: 443
+      targetPort: 443
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web-ui
+spec:
+  selector:
+    app: traefik
+  ports:
+  - port: 80
+    targetPort: 8080

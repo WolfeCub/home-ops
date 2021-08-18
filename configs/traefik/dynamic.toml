@@ -1,0 +1,4 @@
+[http.middlewares.authelia.forwardauth]
+  address = "http://authelia/api/verify?rd=https://login.{{ domain }}/"
+  trustForwardHeader = true
+  authResponseHeaders = ["Remote-User", "Remote-Groups"]

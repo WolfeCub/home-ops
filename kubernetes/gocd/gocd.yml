@@ -1,0 +1,36 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: gocd-role
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "namespace"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["watch", "list"]
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["*"]
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gocd-service-account
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: gocd-role-binding
+subjects:
+- kind: ServiceAccount
+  name: gocd-service-account
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: gocd-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,92 @@
+---
+- name: Homelab
+  hosts: all
+  become: true
+  tasks:
+    - name: Update repositories cache and install depends
+      apt:
+        pkg:
+          - apt-transport-https 
+          - ca-certificates 
+          - curl 
+          - gnupg-agent 
+          - software-properties-common
+        update_cache: yes
+
+    - name: Add docker gpg key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Get lsb relesea
+      command: lsb_release -cs
+      register: lsb_release
+
+    - name: Add docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable"
+        state: present
+
+    - name: Update repositories cache and install docker
+      apt:
+        pkg:
+          - docker-ce 
+          - docker-ce-cli 
+          - containerd.io
+        update_cache: yes
+
+    - name: Add kubeadm gpg key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add kubeadm repository
+      apt_repository:
+        repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+        state: present
+
+    - name: Update repositories cache and install docker
+      apt:
+        pkg:
+          - kubelet 
+          - kubeadm 
+          - kubectl
+        update_cache: yes
+
+    - dpkg_selections:
+        name: kubelet
+        selection: hold
+
+    - dpkg_selections:
+        name: kubeadm
+        selection: hold
+
+    - dpkg_selections:
+        name: kubectl
+        selection: hold
+
+    - name: Disable and stop resolved
+      systemd:
+        name: systemd-resolved.service
+        state: stopped
+        enabled: no
+
+    - name: Remove resolv.conf
+      file:
+        path: /etc/resolv.conf
+        state: absent
+
+    - name: Populate resolve.conf
+      copy:
+        content: |
+                 nameserver 192.168.0.100
+        dest: /etc/resolv.conf
+
+    - name: Disable swap
+      command: swapoff -a
+
+    - name: Remove swap from fstab
+      lineinfile:
+        path: /etc/fstab
+        state: absent
+        regexp: '^/swap.img'
