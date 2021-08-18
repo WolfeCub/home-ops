@@ -36,36 +36,15 @@ services:
         constraints:
           - node.hostname == shirleytemple
 
-  grocy:
-    image: linuxserver/grocy
+  shepherd:
+    image: mazzolino/shepherd
     networks:
       - webnet
     volumes:
-      - /homelab/grocy/config:/config
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/Toronto
+      - FILTER_SERVICES=name=marvin_bot
     deploy:
-      labels:
-        - traefik.http.routers.grocy.rule=Host(`grocy.joshwolfe.ca`)
-        - traefik.http.routers.grocy.tls=true
-        - traefik.http.services.grocy-service.loadbalancer.server.port=80
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
-
-  dashmachine:
-    image: rmountjoy/dashmachine
-    networks:
-      - webnet
-    volumes:
-      - /homelab/dashmachine:/dashmachine/dashmachine/user_data
-    deploy:
-      labels:
-        - traefik.http.routers.dashmachine.rule=Host(`dash.joshwolfe.ca`)
-        - traefik.http.routers.dashmachine.tls=true
-        - traefik.http.services.dashmachine-service.loadbalancer.server.port=5000
       placement:
         constraints:
           - node.hostname == shirleytemple
