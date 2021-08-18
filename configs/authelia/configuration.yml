@@ -39,7 +39,7 @@ jwt_secret: {{ authelia.jwt_secret }}
 #
 # Note: this parameter is optional. If not provided, user won't
 # be redirected upon successful authentication.
-default_redirection_url: https://{{ domain }}
+default_redirection_url: https://{{ shared.domain }}
 
 # TOTP Settings
 #
@@ -95,7 +95,8 @@ authentication_backend:
     url: ldaps://ipa.${domain}
     
     # Skip verifying the server certificate (to allow self-signed certificate).
-    skip_verify: true
+    tls:
+      skip_verify: true
     
     # The base dn for every entries
     base_dn: dc=joshwolfe,dc=ca
@@ -152,9 +153,9 @@ authentication_backend:
     mail_attribute: mail
 
     # The username and password of the admin user.
-    user: {{ system_account.user }}
+    user: {{ shared.ldap_system_user_dn }}
     # Password can also be set using a secret: https://docs.authelia.com/configuration/secrets.html
-    password: {{ system_account.password }} 
+    password: {{ shared.ldap_system_user_password }} 
 
   # File backend configuration.
   #
@@ -219,27 +220,27 @@ access_control:
 
   rules:
     # Rules applied to everyone
-    - domain: '*.{{ domain }}'
+    - domain: '*.{{ shared.domain }}'
       subject:
           - "group:webportal-auth"
       policy: one_factor
 
-    - domain: sonarr.{{ domain }}
+    - domain: sonarr.{{ shared.domain }}
       resources:
           - "^/api/.*$"
       policy: bypass
 
-    - domain: radarr.{{ domain }}
+    - domain: radarr.{{ shared.domain }}
       resources:
           - "^/api/.*$"
       policy: bypass
 
-    - domain: transmission.{{ domain }}
+    - domain: transmission.{{ shared.domain }}
       resources:
           - "^/transmission/rpc.*$"
       policy: bypass
 
-    - domain: jackett.{{ domain }}
+    - domain: jackett.{{ shared.domain }}
       resources:
           - "^/api/v2.0/.*$"
       policy: bypass
@@ -272,7 +273,7 @@ session:
   # The domain to protect.
   # Note: the authenticator must also be in that domain. If empty, the cookie
   # is restricted to the subdomain of the issuer.
-  domain: {{ domain }}
+  domain: {{ shared.domain }}
 
   # The redis connection details
   # redis:

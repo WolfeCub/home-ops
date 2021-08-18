@@ -1,4 +1,11 @@
 [http.middlewares.authelia.forwardauth]
-  address = "http://authelia/api/verify?rd=https://login.{{ domain }}/"
+  address = "http://authelia:9091/api/verify?rd=https://login.{{ shared.domain }}/"
   trustForwardHeader = true
   authResponseHeaders = ["Remote-User", "Remote-Groups"]
+
+[http.routers.api]
+  rule = "Host(`traefik.{{ shared.domain }}`)"
+  entrypoints = ["websecure"]
+  service = "api@internal"
+  middlewares = ["authelia@file"]
+  [http.routers.api.tls]
