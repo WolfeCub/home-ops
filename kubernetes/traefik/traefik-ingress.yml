@@ -1,0 +1,17 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: authelia@file
+
+spec:
+  rules:
+    - host: traefik.{{ domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: traefik-web-ui
+              servicePort: 80

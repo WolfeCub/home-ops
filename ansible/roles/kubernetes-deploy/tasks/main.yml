@@ -1,0 +1,29 @@
+---
+- name: Delete old templates
+  file:
+    dest: '{{ template_target_dir }}'
+    state: absent
+
+- name: Copy kubernetes templates
+  copy:
+    src: '{{ base_dir }}/kubernetes/'
+    dest: '{{ template_target_dir }}'
+
+- name: Template files
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.src }}'
+  with_filetree: '{{ template_target_dir }}'
+  when:
+    - item.state == 'file'
+    - item.path | splitext  | last in ['.yml', '.yaml']
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Apply templated deployment to cluster
+  command: 'kubectl apply -R --all --prune -f {{ template_target_dir }}'
+  register: kubectl_output
+
+- name: Kubernetes application results
+  debug:
+    msg: "{{ kubectl_output.stdout_lines }}"

@@ -1,0 +1,6 @@
+---
+- name: Kube apply manifests
+  hosts: all
+  vars_files: /home/wolfe/vault.yml
+  roles:
+      - kubernetes-deploy
