@@ -20,7 +20,7 @@ services:
           - node.hostname == shirleytemple
 
   sonarr:
-    image: linuxserver/sonarr:preview
+    image: linuxserver/sonarr
     networks:
       - webnet
     volumes:
