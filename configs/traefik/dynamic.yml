@@ -1,0 +1,18 @@
+http:
+  middlewares:
+    authelia:
+      forwardAuth:
+        address: "http://authelia:9091/api/verify?rd=https://login.{{ shared.domain }}/"
+        trustForwardHeader: true
+        authResponseHeaders: ["Remote-User", "Remote-Groups"]
+
+    basic:
+      basicAuth:
+        users: ["{{ traefik.basic_auth_credentials_hash }}"]
+
+  routers:
+    api:
+      rule: "Host(`traefik.{{ shared.domain }}`)"
+      entrypoints: ["websecure"]
+      service: "api@internal"
+      middlewares: ["basic@file"]

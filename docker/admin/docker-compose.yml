@@ -6,35 +6,13 @@ services:
       - authelia
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /homelab/traefikconfig:/etc/traefik
-      - /etc/letsencrypt:/ssl
+      - /homelab/traefik:/etc/traefik
     networks:
       - webnet
     ports:
       - 80:80
       - 443:443
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
-
-  portainer:
-    image: portainer/portainer
-    command: -H unix:///var/run/docker.sock
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /homelab/portainerdata:/data
-    networks:
-      - webnet
-    deploy:
-      labels:
-        - traefik.http.routers.portainer.rule=Host(`portainer.${domain}`)
-        - traefik.http.routers.portainer.tls=true
-        - traefik.http.services.portainer-service.loadbalancer.server.port=9000
-        - traefik.http.routers.portainer.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+    env_file: /homelab/traefik/compose.env
 
   shepherd:
     image: mazzolino/shepherd
@@ -44,10 +22,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - FILTER_SERVICES=name=marvin_bot
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
 
 networks:
   webnet:
