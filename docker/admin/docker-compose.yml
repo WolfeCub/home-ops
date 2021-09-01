@@ -20,8 +20,10 @@ services:
       - webnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /home/wolfe/.docker/config.json:/root/.docker/config.json
     environment:
-      - FILTER_SERVICES=name=marvin_bot
+      - FILTER_SERVICES=label=shepherd.enable
+      - WITH_REGISTRY_AUTH=true
 
 networks:
   webnet:

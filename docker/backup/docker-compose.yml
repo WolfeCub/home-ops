@@ -17,9 +17,6 @@ services:
         - traefik.http.routers.duplicati.tls=true
         - traefik.http.services.duplicati-service.loadbalancer.server.port=8200
         - traefik.http.routers.duplicati.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
 
 networks:
   webnet:

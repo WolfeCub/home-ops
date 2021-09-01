@@ -1,0 +1,4 @@
+users:
+  {{ authelia.primary_username }}:
+    password: "{{ authelia.primary_password_hash }}"
+    displayname: "{{ authelia.primary_username }}"

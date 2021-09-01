@@ -15,4 +15,15 @@ http:
       rule: "Host(`traefik.{{ shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "api@internal"
-      middlewares: ["basic@file"]
+      middlewares: ["authelia@file"]
+
+    hass:
+      rule: "Host(`hass.{{ shared.domain }}`)"
+      entrypoints: ["websecure"]
+      service: "hass-service@file"
+
+  services:
+    hass-service:
+      loadBalancer:
+        servers:
+          - url: "http://{{ shared.docker_host_ip }}:8123"

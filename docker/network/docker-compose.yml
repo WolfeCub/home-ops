@@ -1,14 +1,13 @@
-version: "3"
+version: "3.5"
 services:
   dnsmasq:
-    image: jpillora/dnsmasq:latest
-    restart: always
+    image: andyshinn/dnsmasq
+    restart: unless-stopped
     volumes:
       - /homelab/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
-      - /homelab/dnsmasq/dnsmasq_hosts:/etc/dnsmasq_hosts
     network_mode: "host"
-    environment:
-      - "HTTP_USER=foo"
-      - "HTTP_PASS=bar"
-    cap_add:
-      - NET_ADMIN
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns
+    restart: unless-stopped
+    env_file: /homelab/cloudflare-ddns/cf.env

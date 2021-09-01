@@ -11,9 +11,6 @@ services:
         - traefik.http.routers.authelia.rule=Host(`login.joshwolfe.ca`)
         - traefik.http.routers.authelia.tls=true
         - traefik.http.services.authelia-service.loadbalancer.server.port=9091
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
 
 networks:
   webnet:
