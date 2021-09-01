@@ -1,11 +1,11 @@
 version: "3.5"
 services:
   bitwardenrs:
-    image: bitwardenrs/server
-    env_file: /home/wolfe/.yubikey-api.env
+    image: vaultwarden/server
+    env_file: /homelab/vaultwarden/yubikey-api.env
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /homelab/bitwardenrs:/data:rw
+      - /homelab/vaultwarden:/data:rw
     networks:
       - webnet
     environment:
@@ -14,11 +14,7 @@ services:
     deploy:
       labels:
         - traefik.http.routers.bitwardenrs.rule=Host(`bw.${domain}`)
-        - traefik.http.routers.bitwardenrs.tls=true
         - traefik.http.services.bitwardenrs-service.loadbalancer.server.port=80
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
 
 networks:
   webnet:

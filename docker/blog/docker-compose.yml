@@ -1,21 +1,14 @@
 version: "3.5"
 services:
-  ghost:
-    image: ghost
+  hugo:
+    image: ghcr.io/wolfecub/blog
     networks:
       - webnet
-    volumes:
-      - /homelab/ghost:/var/lib/ghost/content
-    environment:
-      url: https://${domain}
     deploy:
       labels:
         - traefik.http.routers.joshwolfe.rule=Host(`${domain}`)
-        - traefik.http.routers.joshwolfe.tls=true
-        - traefik.http.services.joshwolfe-service.loadbalancer.server.port=2368
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+        - traefik.http.services.joshwolfe-service.loadbalancer.server.port=80
+        - shepherd.enable
 
 networks:
   webnet:
