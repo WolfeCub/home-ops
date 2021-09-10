@@ -4,7 +4,7 @@ http:
       forwardAuth:
         address: "http://authelia:9091/api/verify?rd=https://login.{{ shared.domain }}/"
         trustForwardHeader: true
-        authResponseHeaders: ["Remote-User", "Remote-Groups"]
+        authResponseHeaders: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
 
     basic:
       basicAuth:
