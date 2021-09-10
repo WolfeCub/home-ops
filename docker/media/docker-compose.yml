@@ -3,21 +3,30 @@ services:
   plex:
     image: linuxserver/plex
     networks:
-      - hostnet
+      - webnet
     volumes:
       - /homelab/plex/config:/config:Z
+      - /homelab/plex/transcode:/transcode:Z
       - /storage/TV-shows:/data/tvshows:Z
       - /storage/Movies:/data/movies:Z
-      - /storage/PW:/data/pw:Z
-      - /homelab/plex/transcode:/transcode:Z
     environment:
       - PUID=1001
       - PGID=1001
-      - ADVERTISE_IP=http://192.168.0.100:32400
+    ports:
+      #- 32400:32400
+      - 1900:1900/udp
+      - 3005:3005
+      - 5353:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
     deploy:
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+      labels:
+        - traefik.http.routers.plex.rule=Host(`plex.joshwolfe.ca`)
+        - traefik.http.services.plex-service.loadbalancer.server.port=32400
 
   sonarr:
     image: linuxserver/sonarr
@@ -26,7 +35,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /storage/TV-shows:/tv
-      - /homelab/sonarrconfig:/config
+      - /homelab/sonarr:/config
       - /homelab/transmission/downloads/complete:/downloads
     environment:
       - PUID=1001
@@ -34,12 +43,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.sonarr.rule=Host(`sonarr.joshwolfe.ca`)
-        - traefik.http.routers.sonarr.tls=true
         - traefik.http.services.sonarr-service.loadbalancer.server.port=8989
-        - traefik.http.routers.sonarr.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+        - traefik.http.routers.sonarr.middlewares=localOnly@file,authelia@file
 
   radarr:
     image:  linuxserver/radarr:latest
@@ -48,7 +53,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /storage/Movies:/movies
-      - /homelab/radarrconfig:/config
+      - /homelab/radarr:/config
       - /homelab/transmission/downloads/complete:/downloads
     environment:
       - PUID=1001
@@ -56,12 +61,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.radarr.rule=Host(`radarr.joshwolfe.ca`)
-        - traefik.http.routers.radarr.tls=true
         - traefik.http.services.radarr-service.loadbalancer.server.port=7878
-        - traefik.http.routers.radarr.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+        - traefik.http.routers.radarr.middlewares=localOnly@file,authelia@file
 
   bazarr:
     image: linuxserver/bazarr:latest
@@ -78,12 +79,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.bazarr.rule=Host(`bazarr.joshwolfe.ca`)
-        - traefik.http.routers.bazarr.tls=true
         - traefik.http.services.bazarr-service.loadbalancer.server.port=6767
-        - traefik.http.routers.bazarr.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+        - traefik.http.routers.bazarr.middlewares=localOnly@file,authelia@file
 
   jackett:
     image:  linuxserver/jackett:latest
@@ -91,20 +88,16 @@ services:
       - webnet
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /homelab/jackett/config:/config
-      - /homelab/jackett/downloads:/downloads
+      - /homelab/jackett:/config
+        #- /homelab/jackett/downloads:/downloads
     environment:
-      - PUID=1002
-      - PGID=1003
+      - PUID=1001
+      - PGID=1001
     deploy:
       labels:
         - traefik.http.routers.jackett.rule=Host(`jackett.joshwolfe.ca`)
-        - traefik.http.routers.jackett.tls=true
         - traefik.http.services.jackett-service.loadbalancer.server.port=9117
-        - traefik.http.routers.jackett.middlewares=authelia@file
-      placement:
-        constraints:
-          - node.hostname == shirleytemple
+        - traefik.http.routers.jackett.middlewares=localOnly@file,authelia@file
 
 networks:
   hostnet:
