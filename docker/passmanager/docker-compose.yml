@@ -1,6 +1,6 @@
 version: "3.5"
 services:
-  bitwardenrs:
+  vaultwarden:
     image: vaultwarden/server
     env_file: /homelab/vaultwarden/yubikey-api.env
     volumes:
