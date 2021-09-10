@@ -10,20 +10,41 @@ http:
       basicAuth:
         users: ["{{ traefik.basic_auth_credentials_hash }}"]
 
+    localOnly:
+      ipWhiteList:
+        sourceRange:
+          - "{{ shared.network_subnet }}"
+          - 172.18.0.0/16
+
   routers:
     api:
       rule: "Host(`traefik.{{ shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "api@internal"
-      middlewares: ["authelia@file"]
+      middlewares: 
+        - "localOnly@file"
+        - "authelia@file"
 
     hass:
       rule: "Host(`hass.{{ shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "hass-service@file"
 
+    transmission:
+      rule: "Host(`transmission.{{ shared.domain }}`)"
+      entrypoints: ["websecure"]
+      service: "transmission-service@file"
+      middlewares: 
+        - "localOnly@file"
+        - "authelia@file"
+
   services:
     hass-service:
       loadBalancer:
         servers:
           - url: "http://{{ shared.docker_host_ip }}:8123"
+
+    transmission-service:
+      loadBalancer:
+        servers:
+          - url: "http://vpn:9091"

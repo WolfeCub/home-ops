@@ -23,6 +23,7 @@ providers:
   docker:
     swarmMode: true
     watch: true
+    network: webnet
 
   file:
     filename: "/etc/traefik/dynamic.yml"
