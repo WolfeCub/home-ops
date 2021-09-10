@@ -2,3 +2,8 @@ users:
   {{ authelia.primary_username }}:
     password: "{{ authelia.primary_password_hash }}"
     displayname: "{{ authelia.primary_username }}"
+    email: "{{ authelia.primary_email }}"
+  {{ authelia.second_username }}:
+    password: "{{ authelia.second_password_hash }}"
+    displayname: "{{ authelia.second_username }}"
+    email: "{{ authelia.second_email }}"

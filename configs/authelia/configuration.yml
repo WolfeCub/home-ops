@@ -489,8 +489,8 @@ notifier:
   ##
   ## Important: Kubernetes (or HA) users must read https://www.authelia.com/docs/features/statelessness.html
   ##
-  filesystem:
-    filename: /config/notification.txt
+  #filesystem:
+  #  filename: /config/notification.txt
 
   ##
   ## SMTP (Notification Provider)
@@ -502,53 +502,53 @@ notifier:
   ##        (only works for unauthenticated connections)
   ##   - validate the SMTP server x509 certificate during the TLS handshake against the hosts trusted certificates
   ##     (configure in tls section)
-  #smtp:
-  #  ## The SMTP host to connect to.
-  #  host: 127.0.0.1
+  smtp:
+    ## The SMTP host to connect to.
+    host: {{ authelia.smtp_server }}
 
-  #  ## The port to connect to the SMTP host on.
-  #  port: 1025
+    ## The port to connect to the SMTP host on.
+    port: 587
 
-  #  ## The connection timeout.
-  #  timeout: 5s
+    ## The connection timeout.
+    timeout: 5s
 
-  #  ## The username used for SMTP authentication.
-  #  username: test
+    ## The username used for SMTP authentication.
+    username: {{ authelia.smtp_email }}
 
-  #  ## The password used for SMTP authentication.
-  #  ## Can also be set using a secret: https://www.authelia.com/docs/configuration/secrets.html
-  #  password: password
+    ## The password used for SMTP authentication.
+    ## Can also be set using a secret: https://www.authelia.com/docs/configuration/secrets.html
+    password: {{ authelia.smtp_password }}
 
-  #  ## The address to send the email FROM.
-  #  sender: admin@example.com
+    ## The address to send the email FROM.
+    sender: {{ authelia.smtp_email }}
 
-  #  ## HELO/EHLO Identifier. Some SMTP Servers may reject the default of localhost.
-  #  identifier: localhost
+    ## HELO/EHLO Identifier. Some SMTP Servers may reject the default of localhost.
+    identifier: screwdriver
 
-  #  ## Subject configuration of the emails sent. {title} is replaced by the text from the notifier.
-  #  subject: "[Authelia] {title}"
+    ## Subject configuration of the emails sent. {title} is replaced by the text from the notifier.
+    subject: "[Authelia] {title}"
 
-  #  ## This address is used during the startup check to verify the email configuration is correct.
-  #  ## It's not important what it is except if your email server only allows local delivery.
-  #  startup_check_address: test@authelia.com
+    ## This address is used during the startup check to verify the email configuration is correct.
+    ## It's not important what it is except if your email server only allows local delivery.
+    startup_check_address: test@authelia.com
 
-  #  ## By default we require some form of TLS. This disables this check though is not advised.
-  #  disable_require_tls: false
+    ## By default we require some form of TLS. This disables this check though is not advised.
+    disable_require_tls: false
 
-  #  ## Disables sending HTML formatted emails.
-  #  disable_html_emails: false
+    ## Disables sending HTML formatted emails.
+    disable_html_emails: false
 
-  #  tls:
-  #    ## Server Name for certificate validation (in case you are using the IP or non-FQDN in the host option).
-  #    # server_name: smtp.example.com
+    tls:
+      ## Server Name for certificate validation (in case you are using the IP or non-FQDN in the host option).
+      # server_name: smtp.example.com
 
-  #    ## Skip verifying the server certificate (to allow a self-signed certificate).
-  #    ## In preference to setting this we strongly recommend you add the public portion of the certificate to the
-  #    ## certificates directory which is defined by the `certificates_directory` option at the top of the config.
-  #    skip_verify: false
+      ## Skip verifying the server certificate (to allow a self-signed certificate).
+      ## In preference to setting this we strongly recommend you add the public portion of the certificate to the
+      ## certificates directory which is defined by the `certificates_directory` option at the top of the config.
+      skip_verify: false
 
-  #    ## Minimum TLS version for either StartTLS or SMTPS.
-  #    minimum_version: TLS1.2
+      ## Minimum TLS version for either StartTLS or SMTPS.
+      minimum_version: TLS1.2
 
 ##
 ## Identity Providers
