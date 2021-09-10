@@ -1,0 +1,23 @@
+version: "3.5"
+services:
+  phantombot:
+    image: gmt2001/phantombot-stable:latest
+    networks:
+      - webnet
+    volumes:
+      - /homelab/phantombot:/opt/PhantomBot_data
+    environment:
+      PHANTOMBOT_USER: "underwaterblobbot"
+      PHANTOMBOT_CHANNEL: "underwaterblob"
+      PHANTOMBOT_USEHTTPS: "false"
+    deploy:
+      labels:
+      labels:
+        - traefik.http.routers.phantombot.rule=Host(`phantombot.joshwolfe.ca`)
+        - traefik.http.services.phantombot-service.loadbalancer.server.port=25000
+        - traefik.http.routers.phantombot.middlewares=localOnly@file
+    env_file: /homelab/phantombot/phantombot.env
+
+networks:
+  webnet:
+    external: true
