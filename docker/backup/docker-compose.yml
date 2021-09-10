@@ -14,9 +14,8 @@ services:
     deploy:
       labels:
         - traefik.http.routers.duplicati.rule=Host(`backup.${domain}`)
-        - traefik.http.routers.duplicati.tls=true
         - traefik.http.services.duplicati-service.loadbalancer.server.port=8200
-        - traefik.http.routers.duplicati.middlewares=authelia@file
+        - traefik.http.routers.duplicati.middlewares=localOnly@file,authelia@file
 
 networks:
   webnet:
