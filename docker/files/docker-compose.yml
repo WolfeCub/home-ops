@@ -1,0 +1,40 @@
+version: "3.5"
+services:
+  duplicati:
+    image: linuxserver/duplicati
+    networks:
+      - webnet
+    volumes:
+      - /homelab/duplicati:/config
+      - /homelab:/source
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    deploy:
+      labels:
+        - traefik.http.routers.duplicati.rule=Host(`backup.${domain}`)
+        - traefik.http.services.duplicati-service.loadbalancer.server.port=8200
+        - traefik.http.routers.duplicati.middlewares=localOnly@file,authelia@file
+
+  paperless-ng:
+    image: linuxserver/paperless-ng
+    networks:
+      - webnet
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - PAPERLESS_ENABLE_HTTP_REMOTE_USER=true
+    volumes:
+      - /homelab/paperless/config:/config
+      - /homelab/paperless/data:/data
+    deploy:
+      labels:
+        - traefik.http.routers.paperless.rule=Host(`paperless.${domain}`)
+        - traefik.http.services.paperless-service.loadbalancer.server.port=8000
+        - traefik.http.routers.paperless.middlewares=localOnly@file,authelia@file
+
+networks:
+  webnet:
+    external: true
