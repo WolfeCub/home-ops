@@ -1,0 +1,6 @@
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /home/wolfe/testing
+    mountPath: /testing
