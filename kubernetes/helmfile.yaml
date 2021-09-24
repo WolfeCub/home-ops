@@ -18,6 +18,9 @@ bases:
 ---
 
 helmfiles:
+  - path: helmfiles/admin/traefik.hf.yaml
+    values:
+    - {{ toYaml .Values | nindent 6 }}
   - path: helmfiles/*/*.hf.yaml
     values:
     - {{ toYaml .Values | nindent 6 }}
