@@ -1,0 +1,18 @@
+releases:
+- name: transmission
+  namespace: media
+  chart: utkuozdemir/transmission-openvpn
+  values:
+  - ingress:
+      enabled: true
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+      hosts:
+        - host: "transmission.{{ .Values.shared.domain }}"
+          paths: ["/"]
+  - env:
+      OPENVPN_PROVIDER: SURFSHARK
+  - secretEnv:
+      OPENVPN_USERNAME: "{{ .Values.vpn.surfshark_username }}"
+      OPENVPN_PASSWORD: "{{ .Values.vpn.surfshark_password }}"
+      OPENVPN_CONFIG: nl-ams_udp
