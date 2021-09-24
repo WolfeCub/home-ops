@@ -1,0 +1,120 @@
+releases:
+- name: authelia-users
+  namespace: admin
+  chart: bedag/raw
+  values:
+  - resources:
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: authelia-users
+      data:
+        users_database.yml: |
+        {{ tpl (printf "%s%s" .Values.configs "/authelia/users_database.yml" | readFile | nindent 12) . }}
+
+- name: authelia
+  namespace: admin
+  chart: authelia/authelia
+  values:
+  - image:
+      registry: docker.io
+  - pod:
+      env:
+      - name: TZ
+        value: America/Toronto
+
+      extraVolumeMounts:
+      - name: authelia-users
+        mountPath: /config
+      - name: authelia-persist
+        mountPath: /data
+
+      extraVolumes:
+      - name: authelia-users
+        configMap:
+          name: authelia-users
+          items:
+            - key: users_database.yml
+              path: users_database.yml
+      - name: authelia-persist
+        hostPath:
+          path: /homelab/authelia
+
+  - domain: "{{ .Values.shared.domain }}"
+
+  - ingress:
+      enabled: true
+      subdomain: login
+      tls:
+        enabled: false
+
+      traefikCRD:
+        enabled: true
+        entryPoints: [web, websecure]
+
+  - configMap:
+      default_redirection_url: "https://{{ .Values.shared.domain }}"
+
+      totp:
+        issuer: "{{ .Values.shared.domain }}"
+
+      authentication_backend:
+        disable_password_reset: true
+        ldap:
+          enabled: false
+        file:
+          enabled: true
+          path: /config/users_database.yml
+
+      access_control:
+        default_policy: deny
+        rules:
+          ## Rules applied to everyone
+          - domain: "*.{{ .Values.shared.domain }}"
+            policy: two_factor
+
+          - domain: "sonarr.{{ .Values.shared.domain }}"
+            resources:
+                - "^/api/.*$"
+            policy: bypass
+
+          - domain: "radarr.{{ .Values.shared.domain }}"
+            resources:
+                - "^/api/.*$"
+            policy: bypass
+
+          - domain: "transmission.{{ .Values.shared.domain }}"
+            resources:
+                - "^/transmission/rpc.*$"
+            policy: bypass
+
+          - domain: "jackett.{{ .Values.shared.domain }}"
+            resources:
+                - "^/api/v2.0/.*$"
+            policy: bypass
+
+      session:
+        domain: "{{ .Values.shared.domain }}"
+        redis:
+          enabled: false
+
+      storage:
+        local: 
+          enabled: true
+          path: /db.sqlite3
+        postgres:
+          enabled: false
+
+      notifier:
+        smtp:
+          enabledSecret: true
+          host: {{ .Values.authelia.smtp_server }}
+          port: 587
+          sender: {{ .Values.authelia.smtp_email }}
+          username: {{ .Values.authelia.smtp_email }}
+
+  - secret:
+      jwt:
+        value: {{ .Values.authelia.jwt_secret }}
+      smtp:
+        value: {{ .Values.authelia.smtp_password }}

@@ -1,0 +1,26 @@
+environments:
+  default:
+    values:
+    - domain: "sonarr.{{ .Values.shared.domain }}"
+    - middlewares: "localOnly@file"
+
+---
+
+releases:
+- name: sonarr
+  namespace: media
+  chart: k8s-at-home/sonarr
+  values:
+    - persistence:
+        config:
+          enabled: true
+          type: hostPath
+          hostPath: /homelab/sonarr
+          mountPath: /config
+        media:
+          enabled: true
+          type: hostPath
+          hostPath: /storage/TV-shows
+    - env:
+        TZ: America/Toronto
+    - ../../ingress.yaml.gotmpl

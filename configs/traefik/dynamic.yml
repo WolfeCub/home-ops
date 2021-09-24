@@ -1,48 +1,42 @@
 http:
   middlewares:
-    authelia:
-      forwardAuth:
-        address: "http://authelia:9091/api/verify?rd=https://login.{{ shared.domain }}/"
-        trustForwardHeader: true
-        authResponseHeaders: ["Remote-User", "Remote-Groups", "Remote-Name", "Remote-Email"]
-
     basic:
       basicAuth:
-        users: ["{{ traefik.basic_auth_credentials_hash }}"]
+        users: ["{{ .Values.traefik.basic_auth_credentials_hash }}"]
 
     localOnly:
       ipWhiteList:
         sourceRange:
-          - "{{ shared.network_subnet }}"
-          - 172.18.0.0/16
+          - "{{ .Values.shared.network_subnet }}"
+          - 10.42.0.1/24
 
   routers:
     api:
-      rule: "Host(`traefik.{{ shared.domain }}`)"
+      rule: "Host(`traefik.{{ .Values.shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "api@internal"
-      middlewares: 
+      middlewares:
         - "localOnly@file"
-        - "authelia@file"
+        - "admin-forwardauth-authelia@kubernetescrd"
 
     hass:
-      rule: "Host(`hass.{{ shared.domain }}`)"
+      rule: "Host(`hass.{{ .Values.shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "hass-service@file"
 
     transmission:
-      rule: "Host(`transmission.{{ shared.domain }}`)"
+      rule: "Host(`transmission.{{ .Values.shared.domain }}`)"
       entrypoints: ["websecure"]
       service: "transmission-service@file"
       middlewares: 
         - "localOnly@file"
-        - "authelia@file"
+        - "admin-forwardauth-authelia@kubernetescrd"
 
   services:
     hass-service:
       loadBalancer:
         servers:
-          - url: "http://{{ shared.docker_host_ip }}:8123"
+          - url: "http://{{ .Values.shared.docker_host_ip }}:8123"
 
     transmission-service:
       loadBalancer:

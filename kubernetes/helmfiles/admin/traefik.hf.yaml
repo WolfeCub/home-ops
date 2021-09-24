@@ -1,0 +1,54 @@
+releases:
+- name: traefik-config
+  namespace: admin
+  chart: bedag/raw
+  values:
+  - resources:
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: traefik-config
+      data:
+        dynamic.yml: |
+        {{ tpl (printf "%s%s" .Values.configs "/traefik/dynamic.yml" | readFile | nindent 12) . }}
+
+- name: traefik
+  namespace: admin
+  chart: traefik/traefik
+  values:
+  - ingressRoute:
+      dashboard:
+        enabled: false 
+  - ports:
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
+          certResolver: "leCertResolver"
+          domains:
+          - main: "{{ .Values.shared.domain }}"
+            sans:
+              - "*.{{ .Values.shared.domain }}"
+  - additionalArguments:
+    - "--providers.file.filename=/etc/traefik/dynamic.yml"
+    - "--providers.file.watch=true"
+    - "--certificatesresolvers.leCertResolver.acme.email={{ .Values.shared.email }}"
+    - "--certificatesresolvers.leCertResolver.acme.storage=/data/acme.json"
+    #- "--certificatesresolvers.leCertResolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+    - "--certificatesresolvers.leCertResolver.acme.dnschallenge.provider=cloudflare"
+    - "--certificatesresolvers.leCertResolver.acme.dnschallenge.delayBeforeCheck=10"
+  - volumes:
+    - name: traefik-config
+      mountPath: /etc/traefik
+      type: configMap
+  - env:
+    - name: CF_DNS_API_TOKEN
+      value: "{{ .Values.traefik.cf_dns_api_token }}"
+  - persistence:
+      enabled: false
+      name: data
+      accessMode: ReadWriteOnce
+      size: 128Mi
+      path: /data
+      annotations: {}
