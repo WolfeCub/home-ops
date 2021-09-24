@@ -1,0 +1,4 @@
+environments:
+  default:
+    secrets:
+    - ./vault.yaml

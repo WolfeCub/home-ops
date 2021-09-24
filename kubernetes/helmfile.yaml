@@ -1,39 +1,19 @@
 repositories:
-- name:  k8s-at-home
+- name: k8s-at-home
   url: https://k8s-at-home.com/charts
-- name:  traefik
-  url: https://helm.traefik.io/traefik
-
-releases:
 - name: traefik
-  namespace: admin
-  chart: traefik/traefik
-  values:
-    - ingressRoute:
-        dashboard:
-          enabled: false 
-    - tls:
-        enabled: true
-        certResolver: "leCertResolver"
-        domains:
-          - main: ""
-            sans:
-              - ""
+  url: https://helm.traefik.io/traefik
+- name: bedag
+  url: https://bedag.github.io/helm-charts/
+- name: authelia
+  url: https://charts.authelia.com
 
-- name: traefik-dashboard
-  namespace: admin
-  chart: ./ingress-route
-  values:
-    - domain: traefik.domain
+bases:
+- environments.yaml
 
-- name: sonarr
-  namespace: media
-  chart: k8s-at-home/sonarr
-  values:
-    - persistence:
-        config:
-          enabled: true
-          type: hostPath
-          hostPath: /home/wolfe/testing
-          mountPath: /testing
+---
 
+helmfiles:
+  - path: helmfiles/*/*.hf.yaml
+    values:
+    - {{ toYaml .Values | nindent 6 }}
