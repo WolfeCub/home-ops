@@ -1,9 +1,10 @@
 ingress:
   main:
     enabled: true
-    ingressClassName: "traefik"
+    {{- if hasKey .Values "middlewares" }}
     annotations:
       traefik.ingress.kubernetes.io/router.middlewares: "{{ .Values.middlewares }}"
+    {{ end }}
     hosts:
       - host: "{{ .Values.domain }}"
         paths:

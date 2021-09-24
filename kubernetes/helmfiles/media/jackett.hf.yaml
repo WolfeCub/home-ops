@@ -1,26 +1,22 @@
 environments:
   default:
     values:
-    - domain: "sonarr.{{ .Values.shared.domain }}"
+    - domain: "jackett.{{ .Values.shared.domain }}"
     - middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
 
 ---
 
 releases:
-- name: sonarr
+- name: jackett
   namespace: media
-  chart: k8s-at-home/sonarr
+  chart: k8s-at-home/jackett
   values:
     - persistence:
         config:
           enabled: true
           type: hostPath
-          hostPath: /homelab/sonarr
+          hostPath: /homelab/jackett
           mountPath: /config
-        media:
-          enabled: true
-          type: hostPath
-          hostPath: /storage/TV-shows
     - env:
         TZ: America/Toronto
     - ../../ingress.yaml.gotmpl

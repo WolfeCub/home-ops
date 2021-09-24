@@ -1,26 +1,26 @@
 environments:
   default:
     values:
-    - domain: "sonarr.{{ .Values.shared.domain }}"
+    - domain: "bazarr.{{ .Values.shared.domain }}"
     - middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
 
 ---
 
 releases:
-- name: sonarr
+- name: bazarr
   namespace: media
-  chart: k8s-at-home/sonarr
+  chart: k8s-at-home/bazarr
   values:
     - persistence:
         config:
           enabled: true
           type: hostPath
-          hostPath: /homelab/sonarr
+          hostPath: /homelab/bazarr
           mountPath: /config
         media:
           enabled: true
           type: hostPath
-          hostPath: /storage/TV-shows
+          hostPath: /storage
     - env:
         TZ: America/Toronto
     - ../../ingress.yaml.gotmpl
