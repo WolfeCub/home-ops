@@ -1,0 +1,28 @@
+environments:
+  default:
+    values:
+    - domain: "phantombot.{{ .Values.shared.domain }}"
+    - middlewares: "localOnly@file"
+
+---
+
+releases:
+- name: phantombot
+  namespace: twitch
+  chart: ./phantombot
+  values:
+    - persistence:
+        data:
+          enabled: true
+          type: hostPath
+          hostPath: /homelab/phantombot
+          mountPath: /opt/PhantomBot_data
+    - env:
+        TZ: America/Toronto
+        PHANTOMBOT_PANELUSER: "{{ .Values.phantombot.web_username }}"
+        PHANTOMBOT_PANELPASSWORD: "{{ .Values.phantombot.web_password }}"
+        PHANTOMBOT_DISCORD_TOKEN: "{{ .Values.phantombot.discord_token }}"
+        PHANTOMBOT_USER: "{{ .Values.phantombot.channel }}bot"
+        PHANTOMBOT_CHANNEL: "{{ .Values.phantombot.channel }}"
+        PHANTOMBOT_USEHTTPS: "false"
+    - ../../ingress.yaml.gotmpl
