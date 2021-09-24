@@ -1,26 +1,29 @@
 environments:
   default:
     values:
-    - domain: "sonarr.{{ .Values.shared.domain }}"
-    - middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+    - domain: "plex.{{ .Values.shared.domain }}"
 
 ---
 
 releases:
-- name: sonarr
+- name: plex
   namespace: media
-  chart: k8s-at-home/sonarr
+  chart: k8s-at-home/plex
   values:
     - persistence:
         config:
           enabled: true
           type: hostPath
-          hostPath: /homelab/sonarr
-          mountPath: /config
+          hostPath: /homelab/plex/config
+        transcode:
+          enabled: true
+          type: hostPath
+          hostPath: /homelab/plex/transcode
         media:
           enabled: true
           type: hostPath
-          hostPath: /storage/TV-shows
+          hostPath: /storage
+          mountPath: /media
     - env:
         TZ: America/Toronto
     - ../../ingress.yaml.gotmpl
