@@ -73,26 +73,6 @@ releases:
           - domain: "*.{{ .Values.shared.domain }}"
             policy: two_factor
 
-          - domain: "sonarr.{{ .Values.shared.domain }}"
-            resources:
-                - "^/api/.*$"
-            policy: bypass
-
-          - domain: "radarr.{{ .Values.shared.domain }}"
-            resources:
-                - "^/api/.*$"
-            policy: bypass
-
-          - domain: "transmission.{{ .Values.shared.domain }}"
-            resources:
-                - "^/transmission/rpc.*$"
-            policy: bypass
-
-          - domain: "jackett.{{ .Values.shared.domain }}"
-            resources:
-                - "^/api/v2.0/.*$"
-            policy: bypass
-
       session:
         domain: "{{ .Values.shared.domain }}"
         redis:
