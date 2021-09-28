@@ -1,6 +1,6 @@
 image:
   # -- image repository
-  repository: gmt2001/phantombot-stable
+  repository: containous/whoami
   # -- image tag
   tag: latest
   # -- image pull policy
@@ -10,7 +10,7 @@ image:
 # @default -- See below
 env:
   # -- Set the container timezone
-  TZ: UTC
+  TZ: America/Toronto
 
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
@@ -18,7 +18,7 @@ service:
   main:
     ports:
       http:
-        port: 25000
+        port: 80
 
 ingress:
   # -- Enable and configure ingress settings for the chart under this key.
