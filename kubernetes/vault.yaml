@@ -35,6 +35,10 @@ vaultwarden:
 vpn:
     surfshark_username: ENC[AES256_GCM,data:9xTFVvkL2k/zHq2qrwvJENamJTc6RpLL,iv:IMB53dQWi+cywouNqs/AyjDfttHMkdcD6CzjV1A1Sqg=,tag:u+O0Y0iYNcbNsv1lV4k4bA==,type:str]
     surfshark_password: ENC[AES256_GCM,data:aDoSv3t1FKfayOdveHK7wrJZ6dWcOMbZ,iv:tzEoonPei+WHKkAt7/SeUzMEHoTQ5qOZmnbdCCO5c1U=,tag:o84/+/X7mse5y2SoM1yUeA==,type:str]
+foundry:
+    username: ENC[AES256_GCM,data:3ZhRKGxvv0KLJ4hTXw==,iv:GF1lpdcd2GAJp2w4PGnB9L8EndruqR9HBYEw/bdl8Tg=,tag:mgm2T36b76KCrcpp4TrceQ==,type:str]
+    password: ENC[AES256_GCM,data:i5SqPwo8skFJBKsZPXYUJsWgfG4eoFhpfslRtydcuRc=,iv:WeRXIhffrbrhr1soxlQqu9GQFac5CRaiB3M8qKBNf5I=,tag:sLdVYnJwC8j48DmOPdPlUg==,type:str]
+    admin_token: ENC[AES256_GCM,data:4QBbiAxmI2be1tqswujGGqQsCelI6wP3rIfRTbzcnMQ=,iv:bep7lNTQCwi1or0eogiXm0+f3wvPnWt7lfkS+CBvWrg=,tag:1VzX80mxNmyFLxSZ+DXNnw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -46,8 +50,8 @@ sops:
           created_at: "2021-09-21T14:57:04Z"
           enc: vault:v1:CGK6ehqvt7FCqVSRE6sGRMeQY9vmQoxwo3vLbpnhhu+w6qmG0Yg8NnKkZR4ykPhliZeB+UgBwmIccwVxEkOfWe21dysjXbEVQly/Xkw8j3AvTnohY2mVRZbOzOqlm/8HS5q4adPUOdUIPoLzOJAea+hbKjNWKHyTuF52LXx5scTSRbSOUWw9vuw8RJ8m+XYZR8cjZh4NH/Rju3IKm+GO2osX3ktHpKD65f4vXDtbZcQoh2GF7JwNW3JWSpWS18vZNtjH4mRaBbLL18Pf/XspXV7RUFj5vsrgeDZ1nYLc8ttpXWd53WOYwagpIlZZJzQDhDmwPvp4nEXaQhFvpIV0rSVthnKx76LaQNXTHHXiH5qDFiPGJ4fpDj7sezHuMzpZql8ntxjbQY0VX0DH5lbMLWTE16YnLX5fEOyj2GcR+m3F/wDJ+UYa5zG9vo1olTWqDL9G7L0WE0jGjMW/ava1aMhutKpIi84IZyrbMU7MiFtySlWK9PDng+DCO82AooPG/15p3eCq5N81g8sKipqQ1Boce6O6kl7Gq8DOpJB89ORze3A1InfJVwRxpR/QGJIlqCBjVJOOJF9V2MbLdW9FRAt7Mc9ok4lzqb5O28gZ2LJi8vpQEr3Jvl362qzh+MShOkue2oqG4E1hPIHlUXiA4YDtuHvT0L74jX9IllYi6/Y=
     age: []
-    lastmodified: "2021-09-24T15:41:09Z"
-    mac: ENC[AES256_GCM,data:ZIIWQ/oy/9omy9toAOto1AuqOPn6ZOq6uoCmVCVt1tfsHP5rC/cJgJjs/yWNokCFLax/nWBLOi1YRVlZGec8fkttESCDsCHJ4hYdT21E00nnlHLYw3J4ldGj+AvpB5STZ4I3lPfVnuajNvL1nFfFLMt1nKwolg5A8B45cTmN/dA=,iv:KHWkXpBr8/wvMDh2VerQjX5ZucTV3xawjr1Sb399XLg=,tag:REhVBLa/ptnyrCfUo8X5fg==,type:str]
+    lastmodified: "2021-09-28T19:46:52Z"
+    mac: ENC[AES256_GCM,data:g1tJ5Qs9Ia2Q1BIEDyxSBE99zkFnHPu2vgM/Cq0aIzpU4QcRETNoMxzJggjCfAoVhqIIfsjZ2YG+KskuKzPKnu/jNnYkgeXa8RN90PmHdvnZBQ3KXBbVajStaZYVvvPyxwJFNlFyhqtJK0D/TeBfxRuSLD3m18prnmc9ZYo1Xjg=,iv:y+/gkKsT1N5x2uvUUYkDQ9lPTAvXeCN0tvawAXpFzrs=,tag:eBK+kKi8XVNRUn+6VtLtfw==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.1

@@ -9,8 +9,16 @@ environments:
 releases:
 - name: phantombot
   namespace: twitch
-  chart: ./phantombot
+  chart: ../../k8s-at-home-template
   values:
+    - ../../ingress.yaml.gotmpl
+    - image:
+        repository: gmt2001/phantombot-stable
+    - service:
+        main:
+          ports:
+            http:
+              port: 25000
     - persistence:
         data:
           enabled: true
@@ -18,11 +26,9 @@ releases:
           hostPath: /homelab/phantombot
           mountPath: /opt/PhantomBot_data
     - env:
-        TZ: America/Toronto
         PHANTOMBOT_PANELUSER: "{{ .Values.phantombot.web_username }}"
         PHANTOMBOT_PANELPASSWORD: "{{ .Values.phantombot.web_password }}"
         PHANTOMBOT_DISCORD_TOKEN: "{{ .Values.phantombot.discord_token }}"
         PHANTOMBOT_USER: "{{ .Values.phantombot.channel }}bot"
         PHANTOMBOT_CHANNEL: "{{ .Values.phantombot.channel }}"
         PHANTOMBOT_USEHTTPS: "false"
-    - ../../ingress.yaml.gotmpl

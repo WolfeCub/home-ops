@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: k8s-at-home template helm package
+name: k8s-at-home-template
+version: 2.0.1
+kubeVersion: ">=1.16.0-0"
+home: https://github.com/Mulan-Szechuan-Sauce/house20-admin/tree/master/kubernetes/k8s-at-home-template
+dependencies:
+- name: common
+  repository: https://library-charts.k8s-at-home.com
+  version: 4.0.1
