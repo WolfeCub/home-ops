@@ -6,13 +6,10 @@ version: 2.0.1
 kubeVersion: ">=1.16.0-0"
 keywords:
 - phantombot
-home: https://github.com/k8s-at-home/charts/tree/master/charts/stable/${CHARTNAME}
-icon: https://${CHARTNAME}.org/icon
+home: https://github.com/Mulan-Szechuan-Sauce/house20/tree/master/
+home: https://github.com/Mulan-Szechuan-Sauce/house20-admin/tree/master/kubernetes/helmfiles/twitch/phantombot
 sources:
-- https://github.com/${CHARTNAME}/${CHARTNAME}-docker
-maintainers:
-- name: ${CHARTNAME}
-  email: ${CHARTNAME}@${CHARTNAME}.com
+- https://hub.docker.com/r/gmt2001/phantombot-stable
 dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
