@@ -11,16 +11,22 @@ releases:
   namespace: media
   chart: k8s-at-home/sonarr
   values:
-    - persistence:
-        config:
-          enabled: true
-          type: hostPath
-          hostPath: /homelab/sonarr
-          mountPath: /config
-        media:
-          enabled: true
-          type: hostPath
-          hostPath: /storage/TV-shows
-    - env:
-        TZ: America/Toronto
-    - ../../ingress.yaml.gotmpl
+  - ../../ingress.yaml.gotmpl
+  - persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/sonarr
+        mountPath: /config
+      media:
+        enabled: true
+        type: hostPath
+        hostPath: /storage/TV-shows
+        mountPath: /tv
+      downloads:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/transmission/completed
+        mountPath: /downloads
+  - env:
+      TZ: America/Toronto
