@@ -36,7 +36,7 @@ releases:
     - "--providers.file.watch=true"
     - "--certificatesresolvers.leCertResolver.acme.email={{ .Values.shared.email }}"
     - "--certificatesresolvers.leCertResolver.acme.storage=/certs/acme.json"
-    - "--certificatesresolvers.leCertResolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+    #- "--certificatesresolvers.leCertResolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
     - "--certificatesresolvers.leCertResolver.acme.dnschallenge.provider=cloudflare"
     - "--certificatesresolvers.leCertResolver.acme.dnschallenge.delayBeforeCheck=10"
 
