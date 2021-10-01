@@ -9,8 +9,6 @@ repositories:
   url: https://bedag.github.io/helm-charts/
 - name: authelia
   url: https://charts.authelia.com
-- name: utkuozdemir
-  url: https://utkuozdemir.org/helm-charts
 
 bases:
 - environments.yaml

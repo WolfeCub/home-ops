@@ -1,0 +1,24 @@
+environments:
+  default:
+    values:
+    - domain: "bw.{{ .Values.shared.domain }}"
+
+---
+
+releases:
+- name: vaultwarden
+  namespace: passwordmanager
+  chart: k8s-at-home/vaultwarden
+  values:
+  - ../../ingress.yaml.gotmpl
+  - persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/vaultwarden
+        mountPath: /config
+  - env:
+      TZ: America/Toronto
+      YUBICO_CLIENT_ID: "{{ .Values.vaultwarden.yubico_client_id }}"
+      YUBICO_SECRET_KEY: "{{ .Values.vaultwarden.yubico_secret_key }}"
+      ADMIN_TOKEN: "{{ .Values.vaultwarden.admin_token }}"
