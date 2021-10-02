@@ -5,7 +5,7 @@ metadata:
   name: traefik-config
   namespace: admin
 data:
-  dynamic.yml:
+  dynamic.yml: |
     http:
       middlewares:
         basic:
