@@ -91,7 +91,7 @@ spec:
           host: ${authelia_smtp_server}
           port: 587
           sender: ${authelia_smtp_email}
-          username: ${smtp_email}
+          username: ${authelia_smtp_email}
 
     secret:
       jwt:
