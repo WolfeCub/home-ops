@@ -15,10 +15,6 @@ spec:
         name: k8s-at-home
         namespace: flux-system
       interval: 5m
-releases:
-- name: vaultwarden
-  namespace: passwordmanager
-  chart: k8s-at-home/vaultwarden
   values:
     ingress:
      main:
