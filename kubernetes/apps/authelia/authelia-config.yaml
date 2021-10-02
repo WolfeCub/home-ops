@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authelia-users
+data:
+  users_database.yml: |
+    users:
+      ${authelia_primary_username}:
+        password: "${authelia_primary_password_hash}"
+        displayname: "${authelia_primary_username}"
+        email: "${authelia_primary_email}"
+      ${authelia_secondary_username}:
+        password: "${authelia_secondary_password_hash}"
+        displayname: "${authelia_secondary_username}"
+        email: "${authelia_secondary_email}"
