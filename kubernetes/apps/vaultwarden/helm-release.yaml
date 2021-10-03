@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: vaultwarden
       version: 3.1.1
       sourceRef:
@@ -16,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: vaultwarden/server
+      tag: 1.22.2
     ingress:
      main:
        enabled: true

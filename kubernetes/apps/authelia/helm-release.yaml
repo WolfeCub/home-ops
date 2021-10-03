@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
       version: 0.5.7
       sourceRef:
@@ -17,7 +18,8 @@ spec:
       interval: 5m
   values:
     image:
-      registry: docker.io
+      repository: authelia/authelia
+      tag: 4.31.0
     pod:
       env:
       - name: TZ
