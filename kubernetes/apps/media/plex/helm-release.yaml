@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: plex
+      version: 6.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/plex
+      tag: v1.24.1.4931-1a38e63c6
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "plex.${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/plex/config
+      transcode:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/plex/transcode
+      media:
+        enabled: true
+        type: hostPath
+        hostPath: /storage
+        mountPath: /media
+    env:
+      TZ: America/Toronto
