@@ -21,13 +21,15 @@ spec:
       repository: ghcr.io/k8s-at-home/sonarr
       tag: v3.0.6.1265
     ingress:
-     main:
-       enabled: true
-       hosts:
-         - host: "sonarr.${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "sonarr.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true
