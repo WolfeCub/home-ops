@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://helm.traefik.io/traefik
       chart: traefik
       version: 10.3.6
       sourceRef:
@@ -16,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      name: traefik
+      tag: v2.5.3
     ingressRoute:
       dashboard:
         enabled: false 
