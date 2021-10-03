@@ -39,8 +39,8 @@ spec:
         mountPath: /data
     env:
       OPENVPN_PROVIDER: SURFSHARK
-      OPENVPN_USERNAME: "{{ .Values.vpn.surfshark_username }}"
-      OPENVPN_PASSWORD: "{{ .Values.vpn.surfshark_password }}"
+      OPENVPN_USERNAME: "${vpn_surfshark_username}"
+      OPENVPN_PASSWORD: "${vpn_surfshark_password}"
       OPENVPN_CONFIG: nl-ams_udp
       LOCAL_NETWORK: "10.43.0.0/16"
     securityContext:
