@@ -16,7 +16,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: haugene/transmission-openvpn
+      repository: docker.io/haugene/transmission-openvpn
       tage: 4.0
     ingress:
      main:
