@@ -5,7 +5,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "includePaths" ["kubernetes/**"],
+  "includePaths": ["kubernetes/**"],
   "helm-values": {
     "fileMatch": [
       "kubernetes/.+/helm-release\\.yaml$"
