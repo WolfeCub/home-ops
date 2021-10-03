@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   traefik:
-    image: traefik:v2.2.1
+    image: traefik:v2.5.3
     depends_on:
       - authelia
     volumes:
