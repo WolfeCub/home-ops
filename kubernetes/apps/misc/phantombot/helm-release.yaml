@@ -17,6 +17,7 @@ spec:
   values:
     image:
       repository: gmt2001/phantombot-stable
+      tag: latest
     ingress:
      main:
        enabled: true
