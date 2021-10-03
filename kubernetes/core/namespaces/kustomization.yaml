@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - admin.yaml
   - utils.yaml
+  - media.yaml
