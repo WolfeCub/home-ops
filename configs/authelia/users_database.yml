@@ -1,7 +1,0 @@
-users:
-  {{- range .Values.authelia.users }}
-  {{ .username }}:
-    password: "{{ .password_hash }}"
-    displayname: "{{ .username }}"
-    email: "{{ .email }}"
-  {{ end }}
