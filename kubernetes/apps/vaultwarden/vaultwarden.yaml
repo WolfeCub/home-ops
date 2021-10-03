@@ -32,6 +32,6 @@ spec:
         mountPath: /config
     env:
       TZ: America/Toronto
-      YUBICO_CLIENT_ID: "{{ .Values.vaultwarden.yubico_client_id }}"
-      YUBICO_SECRET_KEY: "{{ .Values.vaultwarden.yubico_secret_key }}"
-      ADMIN_TOKEN: "{{ .Values.vaultwarden.admin_token }}"
+      YUBICO_CLIENT_ID: "${vaultwarden_yubico_client_id}"
+      YUBICO_SECRET_KEY: "${vaultwarden_yubico_secret_key}"
+      ADMIN_TOKEN: "${vaultwarden_admin_token}"
