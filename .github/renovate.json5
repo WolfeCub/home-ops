@@ -6,6 +6,9 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "includePaths": ["kubernetes/**"],
+  "helmv3": {
+    "fileMatch": ["charts/.+/Chart\\.yaml$"]
+  },
   "helm-values": {
     "fileMatch": [
       "kubernetes/.+/helm-release\\.yaml$"
