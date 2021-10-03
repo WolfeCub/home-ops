@@ -8,7 +8,7 @@
   "includePaths": ["kubernetes/**"],
   "helm-values": {
     "fileMatch": [
-      "kubernetes/.+/helm-release\\.yaml$"
+      "kubernetes/.+\\.yaml$"
     ]
   },
   "kubernetes": {
