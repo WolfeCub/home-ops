@@ -17,6 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/wolfecub/blog
+      tag: latest
     ingress:
      main:
        enabled: true
