@@ -19,13 +19,15 @@ spec:
       repository: haugene/transmission-openvpn
       tag: "4.0"
     ingress:
-     main:
-       enabled: true
-       hosts:
-         - host: "transmission.${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "transmission.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     service:
       main:
         ports:

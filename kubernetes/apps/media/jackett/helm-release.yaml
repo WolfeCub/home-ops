@@ -21,13 +21,15 @@ spec:
       repository: ghcr.io/k8s-at-home/jackett
       tag: v0.18.791
     ingress:
-     main:
-       enabled: true
-       hosts:
-         - host: "jackett.${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "jackett.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true
