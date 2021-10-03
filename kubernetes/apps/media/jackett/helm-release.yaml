@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jackett
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: jackett
+      version: 11.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/jackett
+      tag: v0.18.791
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "jackett.${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/jackett
+        mountPath: /config
+    env:
+      TZ: America/Toronto

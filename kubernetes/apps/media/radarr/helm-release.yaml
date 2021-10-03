@@ -1,0 +1,48 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: radarr
+      version: 15.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/radarr
+      tag: v3.2.2.5080
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "radarr.${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/radarr
+        mountPath: /config
+      media:
+        enabled: true
+        type: hostPath
+        hostPath: /storage/Movies
+        mountPath: /movies
+      downloads:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/transmission/completed
+        mountPath: /downloads
+    env:
+      TZ: America/Toronto
