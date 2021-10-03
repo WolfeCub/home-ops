@@ -1,0 +1,45 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: phantombot
+  namespace: misc
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: gmt2001/phantombot-stable
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "phantombot.${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    service:
+      main:
+        ports:
+          http:
+            port: 25000
+    persistence:
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/phantombot
+        mountPath: /opt/PhantomBot_data
+    env:
+      PHANTOMBOT_PANELUSER: "${phantombot_web_username}"
+      PHANTOMBOT_PANELPASSWORD: "${phantombot_web_password}"
+      PHANTOMBOT_DISCORD_TOKEN: "${phantombot_discord_token}"
+      PHANTOMBOT_USER: "${phantombot_channel}bot"
+      PHANTOMBOT_CHANNEL: "${phantombot_channel}"
+      PHANTOMBOT_USEHTTPS: "false"

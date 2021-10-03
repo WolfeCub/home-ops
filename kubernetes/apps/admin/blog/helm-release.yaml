@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: blog
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/wolfecub/blog
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    service:
+      main:
+        ports:
+          http:
+            port: 80
