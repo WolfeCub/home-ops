@@ -5,3 +5,4 @@ resources:
   - utils.yaml
   - media.yaml
   - misc.yaml
+  - home.yaml
