@@ -3,16 +3,16 @@ kind: Secret
 metadata:
     name: github-pat
     namespace: flux-system
-data:
-    token: ENC[AES256_GCM,data:Vvdnv5whVCPMlMSzYszVGhm4AMDV9IvUI0kuGjczj1FC/Bp6yNNBfQ==,iv:AQgt8y7LkCoeBJXfCyCJgKpTDxpfCqD6rK+j0LkQSYo=,tag:kBym22dbwY//NKPvzdbeig==,type:str]
+stringData:
+    token: ENC[AES256_GCM,data:PoBARvmIbgvvBwHfC6Ai9d+xMdHT6MO71ccERF50Tbo0x0c+Hrim+w==,iv:hiER8Dr8RZHbOK042rNasuoCqPmgM415rALzgDL1GNU=,tag:cz9q1eZNh1+jS1XAzSzyYQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-04T19:48:47Z"
-    mac: ENC[AES256_GCM,data:rUddq+BUKENpzrwfwXzrMJvRuW1+VeV5H8IKsh9pCrkMeUnJcbXi8Pu1cQBlycTVy2cLwCqQ+O3wcaKY5HPEQdw4mDEkvQY2maMYx0TDGoHfvjTybrTgJ1ogi20vRvuDdwy2lKmQc+2TH2Vlhs6p6LtT8UGduCqu9kkN+NNrwpg=,iv:7ZwbF5CJCRy6ptT01aSMN/veeiVRqbMfu91PE5soTys=,tag:WoMn5KxO5B2JOtuSvTUQNg==,type:str]
+    lastmodified: "2021-10-04T19:53:11Z"
+    mac: ENC[AES256_GCM,data:xOkyGlxtttn0nzhW7zaLBfu8DdjUOEe3C8yO8/o1C+HyQhz8zO9QWFwPy1xcFvwu1q/4G3d01AmXRX4z15VeLk5fRkT6hPTpp+WzJbIr9qXAEkfd4Q0g+teMMypZaSwk2B8LSV+7ChjFOvsqPpSeyI1yAf3qlvFhYF1HIz2Iogo=,iv:F6rVupKaeGWfFmf6xlefZO6j9vJK4M7FwGfG58Ko3Wk=,tag:8zrE/5QxqX5pC0lj7In6vw==,type:str]
     pgp:
         - created_at: "2021-10-04T19:47:17Z"
           enc: |
