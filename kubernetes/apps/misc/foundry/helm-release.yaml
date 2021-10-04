@@ -16,7 +16,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: felddy/foundryvtt-docker
+      repository: felddy/foundryvtt
       tag: 0.8.9
     ingress:
      main:
