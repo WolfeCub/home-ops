@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: foundry
+  namespace: misc
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: felddy/foundryvtt-docker
+      tag: v0.8.9
+    ingress:
+     main:
+       enabled: true
+       hosts:
+         - host: "foundry.${domain}"
+           paths:
+             - path: /
+               pathType: Prefix
+    service:
+      main:
+        ports:
+          http:
+            port: 30000
+    persistence:
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /homelab/foundry
+        mountPath: /data
+    env:
+      CONTAINER_CACHE: /data/container_cache
