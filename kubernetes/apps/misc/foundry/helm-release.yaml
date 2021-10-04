@@ -39,3 +39,4 @@ spec:
         mountPath: /data
     env:
       CONTAINER_CACHE: /data/container_cache
+      FOUNDRY_ADMIN_KEY: ${foundry_admin_token}
