@@ -43,3 +43,20 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
         hosts: ["prometheus.${domain}"]
         paths: [/]
+
+    kubeControllerManager:
+      enabled: true
+      endpoints:
+        - ${docker_host_ip}
+    kubeScheduler:
+      enabled: true
+      endpoints:
+        - ${docker_host_ip}
+    kubeProxy:
+      enabled: true
+      endpoints:
+        - ${docker_host_ip}
+    kubeEtcd:
+      enabled: true
+      endpoints:
+        - ${docker_host_ip}
