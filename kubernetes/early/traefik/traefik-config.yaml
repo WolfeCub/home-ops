@@ -11,13 +11,13 @@ data:
         basic:
           basicAuth:
             users: ["${traefik_basic_auth_credentials_hash}"]
-    
+
         localOnly:
           ipWhiteList:
             sourceRange:
               - "${network_subnet}"
               - 10.42.0.1/24
-    
+
       routers:
         api:
           rule: "Host(`traefik.${domain}`)"

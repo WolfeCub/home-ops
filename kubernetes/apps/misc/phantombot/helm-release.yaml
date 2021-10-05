@@ -19,15 +19,15 @@ spec:
       repository: gmt2001/phantombot-stable
       tag: latest
     ingress:
-     main:
-       enabled: true
-       annotations:
-         traefik.ingress.kubernetes.io/router.middlewares: localOnly@file
-       hosts:
-         - host: "phantombot.${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: localOnly@file
+        hosts:
+          - host: "phantombot.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     service:
       main:
         ports:

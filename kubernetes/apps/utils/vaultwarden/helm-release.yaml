@@ -21,13 +21,13 @@ spec:
       repository: vaultwarden/server
       tag: 1.22.2
     ingress:
-     main:
-       enabled: true
-       hosts:
-         - host: "bw.${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        hosts:
+          - host: "bw.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true
