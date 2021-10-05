@@ -44,6 +44,8 @@ spec:
         hosts: ["prometheus.${domain}"]
         paths: [/]
 
+    kubeApiServer:
+      enabled: true
     kubeControllerManager:
       enabled: true
       endpoints:
