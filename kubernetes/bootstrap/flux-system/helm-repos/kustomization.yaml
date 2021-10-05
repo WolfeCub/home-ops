@@ -5,3 +5,4 @@ resources:
   - traefik.yaml
   - authelia.yaml
   - k8s-at-home.yaml
+  - prometheus-community.yaml
