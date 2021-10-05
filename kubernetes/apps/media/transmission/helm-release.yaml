@@ -45,6 +45,8 @@ spec:
       OPENVPN_PASSWORD: "${vpn_surfshark_password}"
       OPENVPN_CONFIG: nl-ams_udp
       LOCAL_NETWORK: "10.43.0.0/16"
+      PUID: 568
+      PGID: 568
     securityContext:
       capabilities:
         add:
