@@ -22,25 +22,25 @@ spec:
       tag: 4.31.0
     pod:
       env:
-      - name: TZ
-        value: America/Toronto
+        - name: TZ
+          value: America/Toronto
 
       extraVolumeMounts:
-      - name: authelia-users
-        mountPath: /config
-      - name: authelia-persist
-        mountPath: /data
+        - name: authelia-users
+          mountPath: /config
+        - name: authelia-persist
+          mountPath: /data
 
       extraVolumes:
-      - name: authelia-users
-        configMap:
-          name: authelia-users
-          items:
-            - key: users_database.yml
-              path: users_database.yml
-      - name: authelia-persist
-        hostPath:
-          path: /homelab/authelia
+        - name: authelia-users
+          configMap:
+            name: authelia-users
+            items:
+              - key: users_database.yml
+                path: users_database.yml
+        - name: authelia-persist
+          hostPath:
+            path: /homelab/authelia
 
     domain: "${domain}"
 
@@ -81,7 +81,7 @@ spec:
           enabled: false
 
       storage:
-        local: 
+        local:
           enabled: true
           path: /data/db.sqlite3
         postgres:

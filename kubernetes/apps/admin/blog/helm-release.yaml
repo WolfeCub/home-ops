@@ -19,13 +19,13 @@ spec:
       repository: ghcr.io/wolfecub/blog
       tag: latest
     ingress:
-     main:
-       enabled: true
-       hosts:
-         - host: "${domain}"
-           paths:
-             - path: /
-               pathType: Prefix
+      main:
+        enabled: true
+        hosts:
+          - host: "${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
     service:
       main:
         ports:
