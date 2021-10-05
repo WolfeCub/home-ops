@@ -22,28 +22,20 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
-        hosts:
-          - host: "alertmanager.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
+        hosts: ["alertmanager.${domain}"]
+        paths: [/]
+
     grafana:
       ingress:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
-        hosts:
-          - host: "grafana.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
+        hosts: ["grafana.${domain}"]
+        paths: [/]
     prometheus:
       ingress:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
-        hosts:
-          - host: "prometheus.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
+        hosts: ["prometheus.${domain}"]
+        paths: [/]
