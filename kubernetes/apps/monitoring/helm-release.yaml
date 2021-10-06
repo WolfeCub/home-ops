@@ -62,3 +62,7 @@ spec:
       enabled: true
       endpoints:
         - ${docker_host_ip}
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
