@@ -20,6 +20,7 @@ spec:
     image:
       repository: homeassistant/home-assistant
       tag: 2021.10.0
+    hostNetwork: true
     ingress:
       main:
         enabled: true
