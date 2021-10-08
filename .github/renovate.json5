@@ -19,7 +19,7 @@
       "kubernetes/.+\\.yaml$"
     ],
     "ignorePaths": [
-      "kubernetes/base/"
+      "kubernetes/bootstrap/"
     ],
   },
   "regexManagers": [
