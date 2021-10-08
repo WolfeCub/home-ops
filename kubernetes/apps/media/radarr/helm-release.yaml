@@ -36,15 +36,18 @@ spec:
         type: hostPath
         hostPath: /homelab/radarr
         mountPath: /config
-      media:
-        enabled: true
-        type: hostPath
-        hostPath: /storage/Movies
-        mountPath: /movies
       downloads:
         enabled: true
         type: hostPath
         hostPath: /homelab/transmission/completed
         mountPath: /downloads
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/Movies
+        mountPath: /movies
     env:
       TZ: America/Toronto

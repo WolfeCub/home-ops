@@ -36,15 +36,18 @@ spec:
         type: hostPath
         hostPath: /homelab/sonarr
         mountPath: /config
-      media:
-        enabled: true
-        type: hostPath
-        hostPath: /storage/TV-shows
-        mountPath: /tv
       downloads:
         enabled: true
         type: hostPath
         hostPath: /homelab/transmission/completed
         mountPath: /downloads
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/TV-shows
+        mountPath: /tv
     env:
       TZ: America/Toronto

@@ -38,7 +38,10 @@ spec:
         mountPath: /config
       media:
         enabled: true
-        type: hostPath
-        hostPath: /storage
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/
     env:
       TZ: America/Toronto
