@@ -59,6 +59,27 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
         hosts: ["grafana.${domain}"]
         paths: [/]
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: "default"
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          flux-cluster:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+            datasource: Prometheus
+          flux-control-plane:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+            datasource: Prometheus
+
     prometheus:
       ingress:
         enabled: true
