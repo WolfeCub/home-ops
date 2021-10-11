@@ -51,7 +51,7 @@ spec:
     grafana:
       image:
         repository: ghcr.io/k8s-at-home/grafana
-        tag: v8.2.0
+        tag: v8.2.1
       adminPassword: "${grafana_admin_password}"
       ingress:
         enabled: true
