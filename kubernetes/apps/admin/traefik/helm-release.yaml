@@ -29,36 +29,12 @@ spec:
       websecure:
         tls:
           enabled: true
-          certResolver: "leCertResolver"
-          domains:
-            - main: "${domain}"
-              sans:
-                - "*.${domain}"
 
     additionalArguments:
       - "--providers.file.filename=/etc/traefik/dynamic.yml"
       - "--providers.file.watch=true"
-      - "--certificatesresolvers.leCertResolver.acme.email=${email}"
-      - "--certificatesresolvers.leCertResolver.acme.storage=/certs/acme.json"
-      - "--certificatesresolvers.leCertResolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.leCertResolver.acme.dnschallenge.provider=cloudflare"
-      - "--certificatesresolvers.leCertResolver.acme.dnschallenge.delayBeforeCheck=10"
 
     volumes:
       - name: traefik-config
         mountPath: /etc/traefik
         type: configMap
-
-    additionalVolumeMounts:
-      - name: traefik-certs
-        mountPath: /certs
-
-    deployment:
-      additionalVolumes:
-        - name: traefik-certs
-          hostPath:
-            path: /homelab/traefik
-
-    env:
-      - name: CF_DNS_API_TOKEN
-        value: "${traefik_cf_dns_api_token}"
