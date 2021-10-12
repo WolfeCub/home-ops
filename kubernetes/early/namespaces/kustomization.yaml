@@ -8,3 +8,4 @@ resources:
   - misc.yaml
   - home.yaml
   - monitoring.yaml
+  - cert-manager.yaml

@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${domain/./-}"
+  namespace: admin
+spec:
+  secretName: "${domain/./-}-tls"
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: "${domain}"
+  dnsNames:
+    - "${domain}"
+    - "*.${domain}"
