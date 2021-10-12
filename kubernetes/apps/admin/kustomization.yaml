@@ -5,3 +5,4 @@ resources:
   - authelia
   - blog
   - flux-notifications
+  - traefik
