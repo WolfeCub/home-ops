@@ -14,5 +14,5 @@ spec:
           cloudflare:
             email: "${email}"
             apiKeySecretRef:
-              name: cluster-secrets
-              key: traefik_cf_dns_api_token
+              name: cloudflare-token-secret
+              key: cloudflare-token
