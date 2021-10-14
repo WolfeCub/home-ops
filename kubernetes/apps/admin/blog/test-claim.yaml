@@ -5,7 +5,7 @@ metadata:
   name: test-claim
   namespace: admin
 spec:
-  storageClassName: managed-nfs-storage
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteMany
   resources:
