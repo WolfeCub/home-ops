@@ -20,3 +20,4 @@ spec:
     nfs:
       server: ${storage_host_ip}
       path: /raid/k8s_provisioner
+      mountOptions: "nfsvers=4"
