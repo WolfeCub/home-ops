@@ -9,3 +9,4 @@ resources:
   - home.yaml
   - monitoring.yaml
   - cert-manager.yaml
+  - rook-ceph.yaml
