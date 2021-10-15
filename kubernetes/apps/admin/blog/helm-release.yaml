@@ -6,6 +6,8 @@ metadata:
   namespace: admin
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       chart: /charts/kah-common/
