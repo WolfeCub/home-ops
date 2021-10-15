@@ -7,4 +7,3 @@ resources:
   - k8s-at-home.yaml
   - prometheus-community.yaml
   - jetstack.yaml
-  - nfs-subdir-external-provisioner.yaml

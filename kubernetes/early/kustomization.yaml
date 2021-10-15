@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - namespaces
   - cert-manager
-  - nfs-subdir-external-provisioner
