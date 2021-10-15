@@ -31,9 +31,3 @@ spec:
         ports:
           http:
             port: 80
-
-    persistence:
-      something:
-        enabled: true
-        existingClaim: test-claim
-        mountPath: /testing

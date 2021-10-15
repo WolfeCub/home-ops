@@ -9,4 +9,3 @@ resources:
   - home.yaml
   - monitoring.yaml
   - cert-manager.yaml
-  - nfs-subdir-external-provisioner.yaml
