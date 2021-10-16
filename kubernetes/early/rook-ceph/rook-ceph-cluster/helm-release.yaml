@@ -30,13 +30,13 @@ spec:
       mon:
         allowMultiplePerNode: true # Just for setup
 
-    removeOSDsIfOutAndSafeToRemove: false
-    storage:
-      useAllNodes: false
-      useAllDevices: false
-      config:
-        osdsPerDevice: "1"
-      nodes:
-        - name: screwdriver
-          devices:
-            - name: /dev/disk/by-partuuid/50787ca4-b3f2-4c43-9f3f-8c499cb170d3
+      removeOSDsIfOutAndSafeToRemove: false
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: screwdriver
+            devices:
+              - name: /dev/disk/by-partuuid/50787ca4-b3f2-4c43-9f3f-8c499cb170d3
