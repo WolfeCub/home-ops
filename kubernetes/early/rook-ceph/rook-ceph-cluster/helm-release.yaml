@@ -1,0 +1,42 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.rook.io/release/
+      chart: rook-ceph-cluster
+      version: v1.7.5
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+        namespace: flux-system
+      interval: 5m
+  values:
+    ingress:
+      dashboard:
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
+        host:
+          name: "ceph.${domain}"
+
+    cephClusterSpec:
+      mon:
+        allowMultiplePerNode: true # Just for setup
+
+    removeOSDsIfOutAndSafeToRemove: false
+    storage:
+      useAllNodes: false
+      useAllDevices: false
+      config:
+        osdsPerDevice: "1"
+      nodes:
+        - name: screwdriver
+          devices:
+            - name: /dev/sda3
