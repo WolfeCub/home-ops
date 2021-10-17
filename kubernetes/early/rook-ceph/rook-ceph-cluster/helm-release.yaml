@@ -27,10 +27,14 @@ spec:
           name: "ceph.${domain}"
 
     cephClusterSpec:
+      removeOSDsIfOutAndSafeToRemove: false
+
       mon:
         allowMultiplePerNode: true # Just for setup
 
-      removeOSDsIfOutAndSafeToRemove: false
+      dashboard:
+        enabled: true
+
       storage:
         useAllNodes: false
         useAllDevices: false
