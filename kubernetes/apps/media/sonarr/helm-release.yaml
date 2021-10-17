@@ -36,6 +36,9 @@ spec:
         type: hostPath
         hostPath: /homelab/sonarr
         mountPath: /config
+      testing:
+        enabled: true
+        existingClaim: sonarr-config
       downloads:
         enabled: true
         type: hostPath
