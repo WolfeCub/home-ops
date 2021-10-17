@@ -10,3 +10,4 @@ resources:
   - monitoring.yaml
   - cert-manager.yaml
   - rook-ceph.yaml
+  - longhorn-system.yaml

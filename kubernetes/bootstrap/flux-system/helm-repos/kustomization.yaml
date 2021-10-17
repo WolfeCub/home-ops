@@ -8,3 +8,4 @@ resources:
   - prometheus-community.yaml
   - jetstack.yaml
   - rook-ceph.yaml
+  - longhorn.yaml
