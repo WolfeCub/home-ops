@@ -52,5 +52,7 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/TV-shows
         mountPath: /tv
+    podSecurityContext:
+      fsGroup: 568
     env:
       TZ: America/Toronto
