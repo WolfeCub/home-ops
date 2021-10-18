@@ -30,3 +30,4 @@ spec:
 
     defaultSettings:
       backupTarget: s3://longhorn-backups@us-east-1/
+      backupTargetCredentialSecret: minio-credentials
