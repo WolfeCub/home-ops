@@ -29,4 +29,4 @@ spec:
       reclaimPolicy: Retain
 
     defaultSettings:
-      backupTarget: nfs://${storage_host_ip}:/raid/longhorn
+      backupTarget: s3://longhorn-backups@us-east-1/
