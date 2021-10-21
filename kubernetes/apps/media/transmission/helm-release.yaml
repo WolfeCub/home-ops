@@ -46,7 +46,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${storage_host_ip}"
-            path: /raid/network_share/k8s-shared/torrents/completed
+            path: /raid/k8s-shared/torrents/completed
         mountPath: /data/completed
       downloads-incomplete:
         enabled: true
@@ -54,7 +54,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${storage_host_ip}"
-            path: /raid/network_share/k8s-shared/torrents/incomplete
+            path: /raid/k8s-shared/torrents/incomplete
         mountPath: /data/incomplete
     podSecurityContext:
       fsGroup: 568
