@@ -23,6 +23,7 @@ spec:
       repository: authelia/authelia
       tag: 4.32.2
     pod:
+      kind: Deployment
       env:
         - name: TZ
           value: America/Toronto
