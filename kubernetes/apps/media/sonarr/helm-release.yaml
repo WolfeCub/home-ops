@@ -38,9 +38,11 @@ spec:
         existingClaim: sonarr-config
       downloads:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/transmission/completed
-        mountPath: /downloads
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/k8s-shared/torrents/completed
       media:
         enabled: true
         type: custom
