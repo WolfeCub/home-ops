@@ -6,6 +6,8 @@ metadata:
   namespace: media
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       chart: /charts/kah-common/
@@ -34,11 +36,28 @@ spec:
           http:
             port: 9091
     persistence:
-      data:
+      config:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/transmission
-        mountPath: /data
+        existingClaim: transmission-config
+        mountPath: /data/transmission-home
+      downloads-complete:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/k8s-shared/torrents/completed
+        mountPath: /data/completed
+      downloads-incomplete:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/k8s-shared/torrents/incomplete
+        mountPath: /data/incomplete
+    podSecurityContext:
+      fsGroup: 568
     env:
       OPENVPN_PROVIDER: SURFSHARK
       OPENVPN_USERNAME: "${vpn_surfshark_username}"
