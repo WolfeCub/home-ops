@@ -6,6 +6,8 @@ metadata:
   namespace: misc
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       chart: /charts/kah-common/
@@ -36,9 +38,10 @@ spec:
     persistence:
       data:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/phantombot
+        existingClaim: phantombot-config
         mountPath: /opt/PhantomBot_data
+    podSecurityContext:
+      fsGroup: 568
     env:
       PHANTOMBOT_PANELUSER: "${phantombot_web_username}"
       PHANTOMBOT_PANELPASSWORD: "${phantombot_web_password}"
