@@ -6,6 +6,8 @@ metadata:
   namespace: misc
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       chart: /charts/kah-common/
@@ -34,9 +36,9 @@ spec:
     persistence:
       data:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/foundry
-        mountPath: /data
+        existingClaim: foundry-config
+    podSecurityContext:
+      fsGroup: 568
     env:
       CONTAINER_CACHE: /data/container_cache
       FOUNDRY_ADMIN_KEY: ${foundry_admin_token}
