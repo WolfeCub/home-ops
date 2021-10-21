@@ -6,6 +6,8 @@ metadata:
   namespace: media
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -31,12 +33,11 @@ spec:
     persistence:
       config:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/plex/config
+        existingClaim: plex-config
       transcode:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/plex/transcode
+        type: emptyDir
+        medium: Memory
       media:
         enabled: true
         type: custom
@@ -45,5 +46,7 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/
         mountPath: /media
+    podSecurityContext:
+      fsGroup: 568
     env:
       TZ: America/Toronto
