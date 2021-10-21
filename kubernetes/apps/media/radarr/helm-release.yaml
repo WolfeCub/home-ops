@@ -6,6 +6,8 @@ metadata:
   namespace: media
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -33,9 +35,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/radarr
-        mountPath: /config
+        existingClaim: radarr-config
       downloads:
         enabled: true
         type: hostPath
@@ -49,5 +49,7 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/Movies
         mountPath: /movies
+    podSecurityContext:
+      fsGroup: 568
     env:
       TZ: America/Toronto
