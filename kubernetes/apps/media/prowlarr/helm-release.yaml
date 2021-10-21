@@ -6,6 +6,8 @@ metadata:
   namespace: media
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -33,8 +35,8 @@ spec:
     persistence:
       config:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/prowlarr
-        mountPath: /config
+        existingClaim: prowlarr-config
+    podSecurityContext:
+      fsGroup: 568
     env:
       TZ: America/Toronto
