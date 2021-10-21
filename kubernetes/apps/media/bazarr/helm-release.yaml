@@ -6,6 +6,8 @@ metadata:
   namespace: media
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -33,9 +35,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: hostPath
-        hostPath: /homelab/bazarr
-        mountPath: /config
+        existingClaim: bazarr-config
       media:
         enabled: true
         type: custom
@@ -43,5 +43,7 @@ spec:
           nfs:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/
+    podSecurityContext:
+      fsGroup: 568
     env:
       TZ: America/Toronto
