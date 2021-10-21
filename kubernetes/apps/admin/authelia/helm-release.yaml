@@ -6,6 +6,8 @@ metadata:
   namespace: admin
 spec:
   interval: 5m
+  upgrade:
+    force: true
   chart:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
@@ -39,8 +41,12 @@ spec:
               - key: users_database.yml
                 path: users_database.yml
         - name: authelia-persist
-          hostPath:
-            path: /homelab/authelia
+          persistentVolumeClaim:
+            claimName: authelia-data
+
+      securityContext:
+        container:
+          fsGroup: 568
 
     domain: "${domain}"
 
