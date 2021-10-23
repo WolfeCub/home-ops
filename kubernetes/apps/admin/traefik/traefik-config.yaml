@@ -16,7 +16,7 @@ data:
           ipWhiteList:
             sourceRange:
               - "${network_subnet}"
-              - 10.42.0.1/24
+              - 10.42.0.1/16
 
       routers:
         api:
