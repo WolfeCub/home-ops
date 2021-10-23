@@ -17,6 +17,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    # Without the explicit hostname foundry will ask for the licence agreement every time
+    hostname: foundry-container
     image:
       repository: felddy/foundryvtt
       tag: 0.8.9
@@ -42,3 +44,4 @@ spec:
     env:
       CONTAINER_CACHE: /data/container_cache
       FOUNDRY_ADMIN_KEY: ${foundry_admin_token}
+      FOUNDRY_WORLD: twbtw
