@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: mbentley/omada-controller
-      tag: "4.3"
+      tag: "4.4"
     service:
       main:
         ports:
