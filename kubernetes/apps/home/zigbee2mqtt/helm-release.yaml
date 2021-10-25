@@ -22,7 +22,6 @@ spec:
     image:
       repository: koenkk/zigbee2mqtt
       tag: 1.19.1
-    hostNetwork: true
     ingress:
       main:
         enabled: true
@@ -37,14 +36,11 @@ spec:
         enabled: true
         existingClaim: zigbee2mqtt-data
 
-    additionalVolumeMounts:
-      - name: usb
+      usb:
+        enabled: false
+        type: hostPath
+        hostPath: /dev/ttyACM0
         mountPath: /dev/ttyACM0
-
-    additionalVolumes:
-      - name: usb
-        hostPath:
-          path: /dev/ttyACM0
 
     affinity:
       nodeAffinity:
