@@ -57,6 +57,9 @@ spec:
 
     config:
       homeassistant: true
+      permit_join: false
+      mqtt:
+        server: "mqtt://mosquitto"
       serial:
         port: /dev/ttyACM0
 
