@@ -9,3 +9,4 @@ resources:
   - jetstack.yaml
   - rook-ceph.yaml
   - longhorn.yaml
+  - grafana.yaml
