@@ -31,9 +31,9 @@ fi
 
 if [[ "$REPLY" =~ ^[Yy]$ ]]; then
   echo "Installing with cluster init" 
-  curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik --cluster-init" K3S_TOKEN="$K3S_READ_TOKEN" sh -
+  curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-flannel --disable traefik --cluster-init" K3S_TOKEN="$K3S_READ_TOKEN" sh -
 else
-  curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik" K3S_TOKEN="$K3S_READ_TOKEN" sh -s - server --server "https://192.168.0.250:6443"
+  curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-flannel --disable traefik" K3S_TOKEN="$K3S_READ_TOKEN" sh -s - server --server "https://192.168.0.210:6443"
 fi
 
 if [[ "$REPLY" =~ ^[Nn]$ ]]; then
