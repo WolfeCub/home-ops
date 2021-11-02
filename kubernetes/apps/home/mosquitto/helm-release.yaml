@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: eclipse-mosquitto
-      tag: 2.0.12
+      tag: 2.0.13
     hostNetwork: true
     env:
       TZ: America/Toronto
