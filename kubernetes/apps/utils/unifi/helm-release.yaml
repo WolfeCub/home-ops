@@ -22,16 +22,17 @@ spec:
     image:
       repository: jacobalberty/unifi
       tag: v6.2.26
-    ingress:
-      main:
-        enabled: true
-        hosts:
-          - host: "unifi.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
+    hostNetwork: true
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     hosts:
+    #       - host: "unifi.${domain}"
+    #         paths:
+    #           - path: /
+    #             pathType: Prefix
     persistence:
-      config:
+      data:
         enabled: true
         existingClaim: unifi-config
     podSecurityContext:
