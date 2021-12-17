@@ -78,9 +78,25 @@ spec:
       access_control:
         default_policy: deny
         rules:
+          - domain: "sonarr.${domain}"
+            policy: bypass
+            resources:
+              - '^/api.*$'
+
+          - domain: "radarr.${domain}"
+            policy: bypass
+            resources:
+              - '^/api.*$'
+
+          - domain: "bazarr.${domain}"
+            policy: bypass
+            resources:
+              - '^/api.*$'
+
           ## Rules applied to everyone
           - domain: "*.${domain}"
             policy: two_factor
+
 
       session:
         domain: "${domain}"
