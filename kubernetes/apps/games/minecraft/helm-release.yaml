@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: minecraft
+  namespace: games
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: itzg/minecraft-server
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: "minecraft.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+    service:
+      main:
+        ports:
+          http:
+            port: 25565
+            protocol: TCP
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: minecraft-config
+    podSecurityContext:
+      fsGroup: 568
+    env:
+      TYPE: 'FORGE'
+      VERSION: '1.18.1'
+      EULA: 'TRUE'
