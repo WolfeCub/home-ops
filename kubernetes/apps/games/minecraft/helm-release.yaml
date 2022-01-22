@@ -20,20 +20,24 @@ spec:
     image:
       repository: itzg/minecraft-server
       tag: latest
-    ingress:
-      main:
-        enabled: true
-        hosts:
-          - host: "minecraft.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
+
+    hostNetwork: true
     service:
       main:
         ports:
           http:
             port: 25565
             protocol: TCP
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - docker01
 
     persistence:
       data:
