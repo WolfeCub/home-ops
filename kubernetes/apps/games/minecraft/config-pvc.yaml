@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: minecraft-config
-  namespace: utils
+  namespace: games
 spec:
   accessModes:
     - ReadWriteOnce
