@@ -57,7 +57,7 @@ spec:
         ingress:
           enabled: true
           hosts:
-            - host: "code.hass.${domain}"
+            - host: "confighass.${domain}"
               paths:
                 - path: /
                   pathType: Prefix
