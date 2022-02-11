@@ -26,6 +26,8 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
         hosts:
           - host: "hass.${domain}"
             paths:
