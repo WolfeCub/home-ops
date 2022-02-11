@@ -39,3 +39,28 @@ spec:
       fsGroup: 568
     env:
       TZ: America/Toronto
+
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: codercom/code-server
+          tag: 3.9.0
+        workingDir: "/config"
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+        ingress:
+          enabled: true
+          hosts:
+            - host: "code.hass.${domain}"
+              paths:
+                - path: /
+                  pathType: Prefix
+        volumeMounts:
+          - name: config
+            mountPath: /config
