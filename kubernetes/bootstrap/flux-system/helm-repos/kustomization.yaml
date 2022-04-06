@@ -10,3 +10,4 @@ resources:
   - rook-ceph.yaml
   - longhorn.yaml
   - grafana.yaml
+  - dashboard.yaml
