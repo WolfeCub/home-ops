@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: jacobalberty/unifi
-      tag: v6.5.55
+      tag: v7.0.25
     hostNetwork: true
     # ingress:
     #   main:
