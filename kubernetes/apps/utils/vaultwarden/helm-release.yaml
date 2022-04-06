@@ -10,7 +10,6 @@ spec:
     force: true
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: vaultwarden
       version: 4.0.0
       sourceRef:

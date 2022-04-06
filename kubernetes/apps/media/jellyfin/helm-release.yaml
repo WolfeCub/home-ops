@@ -10,7 +10,6 @@ spec:
     force: true
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: jellyfin
       version: 9.3.0
       sourceRef:
