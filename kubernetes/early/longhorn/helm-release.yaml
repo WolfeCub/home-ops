@@ -10,7 +10,6 @@ spec:
     force: true
   chart:
     spec:
-      # renovate: registryUrl=https://charts.longhorn.io
       chart: longhorn
       version: 1.2.3
       sourceRef:

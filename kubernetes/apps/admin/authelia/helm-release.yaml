@@ -10,7 +10,6 @@ spec:
     force: true
   chart:
     spec:
-      # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
       version: 0.7.6
       sourceRef:
