@@ -23,6 +23,10 @@ spec:
       tag: v2.5.1
 
     protocolHttp: true
+    service:
+      type: ClusterIP
+      externalPort: 80
+
     ingress:
       enabled: true
       hosts:
