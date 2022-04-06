@@ -27,6 +27,9 @@ spec:
       type: ClusterIP
       externalPort: 80
 
+    extraArgs:
+      - --enable-insecure-login
+
     ingress:
       enabled: true
       hosts:
