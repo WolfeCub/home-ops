@@ -10,10 +10,11 @@ spec:
     force: true
   chart:
     spec:
-      chart: /charts/kah-common/
+      chart: kah-common-chart
+      version: 1.1.2
       sourceRef:
-        kind: GitRepository
-        name: flux-system
+        kind: HelmRepository
+        name: k8s-at-home
         namespace: flux-system
       interval: 5m
   values:
