@@ -40,3 +40,7 @@ spec:
       - name: traefik-config
         mountPath: /etc/traefik
         type: configMap
+
+    service:
+      spec:
+        externalTrafficPolicy: Local
