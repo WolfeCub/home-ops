@@ -28,6 +28,7 @@ spec:
       externalPort: 80
 
     extraArgs:
+      - --enable-skip-login
       - --enable-insecure-login
 
     ingress:
