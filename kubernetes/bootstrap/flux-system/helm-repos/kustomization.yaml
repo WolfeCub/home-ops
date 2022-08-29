@@ -11,3 +11,4 @@ resources:
   - longhorn.yaml
   - grafana.yaml
   - dashboard.yaml
+  - bjw-s.yaml
