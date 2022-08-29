@@ -25,7 +25,7 @@ spec:
       main:
         enabled: true
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file"
         hosts:
           - host: "netboot.${domain}"
             paths:
@@ -36,7 +36,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: netbootxyz-http-assets
+                  name: netbootxyz-assets
                   port: 80
 
     service:
@@ -44,7 +44,7 @@ spec:
         ports:
           http:
             port: 3000
-      http-assets:
+      assets:
         enabled: true
         primary: false
         type: ClusterIP
@@ -54,6 +54,16 @@ spec:
             primary: false
             protocol: HTTP
             port: 80
+      tftp:
+        enabled: true
+        primary: false
+        type: NodePort
+        ports:
+          udf-tftp:
+            enabled: true
+            primary: false
+            protocol: UDP
+            port: 69
 
     persistence:
       config:
