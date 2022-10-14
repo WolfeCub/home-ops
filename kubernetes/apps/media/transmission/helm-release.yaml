@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: haugene/transmission-openvpn
-      tag: "4.0"
+      tag: dev
     ingress:
       main:
         enabled: true
@@ -63,7 +63,7 @@ spec:
       OPENVPN_PROVIDER: SURFSHARK
       OPENVPN_USERNAME: "${vpn_surfshark_username}"
       OPENVPN_PASSWORD: "${vpn_surfshark_password}"
-      OPENVPN_CONFIG: nl-ams_udp
+      OPENVPN_CONFIG: lu-ste.prod.surfshark.com_udp
       LOCAL_NETWORK: "10.42.0.0/16,10.43.0.0/16,192.168.0.0/24"
       PUID: 568
       PGID: 568
