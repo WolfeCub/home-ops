@@ -66,6 +66,12 @@ spec:
       totp:
         issuer: "${domain}"
 
+      duo_api:
+        enabled: true
+        hostname: ${authelia_duo_hostname}
+        integration_key: ${authelia_duo_integration_key}
+        enable_self_enrollment: false
+
       authentication_backend:
         disable_password_reset: true
         ldap:
@@ -122,3 +128,5 @@ spec:
         value: ${authelia_jwt_secret}
       smtp:
         value: ${authelia_smtp_password}
+      duo:
+        value: ${authelia_duo_secret_key}
