@@ -44,6 +44,7 @@ spec:
     podSecurityContext:
       fsGroup: 568
     env:
+      DATA_FOLDER: "config"
       TZ: America/Toronto
       YUBICO_CLIENT_ID: "${vaultwarden_yubico_client_id}"
       YUBICO_SECRET_KEY: "${vaultwarden_yubico_secret_key}"
