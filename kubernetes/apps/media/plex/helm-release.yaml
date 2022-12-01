@@ -10,17 +10,17 @@ spec:
     force: true
   chart:
     spec:
-      chart: plex
-      version: 6.3.3
+      chart: app-template
+      version: 1.1.3
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/plex
-      tag: v1.24.1.4931-1a38e63c6
+      repository: ghcr.io/onedr0p/plex
+      tag: 1.29.2.6364-6d72b0cf6
     ingress:
       main:
         enabled: true
@@ -29,6 +29,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    service:
+      main:
+        primary: true
+        ports:
+          http:
+            port: 32400
     persistence:
       config:
         enabled: true
