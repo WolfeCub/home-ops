@@ -10,11 +10,11 @@ spec:
     force: true
   chart:
     spec:
-      chart: vaultwarden
-      version: 4.2.3
+      chart: app-template
+      version: 1.1.3
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
       interval: 5m
   values:
@@ -29,6 +29,14 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+          websocket:
+            enabled: true
+            port: 3012
     persistence:
       config:
         enabled: true
