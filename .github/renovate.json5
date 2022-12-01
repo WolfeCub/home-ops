@@ -99,6 +99,8 @@
       "matchPackagePatterns": [
         "*"
       ],
+      // Home assistant uses YEAR.MONTH.DAY versioning so it doesn't make sense to treat it as sementic
+      "excludePackageNames": ["homeassistant/home-assistant"],
       "matchUpdateTypes": [
         "minor",
         "patch"
