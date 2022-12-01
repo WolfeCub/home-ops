@@ -7,3 +7,4 @@ resources:
   - flux-notifications
   - traefik
   - dashboard
+  - ww-gitops

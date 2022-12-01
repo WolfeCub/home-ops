@@ -12,3 +12,4 @@ resources:
   - grafana.yaml
   - dashboard.yaml
   - bjw-s.yaml
+  - ww-gitops.yaml
