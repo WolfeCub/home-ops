@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: zigbee2mqtt
-      version: 9.2.0
+      version: 9.4.2
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: koenkk/zigbee2mqtt
-      tag: 1.25.0
+      tag: 1.28.4
     ingress:
       main:
         enabled: true
