@@ -22,7 +22,7 @@ spec:
     hostname: foundry-container
     image:
       repository: felddy/foundryvtt
-      tag: "9.280"
+      tag: "10.291"
     ingress:
       main:
         enabled: true
