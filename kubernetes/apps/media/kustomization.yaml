@@ -8,5 +8,5 @@ resources:
   - sonarr
   - transmission
   - prowlarr
+  - jellyfin
   # - readarr
-  # - jellyfin
