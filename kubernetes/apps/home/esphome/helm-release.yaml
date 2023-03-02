@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: esphome/esphome
-      tag: 2022.11.4
+      tag: 2023.2.4
     ingress:
       main:
         enabled: true
