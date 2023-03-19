@@ -32,3 +32,6 @@ spec:
       backupTargetCredentialSecret: minio-credentials
 
     enablePSP: true
+
+    csi:
+      kubeletRootDir: /var/lib/kubelet
