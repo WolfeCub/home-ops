@@ -46,4 +46,4 @@ spec:
       CONTAINER_CACHE: /data/container_cache
       FOUNDRY_ADMIN_KEY: ${foundry_admin_token}
       FOUNDRY_WORLD: twbtw
-      FOUNDRY_VERSION: 9.269
+      FOUNDRY_VERSION: 10.291
