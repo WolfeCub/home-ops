@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - traefik
   - cert-manager
-  - kube-prometheus-stack
