@@ -95,21 +95,5 @@
       "matchUpdateTypes": ["patch"],
       "labels": ["renovate/helm", "dep/patch"]
     },
-    {
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "excludePackageNames": [
-        // Home assistant uses YEAR.MONTH.DAY versioning so it doesn't make sense to treat it as sementic
-        "homeassistant/home-assistant",
-        "fluxcd/flux2"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
-    }
   ]
 }
