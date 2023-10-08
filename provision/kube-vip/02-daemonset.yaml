@@ -1,11 +1,10 @@
----
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/name: kube-vip-ds
-    app.kubernetes.io/version: v0.5.7
+    app.kubernetes.io/version: v0.6.3
   name: kube-vip-ds
   namespace: kube-system
 spec:
@@ -17,7 +16,7 @@ spec:
       creationTimestamp: null
       labels:
         app.kubernetes.io/name: kube-vip-ds
-        app.kubernetes.io/version: v0.5.7
+        app.kubernetes.io/version: v0.6.3
     spec:
       affinity:
         nodeAffinity:
@@ -43,8 +42,12 @@ spec:
           value: "32"
         - name: svc_enable
           value: "true"
+        - name: svc_leasename
+          value: plndr-svcs-lock
         - name: vip_leaderelection
           value: "true"
+        - name: vip_leasename
+          value: plndr-cp-lock
         - name: vip_leaseduration
           value: "5"
         - name: vip_renewdeadline
@@ -55,7 +58,7 @@ spec:
           value: 192.168.0.220
         - name: prometheus_server
           value: :2112
-        image: ghcr.io/kube-vip/kube-vip:v0.5.7
+        image: ghcr.io/kube-vip/kube-vip:v0.6.3
         imagePullPolicy: Always
         name: kube-vip
         resources: {}
