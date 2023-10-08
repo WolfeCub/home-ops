@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - admin
   - utils
+  - home
 # - media
 # - misc
-# - home
 # - games
