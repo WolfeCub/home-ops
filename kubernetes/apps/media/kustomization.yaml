@@ -7,6 +7,6 @@ resources:
   - radarr
   - sonarr
   - transmission
-  - jellyfin
-  # - prowlarr
+  - prowlarr
+  # - jellyfin
   # - readarr
