@@ -1,7 +1,7 @@
 <p align="center">
-    <a id="image1" href="#image1"><img alt="k3s" src="https://cncf-branding.netlify.app/img/projects/k3s/icon/color/k3s-icon-color.png" height="100"></a>
-    <a id="image2" href="#image2"><img alt="flux" src="https://cncf-branding.netlify.app/img/projects/flux/icon/color/flux-icon-color.png" height="100"></a>
-    <a id="image3" href="#image3"><img alt="longhorn" src="https://cncf-branding.netlify.app/img/projects/longhorn/icon/color/longhorn-icon-color.png" height="100"></a>
+    <a id="image1" href="#image1"><img alt="k3s" src="https://raw.githubusercontent.com/cncf/artwork/master/projects/k3s/icon/color/k3s-icon-color.png" height="100"></a>
+    <a id="image2" href="#image2"><img alt="flux" src="https://avatars.githubusercontent.com/u/52158677?s=280&v=4" height="100"></a>
+    <a id="image3" href="#image3"><img alt="longhorn" src="https://raw.githubusercontent.com/cncf/artwork/master/projects/longhorn/icon/color/longhorn-icon-color.png" height="100"></a>
     <a id="image4" href="#image4"><img alt="calico" src="https://www.tigera.io/app/uploads/2021/06/Calico-logo-badge.svg" height="100"></a>
     <a id="image5" href="#image5"><img alt="kube-vip" src="https://kube-vip.io/images/kube-vip.png" height="100"></a>
     <a id="image6" href="#image6"><img alt="traefik" src="https://seeklogo.com/images/T/traefik-logo-337D318F44-seeklogo.com.png" height="100"></a>
