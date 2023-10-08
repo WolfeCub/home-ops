@@ -33,3 +33,6 @@ spec:
 
     csi:
       kubeletRootDir: /var/lib/kubelet
+
+    longhornUI:
+      replicas: 1
