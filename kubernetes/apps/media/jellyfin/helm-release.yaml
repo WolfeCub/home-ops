@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/jellyfin
-      tag: 10.8.9
+      tag: 10.8.11
     ingress:
       main:
         enabled: true
