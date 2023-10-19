@@ -6,5 +6,5 @@ resources:
   - utils
   - home
   - media
-# - misc
+  - misc
 # - games
