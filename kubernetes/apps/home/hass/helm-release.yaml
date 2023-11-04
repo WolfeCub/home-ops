@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: homeassistant/home-assistant
-      tag: 2023.10.1
+      tag: 2023.11.1
     hostNetwork: true
     ingress:
       main:
