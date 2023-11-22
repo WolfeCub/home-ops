@@ -64,6 +64,12 @@
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
       "matchUpdateTypes": ["major", "minor", "patch"],
     },
+    {
+        "description": "Loose versioning for non-semver packages",
+        "matchDatasources": ["docker"],
+        "versioning": "loose",
+        "matchPackagePatterns": ["plex"]
+    },
     // add labels according to package and update types
     {
       "matchDatasources": ["docker"],
