@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - traefik.yaml
   - authelia.yaml
-  - k8s-at-home.yaml
   - prometheus-community.yaml
   - jetstack.yaml
   - rook-ceph.yaml
