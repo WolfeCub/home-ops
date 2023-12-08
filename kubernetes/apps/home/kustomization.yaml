@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - hass
   - zwave-js
+  - mosquitto
   # - esphome
   # - zigbee2mqtt
-  # - mosquitto
