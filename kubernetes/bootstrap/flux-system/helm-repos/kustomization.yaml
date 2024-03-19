@@ -12,3 +12,4 @@ resources:
   - dashboard.yaml
   - bjw-s.yaml
   - ww-gitops.yaml
+  - homepage.yaml
