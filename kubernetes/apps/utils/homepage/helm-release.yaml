@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homepage
+  namespace: utils
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: homepage
+      version: 1.2.3
+      sourceRef:
+        kind: HelmRepository
+        name: homepage
+        namespace: flux-system
+      interval: 5m
+  values:
+    # The service account is necessary to allow discovery of other services
+    serviceAccount:
+      create: true
+      name: homepage
+
+    # This enables the service account to access the necessary resources
+    enableRbac: true
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "homepage.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+
+    config:
+      bookmarks:
+        - Developer:
+            - Github:
+                - abbr: GH
+                  href: https://github.com/
+      services:
+        - My First Group:
+            - My First Service:
+                href: http://localhost/
+                description: Homepage is awesome
+
+        - My Second Group:
+            - My Second Service:
+                href: http://localhost/
+                description: Homepage is the best
+
+        - My Third Group:
+            - My Third Service:
+                href: http://localhost/
+                description: Homepage is 😎
+      widgets:
+        # show the kubernetes widget, with the cluster summary and individual nodes
+        - kubernetes:
+            cluster:
+              show: true
+              cpu: true
+              memory: true
+              showLabel: true
+              label: "cluster"
+            nodes:
+              show: true
+              cpu: true
+              memory: true
+              showLabel: true
+        - search:
+            provider: duckduckgo
+            target: _blank
+      kubernetes:
+        mode: cluster
+      settings:
