@@ -5,5 +5,5 @@ resources:
   - hass
   - zwave-js
   - mosquitto
+  - zigbee2mqtt
   # - esphome
-  # - zigbee2mqtt
