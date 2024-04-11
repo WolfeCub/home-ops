@@ -27,7 +27,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
         hosts:
-          - host: "zigbee2mqtt.${domain}"
+          - host: "zigbee.${domain}"
             paths:
               - path: /
                 pathType: Prefix
