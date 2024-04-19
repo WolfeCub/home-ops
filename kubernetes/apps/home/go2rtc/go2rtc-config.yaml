@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go2rtc-config
+  namespace: home
+data:
+  go2rtc.yaml: |
+    streams:
+      backdoor_camera: rtsp://admin:nopassword@192.168.2.4:554/Preview_01_sub
