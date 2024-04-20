@@ -39,6 +39,14 @@ spec:
       config:
         enabled: true
         existingClaim: hass-config
+      network-share:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/k8s-shared/home-assistant
+        mountPath: /mnt/nfs
     podSecurityContext:
       fsGroup: 568
     env:
