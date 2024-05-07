@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: alexxit/go2rtc
-              tag: 1.8.5
+              tag: 1.9.1
 
     ingress:
       main:
