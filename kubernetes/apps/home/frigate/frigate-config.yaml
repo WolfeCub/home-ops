@@ -9,8 +9,17 @@ data:
       mqtt:
         host: ${mqtt_ip}
         port: 1883
+      go2rtc:
+        streams:
+          backdoor: rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_sub
+          driveway: rtsp://admin:${camera_password}@192.168.2.5:554/Preview_01_sub
+
       cameras:
-        back:
+        frigate_backdoor:
           ffmpeg:
             inputs:
-              - path: rtsp://go2rtc:554/backdoor_camera
+              - path: rtsp://localhost:8554/backdoor
+        frigate_driveway:
+          ffmpeg:
+            inputs:
+              - path: rtsp://localhost:8554/driveway
