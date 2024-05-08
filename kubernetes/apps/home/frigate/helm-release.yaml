@@ -38,7 +38,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-          - host: "go2frig.${domain}"
+          - host: "go2rtc.${domain}"
             paths:
               - path: /
                 pathType: Prefix
