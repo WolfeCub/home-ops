@@ -23,3 +23,13 @@ data:
           ffmpeg:
             inputs:
               - path: rtsp://localhost:8554/driveway
+
+      record:
+        enabled: True
+        retain:
+          days: 0
+          mode: all
+        events:
+          retain:
+            default: 30
+            mode: motion
