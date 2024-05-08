@@ -38,12 +38,23 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
+          - host: "go2frig.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: go2rtc
     service:
       main:
         controller: main
         ports:
           http:
             port: 5000
+      go2rtc:
+        controller: main
+        ports:
+          http:
+            port: 1984
 
     persistence:
       config:
