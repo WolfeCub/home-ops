@@ -6,6 +6,5 @@ resources:
   - zwave-js
   - mosquitto
   - zigbee2mqtt
-  - go2rtc
   - frigate
   # - esphome
