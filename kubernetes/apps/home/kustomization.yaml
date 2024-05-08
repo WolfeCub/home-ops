@@ -7,4 +7,5 @@ resources:
   - mosquitto
   - zigbee2mqtt
   - go2rtc
+  - frigate
   # - esphome

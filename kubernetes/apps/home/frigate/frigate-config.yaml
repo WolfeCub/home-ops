@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frigate-configmap
+  namespace: home
+data:
+  config.yml: |
+      mqtt:
+        host: ${mqtt_ip}
+        port: 1883
+      cameras:
+        back:
+          ffmpeg:
+            inputs:
+              - path: rtsp://go2rtc:554/backdoor_camera
