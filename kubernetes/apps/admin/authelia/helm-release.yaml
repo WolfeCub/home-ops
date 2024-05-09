@@ -122,6 +122,7 @@ spec:
           port: 587
           sender: ${authelia_smtp_email}
           username: ${authelia_smtp_email}
+          timeout: 15
 
     secret:
       jwt:
