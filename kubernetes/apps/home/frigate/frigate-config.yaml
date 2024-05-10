@@ -19,10 +19,14 @@ data:
           ffmpeg:
             inputs:
               - path: rtsp://localhost:8554/backdoor
+          detect:
+            enabled: False
         frigate_driveway:
           ffmpeg:
             inputs:
               - path: rtsp://localhost:8554/driveway
+          detect:
+            enabled: False
 
       record:
         enabled: True
