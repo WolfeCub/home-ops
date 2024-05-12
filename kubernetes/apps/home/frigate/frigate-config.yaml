@@ -9,6 +9,10 @@ data:
       mqtt:
         host: ${mqtt_ip}
         port: 1883
+
+      database:
+        path: /data/frigate.db
+
       go2rtc:
         streams:
           backdoor: rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_sub
