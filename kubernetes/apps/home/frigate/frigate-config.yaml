@@ -37,3 +37,7 @@ data:
           retain:
             default: 30
             mode: motion
+
+      birdseye:
+        enabled: True
+        mode: continuous
