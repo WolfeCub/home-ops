@@ -15,8 +15,8 @@ data:
 
       go2rtc:
         streams:
-          backdoor: rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_sub
-          driveway: rtsp://admin:${camera_password}@192.168.2.5:554/Preview_01_sub
+          backdoor: rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_main
+          driveway: rtsp://admin:${camera_password}@192.168.2.5:554/Preview_01_main
 
       cameras:
         frigate_backdoor:
