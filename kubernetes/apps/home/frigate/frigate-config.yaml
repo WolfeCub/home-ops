@@ -23,12 +23,14 @@ data:
           ffmpeg:
             inputs:
               - path: rtsp://localhost:8554/backdoor
+            hwaccel_args: preset-vaapi
           detect:
             enabled: False
         frigate_driveway:
           ffmpeg:
             inputs:
               - path: rtsp://localhost:8554/driveway
+            hwaccel_args: preset-vaapi
           detect:
             enabled: False
 
