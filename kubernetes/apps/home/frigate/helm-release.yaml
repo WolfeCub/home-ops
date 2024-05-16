@@ -80,3 +80,8 @@ spec:
         path: /raid/k8s-shared/frigate
         globalMounts:
           - path: /media
+      quicksync:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
