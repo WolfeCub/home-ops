@@ -38,6 +38,16 @@ data:
             hwaccel_args: preset-vaapi
           detect:
             enabled: True
+          record:
+            events:
+              required_zones:
+                - driveway
+          snapshots:
+            required_zones:
+              - driveway
+          zones:
+            driveway:
+              coordinates: 0,2160,3840,2160,3840,72,2546,182,1477,226,0,486
 
       record:
         enabled: True
