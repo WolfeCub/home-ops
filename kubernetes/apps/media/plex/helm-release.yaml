@@ -51,6 +51,11 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/
         mountPath: /media
+      quicksync:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+        mountPath: /dev/dri
     podSecurityContext:
       fsGroup: 568
     env:
