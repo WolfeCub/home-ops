@@ -23,6 +23,11 @@ data:
           type: edgetpu
           device: usb
 
+      objects:
+        filters:
+          person:
+            min_area: 34000
+
       cameras:
         frigate_backdoor:
           ffmpeg:
