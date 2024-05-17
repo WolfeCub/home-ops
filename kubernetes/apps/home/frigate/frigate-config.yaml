@@ -59,6 +59,10 @@ data:
             default: 30
             mode: active_objects
 
+      snapshots:
+        enabled: True
+        crop: True
+
       birdseye:
         enabled: True
         mode: continuous
