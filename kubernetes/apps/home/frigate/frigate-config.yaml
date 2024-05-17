@@ -23,6 +23,10 @@ data:
           type: edgetpu
           device: usb
 
+      motion:
+        mask:
+          - 3830,59,3836,15,3092,14,3095,65 # Timestamp
+
       objects:
         filters:
           person:
