@@ -57,7 +57,7 @@ data:
         events:
           retain:
             default: 30
-            mode: motion
+            mode: active_objects
 
       birdseye:
         enabled: True
