@@ -15,8 +15,8 @@ data:
 
       go2rtc:
         streams:
-          backdoor: ffmpeg:rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_main#video=h264#hardware
-          driveway: ffmpeg:rtsp://admin:${camera_password}@192.168.2.5:554/Preview_01_main#video=h264#hardware
+          backdoor: rtsp://admin:${camera_password}@192.168.2.4:554/Preview_01_main
+          driveway: rtsp://admin:${camera_password}@192.168.2.5:554/Preview_01_main
 
       detectors:
         coral:
