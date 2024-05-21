@@ -56,7 +56,7 @@ data:
               - driveway
           zones:
             driveway:
-              coordinates: 0,2160,3840,2160,3840,72,2546,182,1477,226,0,486
+              coordinates: 0,2160,3840,2160,3840,214,2538,118,2482,267,1491,274,0,571
 
       record:
         enabled: True
