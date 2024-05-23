@@ -27,11 +27,6 @@ data:
         mask:
           - 3830,59,3836,15,3092,14,3095,65 # Timestamp
 
-      objects:
-        filters:
-          person:
-            min_area: 34000
-
       cameras:
         frigate_backdoor:
           ffmpeg:
@@ -40,6 +35,11 @@ data:
             hwaccel_args: preset-vaapi
           detect:
             enabled: True
+          objects:
+            filters:
+              person:
+                min_area: 120000
+
         frigate_driveway:
           ffmpeg:
             inputs:
@@ -57,6 +57,10 @@ data:
           zones:
             driveway:
               coordinates: 0,2160,3840,2160,3840,214,2538,118,2482,267,1491,274,0,571
+          objects:
+            filters:
+              person:
+                min_area: 34000
 
       record:
         enabled: True
