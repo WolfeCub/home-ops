@@ -60,7 +60,7 @@ data:
           objects:
             filters:
               person:
-                min_area: 34000
+                min_area: 38000
 
       record:
         enabled: True
