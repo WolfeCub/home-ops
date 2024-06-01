@@ -63,6 +63,7 @@ spec:
       privileged: true
     env:
       TZ: America/Toronto
+      ZIGBEE2MQTT_DATA: /data
       ZIGBEE2MQTT_CONFIG_SERIAL_PORT: /dev/zigbee
       ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://${mqtt_ip}
       ZIGBEE2MQTT_CONFIG_HOMEASSISTANT: true
