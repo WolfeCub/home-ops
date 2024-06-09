@@ -25,7 +25,7 @@ data:
 
       motion:
         mask:
-          - 3830,59,3836,15,3092,14,3095,65 # Timestamp
+          - 0.997,0.027,0.999,0.007,0.805,0.006,0.806,0.03 # Timestamp
 
       cameras:
         frigate_backdoor:
@@ -63,7 +63,7 @@ data:
               - driveway
           zones:
             driveway:
-              coordinates: 0,2160,3840,2160,3840,214,2538,118,1846,116,1437,288,1391,406,0,634
+              coordinates: 0,1,1,1,1,0.099,0.67,0.061,0.66,0.139,0.39,0.162,0.362,0.188,0,0.294
           objects:
             filters:
               person:
