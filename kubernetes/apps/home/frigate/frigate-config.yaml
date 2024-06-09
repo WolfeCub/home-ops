@@ -51,8 +51,11 @@ data:
               record: preset-record-generic-audio-copy
           detect:
             enabled: True
-          record:
-            events:
+          review:
+            alerts:
+              required_zones:
+                - driveway
+            detections:
               required_zones:
                 - driveway
           snapshots:
