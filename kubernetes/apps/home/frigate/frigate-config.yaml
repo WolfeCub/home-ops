@@ -55,9 +55,6 @@ data:
             alerts:
               required_zones:
                 - driveway
-            detections:
-              required_zones:
-                - driveway
           snapshots:
             required_zones:
               - driveway
