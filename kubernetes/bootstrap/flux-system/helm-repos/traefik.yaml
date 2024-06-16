@@ -7,4 +7,4 @@ metadata:
 spec:
   interval: 15m
   url: https://helm.traefik.io/traefik
-  timeout: 3m
+  timeout: 10m
