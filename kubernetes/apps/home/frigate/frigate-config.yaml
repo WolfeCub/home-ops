@@ -6,6 +6,9 @@ metadata:
   namespace: home
 data:
   config.yml: |
+      tls:
+        enabled: False
+
       mqtt:
         host: ${mqtt_ip}
         port: 1883
