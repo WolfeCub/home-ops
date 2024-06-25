@@ -82,7 +82,7 @@ spec:
       cache:
         type: emptyDir
         medium: Memory
-        sizeLimit: 1Gi
+        sizeLimit: 1.5Gi
         globalMounts:
           - path: /dev/shm
       media:
