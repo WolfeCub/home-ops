@@ -72,6 +72,7 @@ spec:
         existingClaim: frigate-config
         globalMounts:
           - path: /data
+            readOnly: false
       config-file:
         type: configMap
         name: frigate-configmap
