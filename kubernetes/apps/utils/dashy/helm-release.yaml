@@ -36,12 +36,12 @@ spec:
       main:
         ports:
           http:
-            port: 80
+            port: 8080
 
     persistence:
       config:
         enabled: true
-        mountPath: /app/public
+        mountPath: /app/user-data
         existingClaim: dashy-config
     podSecurityContext:
       fsGroup: 568
