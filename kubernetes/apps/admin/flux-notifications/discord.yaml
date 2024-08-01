@@ -10,7 +10,7 @@ spec:
   channel: flux
   address: ${flux_discord_webhook}
 ---
-apiVersion: notification.toolkit.fluxcd.io/v1beta2
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
 kind: Alert
 metadata:
   name: discord-alert
