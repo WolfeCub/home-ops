@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/radarr
-      tag: 4.7.5.7809
+      tag: 5.8.3.8933
     ingress:
       main:
         enabled: true
