@@ -72,7 +72,7 @@ data:
       record:
         enabled: True
         retain:
-          days: 0
+          days: 3
           mode: all
         events:
           retain:
