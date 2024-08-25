@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     app.kubernetes.io/name: kube-vip-ds
-    app.kubernetes.io/version: v0.6.3
+    app.kubernetes.io/version: v0.8.2
   name: kube-vip-ds
   namespace: kube-system
 spec:
@@ -16,7 +16,7 @@ spec:
       creationTimestamp: null
       labels:
         app.kubernetes.io/name: kube-vip-ds
-        app.kubernetes.io/version: v0.6.3
+        app.kubernetes.io/version: v0.8.2
     spec:
       affinity:
         nodeAffinity:
@@ -36,10 +36,16 @@ spec:
           value: "true"
         - name: port
           value: "6443"
+        - name: vip_nodename
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         - name: vip_interface
           value: eno1
         - name: vip_cidr
           value: "32"
+        - name: dns_mode
+          value: first
         - name: svc_enable
           value: "true"
         - name: svc_leasename
@@ -58,8 +64,8 @@ spec:
           value: 192.168.0.220
         - name: prometheus_server
           value: :2112
-        image: ghcr.io/kube-vip/kube-vip:v0.6.3
-        imagePullPolicy: Always
+        image: ghcr.io/kube-vip/kube-vip:v0.8.2
+        imagePullPolicy: IfNotPresent
         name: kube-vip
         resources: {}
         securityContext:
@@ -75,9 +81,4 @@ spec:
       - effect: NoExecute
         operator: Exists
   updateStrategy: {}
-status:
-  currentNumberScheduled: 0
-  desiredNumberScheduled: 0
-  numberMisscheduled: 0
-  numberReady: 0
 
