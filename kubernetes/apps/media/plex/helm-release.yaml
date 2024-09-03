@@ -58,6 +58,8 @@ spec:
         mountPath: /dev/dri
     podSecurityContext:
       fsGroup: 568
+      runAsUser: 568
+      runAsGroup: 568
     securityContext:
       privileged: true
     env:

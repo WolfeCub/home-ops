@@ -49,5 +49,7 @@ spec:
             path: /raid/network_share/media/
     podSecurityContext:
       fsGroup: 568
+      runAsUser: 568
+      runAsGroup: 568
     env:
       TZ: America/Toronto
