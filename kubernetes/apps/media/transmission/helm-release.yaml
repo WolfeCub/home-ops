@@ -59,8 +59,6 @@ spec:
         mountPath: /data/incomplete
     podSecurityContext:
       fsGroup: 568
-      runAsUser: 568
-      runAsGroup: 568
     env:
       OPENVPN_PROVIDER: SURFSHARK
       OPENVPN_USERNAME: "${vpn_surfshark_username}"
