@@ -4,7 +4,7 @@
 # Sourcing the instructions from here https://kube-vip.io/docs/installation/daemonset/
 
 VIP=192.168.0.220
-INTERFACE=eno1
+INTERFACE=enp1s0f0
 KVVERSION=$(curl -sL https://api.github.com/repos/kube-vip/kube-vip/releases | jq -r ".[0].name")
 
 echo Found version $KVVERSION. Running....
