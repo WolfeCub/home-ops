@@ -43,4 +43,4 @@ spec:
 
     service:
       spec:
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
