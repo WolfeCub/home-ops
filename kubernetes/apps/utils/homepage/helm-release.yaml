@@ -25,20 +25,43 @@ spec:
                 - abbr: GH
                   href: https://github.com/
       services:
-        - My First Group:
-            - My First Service:
-                href: http://localhost/
-                description: Homepage is awesome
+        - Misc:
+            - YouTube:
+                icon: youtube.svg
+                href: https://youtube.com
+            - GitHub:
+                icon: github.svg
+                href: https://github.com
+        - Homelab:
+            - Vaultwarden:
+                icon: vaultwarden.svg
+                href: https://vaultwarden.${domain}
+            - Home Assistant:
+                icon: home-assistant.svg
+                href: https://hass.${domain}
+            - Frigate:
+                icon: frigate.svg
+                href: https://frigate.${domain}
+        - Media:
+            - Plex:
+                icon: plex.svg
+                href: https://plex.${domain}
+            - Sonarr:
+                icon: sonarr.svg
+                href: https://sonarr.${domain}
+            - Radarr:
+                icon: radarr.svg
+                href: https://radarr.${domain}
+            - Transmission:
+                icon: transmission.svg
+                href: https://transmission.${domain}
+            - Readarr:
+                icon: readarr.svg
+                href: https://readarr.${domain}
+            - Prowlarr:
+                icon: prowlarr.svg
+                href: https://prowlarr.${domain}
 
-        - My Second Group:
-            - My Second Service:
-                href: http://localhost/
-                description: Homepage is the best
-
-        - My Third Group:
-            - My Third Service:
-                href: http://localhost/
-                description: Homepage is 😎
       widgets:
         # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
@@ -73,12 +96,6 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
-          # Example annotations to add Homepage to your Homepage!
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Homepage"
-          gethomepage.dev/description: "Dynamically Detected Homepage"
-          gethomepage.dev/group: "Dynamic"
-          gethomepage.dev/icon: "homepage.png"
         hosts:
           - host: "homepage.${domain}"
             paths:
