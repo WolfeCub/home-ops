@@ -19,14 +19,14 @@ spec:
       interval: 5m
   values:
     image:
-      name: traefik
       tag: v2.11.9
     ingressRoute:
       dashboard:
         enabled: false
     ports:
       web:
-        redirectTo: websecure
+        redirectTo:
+          port: websecure
       websecure:
         tls:
           enabled: true
