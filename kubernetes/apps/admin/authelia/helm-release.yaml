@@ -102,9 +102,9 @@ spec:
 
 
       session:
-        domain: "${domain}"
         cookies:
-          - default_redirection_url: "https://${domain}"
+          - domain: "${domain}"
+            default_redirection_url: "https://${domain}"
         redis:
           enabled: false
 
