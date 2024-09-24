@@ -112,6 +112,8 @@ spec:
           enabled: false
 
       storage:
+        encryption_key:
+          value: "${authelia_storage_encryption_key}"
         local:
           enabled: true
           path: /data/db.sqlite3
