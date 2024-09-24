@@ -124,11 +124,13 @@ spec:
           sender: "Authelia <${authelia_smtp_email}>"
           username: ${authelia_smtp_email}
           timeout: '15 seconds'
+          password:
+            value: ${authelia_smtp_password}
 
     secret:
       jwt:
         value: ${authelia_jwt_secret}
-      smtp:
-        value: ${authelia_smtp_password}
+      # smtp:
+      #   value: ${authelia_smtp_password}
       duo:
         value: ${authelia_duo_secret_key}
