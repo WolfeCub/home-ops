@@ -118,6 +118,7 @@ spec:
 
       notifier:
         smtp:
+          enabled: true
           enabledSecret: true
           host: ${authelia_smtp_server}
           port: 587
