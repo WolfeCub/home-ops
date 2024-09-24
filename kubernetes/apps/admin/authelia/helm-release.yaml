@@ -104,6 +104,7 @@ spec:
       session:
         cookies:
           - domain: "${domain}"
+            subdomain: login
             default_redirection_url: "https://${domain}"
         redis:
           enabled: false
