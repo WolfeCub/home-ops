@@ -13,7 +13,7 @@ data:
             users: ["${traefik_basic_auth_credentials_hash}"]
 
         localOnly:
-          ipWhiteList:
+          iPAllowList:
             sourceRange:
               - "${network_subnet}"
               - 10.0.8.0/24
