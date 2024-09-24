@@ -120,11 +120,11 @@ spec:
         smtp:
           enabled: true
           enabledSecret: true
-          host: ${authelia_smtp_server}
-          port: 587
-          sender: ${authelia_smtp_email}
+          address: '${authelia_smtp_server}'
+          # port: 587
+          sender: "Authelia <${authelia_smtp_email}>"
           username: ${authelia_smtp_email}
-          timeout: 15
+          timeout: '15 seconds'
 
     secret:
       jwt:
