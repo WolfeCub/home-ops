@@ -25,15 +25,9 @@ spec:
         enabled: false
     ports:
       web:
-        expose:
-          default: true
-          internal: true
         redirectTo:
           port: websecure
       websecure:
-        expose:
-          default: true
-          internal: true
         tls:
           enabled: true
           options: "default"
@@ -50,9 +44,3 @@ spec:
     service:
       spec:
         externalTrafficPolicy: Cluster
-        loadBalancerIP: "${traefik_load_balancer_ip}"
-      additionalServices:
-        internal:
-          type: LoadBalancer
-          spec:
-            loadBalancerIP: "${traefik_internal_load_balancer_ip}"
