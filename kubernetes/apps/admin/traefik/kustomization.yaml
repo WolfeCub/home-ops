@@ -6,4 +6,3 @@ resources:
   - traefik-config.yaml
   - certificate.yaml
   - tls-store.yaml
-  - internal-ingress-class.yaml
