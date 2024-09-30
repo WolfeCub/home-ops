@@ -26,7 +26,6 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
-        ingressClassName: traefik-internal
         hosts:
           - host: "sonarr.${domain}"
             paths:
