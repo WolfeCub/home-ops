@@ -37,23 +37,6 @@ spec:
         tls:
           enabled: true
           options: "default"
-      web-int:
-        port: 9080
-        exposedPort: 80
-        expose:
-          default: false
-          internal: true
-        redirectTo:
-          port: websecure-internal
-      websecure-int:
-        port: 9443
-        exposedPort: 443
-        expose:
-          default: false
-          internal: true
-        tls:
-          enabled: true
-          options: "default"
 
     additionalArguments:
       - "--providers.file.filename=/etc/traefik/dynamic.yml"
@@ -68,8 +51,3 @@ spec:
       spec:
         externalTrafficPolicy: Cluster
         loadBalancerIP: "${traefik_load_balancer_ip}"
-      additionalServices:
-        internal:
-          type: LoadBalancer
-          spec:
-            loadBalancerIP: "${traefik_internal_load_balancer_ip}"
