@@ -39,17 +39,17 @@ spec:
           options: "default"
       web-int:
         port: 9080
-        exposedPort: 9080
+        exposedPort: 80
         expose:
-          default: true
+          default: false
           internal: true
         redirectTo:
           port: websecure-internal
       websecure-int:
         port: 9443
-        exposedPort: 9443
+        exposedPort: 443
         expose:
-          default: true
+          default: false
           internal: true
         tls:
           enabled: true
