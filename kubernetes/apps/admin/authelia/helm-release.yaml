@@ -23,6 +23,8 @@ spec:
       tag: 4.38.16
     pod:
       kind: Deployment
+      strategy:
+        type: Recreate
       env:
         - name: TZ
           value: America/Toronto
