@@ -23,11 +23,5 @@ spec:
         repository: kubernetesui/dashboard
         tag: v2.7.0
 
-      protocolHttp: true
-
-      extraArgs:
-        - --enable-skip-login
-        - --enable-insecure-login
-
     kong:
       enabled: false
