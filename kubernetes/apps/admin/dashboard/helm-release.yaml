@@ -24,23 +24,10 @@ spec:
         tag: v2.7.0
 
       protocolHttp: true
-      service:
-        type: ClusterIP
-        externalPort: 80
 
       extraArgs:
         - --enable-skip-login
         - --enable-insecure-login
-
-      ingress:
-        enabled: true
-        hosts:
-          - "k8s.${domain}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
-        ingressClassName: traefik
-        tls:
-          enabled: false
 
     kong:
       enabled: false
