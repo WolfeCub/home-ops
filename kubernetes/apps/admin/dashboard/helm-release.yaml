@@ -39,3 +39,8 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd"
         ingressClassName: traefik
+        tls:
+          enabled: false
+
+    kong:
+      enabled: false
