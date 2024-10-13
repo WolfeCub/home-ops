@@ -57,12 +57,10 @@ spec:
       subdomain: login
       tls:
         enabled: false
-      annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
 
       traefikCRD:
         enabled: true
-        entryPoints: [web, websecure]
+        entryPoints: [websecure-ext, websecure]
 
     configMap:
       totp:
