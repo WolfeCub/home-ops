@@ -25,7 +25,7 @@ spec:
         enabled: false
     ports:
       web:
-        asDefault: true
+        asDefault: false
         redirectTo:
           port: websecure
       websecure:
