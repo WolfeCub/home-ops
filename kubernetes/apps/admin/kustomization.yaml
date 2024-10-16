@@ -6,5 +6,4 @@ resources:
   - blog
   - flux-notifications
   - traefik
-  - dashboard
   - ww-gitops
