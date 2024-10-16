@@ -7,3 +7,4 @@ resources:
   - flux-notifications
   - traefik
   - ww-gitops
+  - kubewall
