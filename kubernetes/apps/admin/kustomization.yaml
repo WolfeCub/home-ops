@@ -6,5 +6,5 @@ resources:
   - blog
   - flux-notifications
   - traefik
-  - ww-gitops
   - kubewall
+  - capacitor
