@@ -40,7 +40,7 @@ spec:
         expose:
           default: true
         redirectTo:
-          port: websecure-ext
+          port: websecure # Since we change the ports in NAT
       websecure-ext:
         asDefault: false
         port: 9443
