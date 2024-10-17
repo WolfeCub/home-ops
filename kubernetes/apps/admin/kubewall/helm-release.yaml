@@ -25,11 +25,14 @@ spec:
             image:
               repository: ghcr.io/kubewall/kubewall
               tag: 0.0.9
+    serviceAccount:
+      create: true
+      name: kubewall
     ingress:
       main:
         enabled: true
-        # annotations:
-        #   traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:
           - host: "k8s.${domain}"
             paths:
