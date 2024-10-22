@@ -30,6 +30,8 @@ spec:
     defaultSettings:
       backupTarget: s3://longhorn-backups@us-east-1/
       backupTargetCredentialSecret: minio-credentials
+      backupConcurrentLimit: 1
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
 
     csi:
       kubeletRootDir: /var/lib/kubelet
