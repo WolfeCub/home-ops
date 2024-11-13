@@ -25,6 +25,7 @@ spec:
             image:
               repository: ghcr.io/wolfecub/ale-pal
               tag: latest
+              pullPolicy: Always
     ingress:
       main:
         enabled: true
