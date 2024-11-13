@@ -13,27 +13,17 @@ data:
             widgets:
               - type: calendar
 
-              - type: rss
-                limit: 10
-                collapse-after: 3
-                cache: 3h
-                feeds:
-                  - url: https://ciechanow.ski/atom.xml
-                  - url: https://www.joshwcomeau.com/rss.xml
-                    title: Josh Comeau
-                  - url: https://samwho.dev/rss.xml
-                  - url: https://awesomekling.github.io/feed.xml
-                  - url: https://ishadeed.com/feed.xml
-                    title: Ahmad Shadeed
+              - type: monitor
+                cache: 1m
+                title: Services
+                sites:
+                  - title: Plex
+                    url: https://plex.${domain}
+                    icon: /assets/plex-logo.png
+                  - title: Vaultwarden
+                    url: https://bw.${domain}
+                    icon: /assets/vaultwarden-logo.png
 
-              - type: twitch-channels
-                channels:
-                  - theprimeagen
-                  - cohhcarnage
-                  - christitustech
-                  - blurbs
-                  - asmongold
-                  - jembawls
 
           - size: full
             widgets:
@@ -41,33 +31,28 @@ data:
 
               - type: videos
                 channels:
-                  - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
-                  - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
-                  - UCOk-gHyjcWZNj3Br4oxwh0A # Techno Tim
+                  - UCgtOMaHBiYvsRYZ77utf8FQ # Erik Karlsson Bouldering
 
-              - type: reddit
-                subreddit: selfhosted
+
+              - type: group
+                widgets:
+                - type: reddit
+                  subreddit: selfhosted
+                - type: reddit
+                  subreddit: neovim
+                - type: reddit
+                  subreddit: rust
 
           - size: small
             widgets:
               - type: weather
-                location: London, United Kingdom
+                location: Mississauga, Canada
 
               - type: markets
                 markets:
                   - symbol: SPY
                     name: S&P 500
-                  - symbol: BTC-USD
-                    name: Bitcoin
-                  - symbol: NVDA
-                    name: NVIDIA
-                  - symbol: AAPL
-                    name: Apple
-                  - symbol: MSFT
-                    name: Microsoft
-                  - symbol: GOOGL
+                  - symbol: DBX
+                    name: Dropbox
+                  - symbol: GOOG
                     name: Google
-                  - symbol: AMD
-                    name: AMD
-                  - symbol: RDDT
-                    name: Reddit
