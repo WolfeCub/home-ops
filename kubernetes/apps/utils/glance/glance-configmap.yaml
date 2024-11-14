@@ -11,28 +11,97 @@ data:
         columns:
           - size: small
             widgets:
+              - type: clock
+                hour-format: 12h
+                timezones:
+                  - timezone: America/Los_Angeles
+                    label: PST
+
               - type: calendar
 
               - type: monitor
-                cache: 1m
+                cache: 10m
                 title: Services
                 sites:
-                  - title: Plex
-                    url: https://plex.${domain}
-                    icon: /assets/plex-logo.png
                   - title: Vaultwarden
+                    icon: si:vaultwarden
                     url: https://bw.${domain}
-                    icon: /assets/vaultwarden-logo.png
+                    same-tab: true
+                  - title: Home Assistant
+                    icon: si:homeassistant
+                    url: https://hass.${domain}
+                    same-tab: true
+                  - title: Plex
+                    icon: si:plex
+                    url: https://plex.${domain}
+                    check-url: http://plex.media.svc.cluster.local:32400
+                    same-tab: true
+                  - title: Sonarr
+                    icon: si:sonarr
+                    url: https://sonarr.${domain}
+                    check-url: http://sonarr.media.svc.cluster.local:8989
+                    same-tab: true
+                  - title: Radarr
+                    icon: si:radarr
+                    url: https://radarr.${domain}
+                    check-url: http://radarr.media.svc.cluster.local:7878
+                    same-tab: true
+                  - title: Transmission
+                    icon: si:transmission
+                    url: https://transmission.${domain}
+                    check-url: http://transmission.media.svc.cluster.local:9091
+                    same-tab: true
+                  - title: Prowlarr
+                    icon: si:prowlarr
+                    url: https://prowlarr.${domain}
+                    check-url: http://prowlarr.media.svc.cluster.local:9696
+                    same-tab: true
 
 
           - size: full
             widgets:
-              - type: hacker-news
+              - type: search
+                search-engine: google
+                bangs:
+                  - title: YouTube
+                    shortcut: "!yt"
+                    url: https://www.youtube.com/results?search_query={QUERY}
+                  - title: Amazon
+                    shortcut: "!am"
+                    url: https://www.amazon.com/s?k={QUERY}
 
-              - type: videos
-                channels:
-                  - UCgtOMaHBiYvsRYZ77utf8FQ # Erik Karlsson Bouldering
-
+              - type: bookmarks
+                groups:
+                  - title: General
+                    links:
+                      - title: YouTube
+                        url: https://www.youtube.com/
+                        same-tab: true
+                        hide-arrow: true
+                      - title: Gmail
+                        url: https://mail.google.com/mail/u/0/
+                        same-tab: true
+                        hide-arrow: true
+                      - title: Github
+                        url: https://github.com/
+                        same-tab: true
+                        hide-arrow: true
+                  - title: Local
+                    links:
+                      - title: pfSense
+                        url: https://192.168.0.1/
+                        same-tab: true
+                        hide-arrow: true
+                      - title: Trident
+                        url: https://trident.jw.lan/
+                        same-tab: true
+                        hide-arrow: true
+                  - title: Other
+                    links:
+                      - title: Lobsters
+                        url: https://lobste.rs/
+                        same-tab: true
+                        hide-arrow: true
 
               - type: group
                 widgets:
@@ -42,6 +111,22 @@ data:
                   subreddit: neovim
                 - type: reddit
                   subreddit: rust
+                - type: reddit
+                  subreddit: 3dprinting
+                - type: reddit
+                  subreddit: watches
+                - type: reddit
+                  subreddit: chess
+
+              - type: videos
+                channels:
+                  - UCgtOMaHBiYvsRYZ77utf8FQ # Erik Karlsson Bouldering
+                  - UChT1fv0xpIMSeVAJ_Hg1tjg # Richardson Climbing
+                  - UCj1VqrHhDte54oLgPG4xpuQ # Stuff Made Here
+                  - UC6dTi88TnCio5-XWaNLPnBQ # Mandic Really
+                  - UCyXiDU5qjfOPxgOPeFWGwKw # Throttle House
+
+              - type: hacker-news
 
           - size: small
             widgets:
