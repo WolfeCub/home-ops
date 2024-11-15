@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.41.0.8992-8463ad060
+      tag: 1.41.2.9200-c6bbc1b53
     ingress:
       main:
         enabled: true
