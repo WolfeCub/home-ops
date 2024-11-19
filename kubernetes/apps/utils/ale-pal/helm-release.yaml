@@ -31,6 +31,7 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
         hosts:
           - host: "ale.${domain}"
             paths:
@@ -45,9 +46,9 @@ spec:
           http:
             port: 8080
 
-# persistence:
-#   config:
-#     existingClaim: ale-config
-#     globalMounts:
-#       - path: /config
-#         readOnly: false
+    persistence:
+      config:
+        existingClaim: ale-pal-data
+        globalMounts:
+          - path: /config
+            readOnly: false
