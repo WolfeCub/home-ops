@@ -93,7 +93,11 @@ data:
                         same-tab: true
                         hide-arrow: true
                       - title: Trident
-                        url: https://trident.jw.lan/
+                        url: http://trident.jw.lan/
+                        same-tab: true
+                        hide-arrow: true
+                      - title: Ender
+                        url: http://kitten.jw.lan/
                         same-tab: true
                         hide-arrow: true
                   - title: Other
@@ -107,6 +111,10 @@ data:
                 widgets:
                 - type: reddit
                   subreddit: selfhosted
+                - type: reddit
+                  subreddit: homeassistant
+                - type: reddit
+                  subreddit: homelab
                 - type: reddit
                   subreddit: neovim
                 - type: reddit
@@ -126,6 +134,7 @@ data:
                   - UC6dTi88TnCio5-XWaNLPnBQ # Mandic Really
                   - UCyXiDU5qjfOPxgOPeFWGwKw # Throttle House
                   - UCqiKFGkSZwrbMSfkkd2CQGg # Emil Abrahamsson
+                  - UC_gSotrFVZ_PiAxo3fTQVuQ # Magnus Midtbø
 
               - type: hacker-news
 
