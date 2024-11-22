@@ -53,6 +53,7 @@ spec:
       fsGroup: 568
     env:
       TZ: America/Toronto
+      PYTHONPATH: /config/deps
 
     addons:
       codeserver:
