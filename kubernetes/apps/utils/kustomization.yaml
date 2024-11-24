@@ -8,3 +8,4 @@ resources:
   - grocy
   - ale-pal
   - glance
+  - ollama
