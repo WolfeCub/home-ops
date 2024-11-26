@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: ollama
+              tag: v0.4.5-ollama
     ingress:
       main:
         enabled: true
