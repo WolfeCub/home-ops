@@ -24,10 +24,20 @@ spec:
           main:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.4.6-ollama
+              tag: v0.4.7-ollama
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - docker04
 
     ingress:
       main:
@@ -48,9 +58,25 @@ spec:
           http:
             port: 8080
 
-# persistence:
-#   config:
-#     existingClaim: ollama-data
-#     globalMounts:
-#       - path: /config
-#         readOnly: false
+    persistence:
+      models:
+        enabled: true
+        type: hostPath
+        hostPath: /ollama
+        advancedMounts:
+          main:
+            main:
+              - path: /root/.ollama
+
+      webui-data:
+        enabled: true
+        existingClaim: ollama-data
+        advancedMounts:
+          main:
+            main:
+              - path: /app/backend/data/webui.db
+                subPath: webui.db
+              - path: /app/backend/data/vector_db
+                subPath: vector_db
+              - path: /app/backend/data/uploads
+                subPath: uploads
