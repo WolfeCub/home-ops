@@ -28,6 +28,7 @@ spec:
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
+              DATABASE_URL: sqlite:////app/backend/data/webui_db/webui.db
         pod:
           affinity:
             nodeAffinity:
@@ -62,21 +63,24 @@ spec:
       models:
         enabled: true
         type: hostPath
-        hostPath: /ollama
+        hostPath: /ollama/models
         advancedMounts:
           main:
             main:
-              - path: /root/.ollama
+              - path: /root/.ollama/models
 
-      webui-data:
+      data:
         enabled: true
         existingClaim: ollama-data
         advancedMounts:
           main:
             main:
-              - path: /app/backend/data/webui.db
-                subPath: webui.db
+              - path: /app/backend/data/webui_db
+                subPath: webui_db
+                readOnly: false
               - path: /app/backend/data/vector_db
                 subPath: vector_db
+                readOnly: false
               - path: /app/backend/data/uploads
                 subPath: uploads
+                readOnly: false
