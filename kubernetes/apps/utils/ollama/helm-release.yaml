@@ -29,6 +29,7 @@ spec:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
               DATABASE_URL: sqlite:////app/backend/data/webui_db/webui.db
+              OLLAMA_HOST: 0.0.0.0:11434
         pod:
           affinity:
             nodeAffinity:
@@ -58,11 +59,11 @@ spec:
         ports:
           http:
             port: 8080
-      ollama:
+      api:
         controller: main
         ports:
           http:
-            port: 11435
+            port: 11434
 
     persistence:
       models:
