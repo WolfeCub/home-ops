@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/prowlarr-develop
-      tag: 1.25.2.4794
+      tag: 1.27.0.4852
     ingress:
       main:
         enabled: true
