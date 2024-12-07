@@ -9,5 +9,5 @@ resources:
   - transmission
   - prowlarr
   - flaresolverr
-  # - jellyfin
+  - jellyfin
   # - readarr

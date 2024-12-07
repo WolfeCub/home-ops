@@ -19,8 +19,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/onedr0p/jellyfin
-      tag: 10.8.11
+      repository: jellyfin/jellyfin
+      tag: 10.10.3
     ingress:
       main:
         enabled: true
@@ -41,7 +41,7 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-        mountPath: /config/transcodes
+        mountPath: /cache/transcodes
       media:
         enabled: true
         type: custom
