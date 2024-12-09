@@ -20,7 +20,11 @@ spec:
   values:
     image:
       repository: homeassistant/home-assistant
-      tag: 2024.11.3
+      tag: 2024.12.1
+    lifecycle:
+      postStart:
+        exec:
+          command: ["touch", "/.dockerenv"]
     hostNetwork: true
     ingress:
       main:
@@ -53,7 +57,6 @@ spec:
       fsGroup: 568
     env:
       TZ: America/Toronto
-      PYTHONPATH: /config/deps
 
     addons:
       codeserver:
