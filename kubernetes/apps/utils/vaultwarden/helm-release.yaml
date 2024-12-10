@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: vaultwarden/server
-      tag: 1.32.5
+      tag: 1.32.6
     ingress:
       main:
         enabled: true
