@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: vaultwarden/server
-      tag: 1.32.5
+      tag: 1.32.6
     ingress:
       main:
         enabled: true
@@ -51,3 +51,4 @@ spec:
       YUBICO_CLIENT_ID: "${vaultwarden_yubico_client_id}"
       YUBICO_SECRET_KEY: "${vaultwarden_yubico_secret_key}"
       ADMIN_TOKEN: "${vaultwarden_admin_token}"
+      EXPERIMENTAL_CLIENT_FEATURE_FLAGS: "ssh-key-vault-item,ssh-agent"
