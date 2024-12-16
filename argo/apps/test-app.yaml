@@ -3,14 +3,13 @@ kind: Application
 metadata:
   name: test-app
 spec:
-  plugin:
-    name: argocd-vault-plugin
-
   project: default
   source:
     repoURL: https://github.com/argoproj/argocd-example-apps.git
     targetRevision: HEAD
     path: ./guestbook
+    plugin:
+      name: argocd-vault-plugin
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook

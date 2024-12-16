@@ -59,3 +59,13 @@ repoServer:
   extraEnv:
     - name: GNUPGHOME
       value: /home/argocd/.gnupg
+
+  # 4. Register the config management plugin
+  configs:
+    cmp:
+      create: true
+      plugins:
+        argocd-vault-plugin:
+          generate:
+            command: ["argocd-vault-plugin"]
+            args: ["generate", "./"]
