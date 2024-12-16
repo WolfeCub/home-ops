@@ -9,6 +9,11 @@ spec:
       volumes:
         - name: custom-tools
           emptyDir: {}
+        - name: gnupg-home
+          emptyDir: {}
+        - name: sops-gpg
+          secret:
+            secretName: sops-gpg-argo
       # 2. Use an init container to download/copy custom binaries into the emptyDir
       initContainers:
         - name: install-ksops
@@ -22,6 +27,17 @@ spec:
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
+        - name: import-gpg-key
+          image: argoproj/argocd:v2.1.7
+          command: ["gpg", "--import","/sops-gpg/sops.asc"]
+          env:
+            - name: GNUPGHOME
+              value: /gnupg-home/.gnupg
+          volumeMounts:
+            - mountPath: /sops-gpg
+              name: sops-gpg
+            - mountPath: /gnupg-home
+              name: gnupg-home
       # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
       containers:
         - name: argocd-repo-server
@@ -32,15 +48,9 @@ spec:
             - mountPath: /usr/local/bin/ksops
               name: custom-tools
               subPath: ksops
-        ## If you use AWS or GCP KMS, don't forget to include the necessary credentials to decrypt the secrets!
-        # env:
-        #  - name: AWS_ACCESS_KEY_ID
-        #    valueFrom:
-        #      secretKeyRef:
-        #        name: argocd-aws-credentials
-        #        key: accesskey
-        #  - name: AWS_SECRET_ACCESS_KEY
-        #    valueFrom:
-        #      secretKeyRef:
-        #        name: argocd-aws-credentials
-        #        key: secretkey
+            - mountPath: /home/argocd/.gnupg
+              name: gnupg-home
+              subPath: .gnupg
+          env:
+            - name: GNUPGHOME
+              value: /home/argocd/.gnupg
