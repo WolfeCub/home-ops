@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/kubewall/kubewall
-              tag: 0.0.9
+              tag: 0.0.10
     serviceAccount:
       create: true
       name: kubewall
