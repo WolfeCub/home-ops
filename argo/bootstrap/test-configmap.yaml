@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+data:
+  blah.yaml: |
+    something: {{ .secrets.domain }}
