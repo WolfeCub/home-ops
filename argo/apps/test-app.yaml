@@ -7,9 +7,10 @@ spec:
   source:
     repoURL: https://github.com/argoproj/argocd-example-apps.git
     targetRevision: HEAD
-    path: ./guestbook
-    plugin:
-      name: argocd-vault-plugin
+    path: ./helm-guestbook
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook
