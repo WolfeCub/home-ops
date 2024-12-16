@@ -4,4 +4,4 @@ metadata:
   name: test-configmap
 data:
   blah.yaml: |
-    something: {{ .secrets.domain }}
+    something: {{ .name }}
