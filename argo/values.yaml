@@ -16,17 +16,25 @@ repoServer:
 
   # 2. Use an init container to download/copy custom binaries into the emptyDir
   initContainers:
-    - name: install-ksops
-      image: viaductoss/ksops:v4.3.2
-      command: ["/bin/sh", "-c"]
+    - name: download-tools
+      image: alpine:3.8
+      command: [sh, -c]
+
+      # Don't forget to update this to whatever the stable release version is
+      # Note the lack of the `v` prefix unlike the git tag
+      env:
+        - name: AVP_VERSION
+          value: "1.16.1"
       args:
-        - echo "Installing KSOPS...";
-          mv ksops /custom-tools/;
-          mv kustomize /custom-tools/;
-          echo "Done.";
+        - >-
+          wget -O argocd-vault-plugin
+          https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64 &&
+          chmod +x argocd-vault-plugin &&
+          mv argocd-vault-plugin /custom-tools/
       volumeMounts:
         - mountPath: /custom-tools
           name: custom-tools
+
     - name: import-gpg-key
       image: argoproj/argocd:v2.1.7
       command: ["gpg", "--import","/sops-gpg/sops.asc"]
@@ -41,12 +49,9 @@ repoServer:
 
   # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
   volumeMounts:
-    - mountPath: /usr/local/bin/kustomize
-      name: custom-tools
-      subPath: kustomize
-    - mountPath: /usr/local/bin/ksops
-      name: custom-tools
-      subPath: ksops
+    - name: custom-tools
+      mountPath: /usr/local/bin/argocd-vault-plugin
+      subPath: argocd-vault-plugin
     - mountPath: /home/argocd/.gnupg
       name: gnupg-home
       subPath: .gnupg
