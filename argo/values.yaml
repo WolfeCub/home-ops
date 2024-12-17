@@ -1,19 +1,41 @@
 configs:
   cm:
     kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
+  cmp:
+    create: true
+    plugins:
+      argocd-vault-plugin:
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - sh
+              - "-c"
+              - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+        generate:
+          command:
+            - argocd-vault-plugin
+            - generate
+            - "."
+            - "-c"
+            - /vault-configuration.yaml
+        lockRepo: false
 
 repoServer:
   volumes:
     - name: custom-tools
       emptyDir: {}
     - configMap:
-        name: cmp-plugin
-      name: cmp-plugin
+        name: argocd-cmp-cm
+      name: argocd-cmp-cm
     - name: gnupg-home
       emptyDir: {}
     - name: sops-gpg
       secret:
         secretName: sops-gpg-argo
+    - configMap:
+        name: vault-configuration
+      name: vault-configuration
 
   initContainers:
     - name: download-tools
@@ -63,8 +85,8 @@ repoServer:
 
         # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: avp.yaml
-          name: cmp-plugin
+          subPath: argocd-vault-plugin.yaml
+          name: argocd-cmp-cm
 
         # Important: Mount tools into $PATH
         - name: custom-tools
@@ -75,4 +97,9 @@ repoServer:
         - mountPath: /home/argocd/.gnupg
           name: gnupg-home
           subPath: .gnupg
+
+        # Mount vault config
+        - mountPath: /vault-configuration.yaml
+          name: vault-configuration
+          subPath: config.yaml
 
