@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: test-secret
   annotations:
-    avp.kubernetes.io/path: "../cluster-secrets-argo.sops.yaml"
+    avp.kubernetes.io/path: "./secret.sops.yaml"
 type: Opaque
 data:
-  blah: <domain>
+  blah: <data | jsonPath {.domain}>
