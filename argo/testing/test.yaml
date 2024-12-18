@@ -1,7 +1,6 @@
-kind: Secret
 apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: test-secret
-type: Opaque
-stringData:
-  blah: <secret:domain>
+  name: test-map
+data:
+  something: <secret:domain>
