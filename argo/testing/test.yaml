@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: test-map
 data:
-  something: <secret:domain>
+  something: |
+    My domain is: <secret:domain>
