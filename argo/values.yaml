@@ -1,58 +1,57 @@
 configs:
-  cm:
-    kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
   cmp:
     create: true
     plugins:
-      argocd-vault-plugin:
+      sops-replacer-plugin-kustomize:
         allowConcurrency: true
         discover:
           find:
             command:
               - sh
               - "-c"
-              - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+              - "[[ ! -z $ARGOCD_ENV_SOPS_SECRET_FILE ]] && find . -name 'kustomization.yaml' && find . -name '$ARGOCD_ENV_SOPS_SECRET_FILE'"
         generate:
           command:
-            - argocd-vault-plugin
-            - generate
-            - "."
+            - bash
             - "-c"
-            - /vault-configuration.yaml
+            - |-
+              kustomize build --enable-alpha-plugins . | argocd-secret-replacer sops -f "$ARGOCD_ENV_SOPS_SECRET_FILE"
+        lockRepo: false
+      sops-replacer-plugin-helm:
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - sh
+              - "-c"
+              - "[[ ! -z $ARGOCD_ENV_SOPS_SECRET_FILE ]] && find . -name 'Chart.yaml' && find . -name '$ARGOCD_ENV_SOPS_SECRET_FILE'"
+        init:
+          command:
+            - bash
+            - "-c"
+            - helm dependency update
+        generate:
+          command:
+            - bash
+            - "-c"
+            - |-
+              helm template --include-crds --release-name "$ARGOCD_APP_NAME" --namespace "$ARGOCD_APP_NAMESPACE" --kube-version $KUBE_VERSION --api-versions $KUBE_API_VERSIONS . | argocd-secret-replacer sops -f "$ARGOCD_ENV_SOPS_SECRET_FILE"
         lockRepo: false
 
 repoServer:
   volumes:
-    - name: custom-tools
-      emptyDir: {}
     - configMap:
-        name: argocd-cmp-cm
-      name: argocd-cmp-cm
-    - name: gnupg-home
+        name: sops-replacer-plugin
+      name: sops-replacer-plugin
+    - name: tmp-sops-replacer-plugin
       emptyDir: {}
     - name: sops-gpg
       secret:
         secretName: sops-gpg-argo
-    - configMap:
-        name: vault-configuration
-      name: vault-configuration
+    - name: gnupg-home
+      emptyDir: {}
 
   initContainers:
-    - name: download-tools
-      image: registry.access.redhat.com/ubi8
-      env:
-        - name: AVP_VERSION
-          value: 1.16.1
-      command: [sh, -c]
-      args:
-        - >-
-          curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
-          chmod +x argocd-vault-plugin &&
-          mv argocd-vault-plugin /custom-tools/
-      volumeMounts:
-        - mountPath: /custom-tools
-          name: custom-tools
-
     - name: import-gpg-key
       image: argoproj/argocd:v2.1.7
       command: ["gpg", "--import","/sops-gpg/sops.asc"]
@@ -65,13 +64,20 @@ repoServer:
         - mountPath: /gnupg-home
           name: gnupg-home
 
-  extraContainers:
-    - name: avp
+  containers:
+    - name: sops-replacer-plugin-kustomize
       command: [/var/run/argocd/argocd-cmp-server]
-      image: registry.access.redhat.com/ubi8
+      image: ghcr.io/mmalyska/argocd-secret-replacer:rolling@sha256:5a0f25fd26b6dbc19d700ba0734d8b82e8b294e2c490a84df1aee307a8e1a607
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
+      resources:
+        limits:
+          cpu: 250m
+          memory: 512Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
       env:
         - name: GNUPGHOME
           value: /home/argocd/.gnupg
@@ -81,25 +87,49 @@ repoServer:
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
         - mountPath: /tmp
-          name: tmp
-
-        # Register plugins into sidecar
+          name: tmp-sops-replacer-plugin
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: argocd-vault-plugin.yaml
-          name: argocd-cmp-cm
-
-        # Important: Mount tools into $PATH
-        - name: custom-tools
-          subPath: argocd-vault-plugin
-          mountPath: /usr/local/bin/argocd-vault-plugin
-
-        # Mount imported gpg keys
+          name: sops-replacer-plugin
+          subPath: sops-replacer-plugin-kustomize.yaml
         - mountPath: /home/argocd/.gnupg
           name: gnupg-home
           subPath: .gnupg
 
-        # Mount vault config
-        - mountPath: /vault-configuration.yaml
-          name: vault-configuration
-          subPath: config.yaml
+    - name: sops-replacer-plugin-helm
+      command: [/var/run/argocd/argocd-cmp-server]
+      image: ghcr.io/mmalyska/argocd-secret-replacer:rolling@sha256:5a0f25fd26b6dbc19d700ba0734d8b82e8b294e2c490a84df1aee307a8e1a607
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      env:
+        - name: GNUPGHOME
+          value: /home/argocd/.gnupg
+        - name: HELM_CACHE_HOME
+          value: /helm-working-dir
+        - name: HELM_CONFIG_HOME
+          value: /helm-working-dir
+        - name: HELM_DATA_HOME
+          value: /helm-working-dir
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp-sops-replacer-plugin
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          name: sops-replacer-plugin
+          subPath: sops-replacer-plugin-helm.yaml
+        - name: helm-working-dir
+          mountPath: /helm-working-dir
+        - mountPath: /home/argocd/.gnupg
+          name: gnupg-home
+          subPath: .gnupg
 

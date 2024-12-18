@@ -2,8 +2,6 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: test-secret
-  annotations:
-    avp.kubernetes.io/path: "./secret.sops.yaml"
 type: Opaque
 data:
-  blah: <data | jsonPath {.domain}>
+  blah: <secret:domain>

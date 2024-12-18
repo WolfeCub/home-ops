@@ -5,12 +5,14 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git
-    targetRevision: HEAD
-    path: ./helm-guestbook
-    helm:
-      valueFiles:
-        - values.yaml
+    repoURL: https://github.com/WolfeCub/home-ops
+    targetRevision: argo
+    path: ./argo/testing/
+    plugin:
+      name: replacer-kustomize
+      env:
+          - name: SOPS_FILE
+            value: ./secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: guestbook
+    namespace: blah
