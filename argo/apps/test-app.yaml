@@ -9,7 +9,7 @@ spec:
     targetRevision: argo
     path: ./argo/testing/
     plugin:
-      name: replacer-kustomize
+      name: sops-replacer-plugin-kustomize
       env:
           - name: SOPS_FILE
             value: ./secret.sops.yaml
