@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/WolfeCub/home-ops
+    targetRevision: argo
+    path: ./argo/apps
+    plugin:
+      env:
+          - name: SOPS_SECRET_FILE
+            value: ./secret.sops.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: blah
