@@ -8,13 +8,13 @@ spec:
   source:
     repoURL: https://github.com/WolfeCub/home-ops
     targetRevision: argo
-    path: ./kubernetes/argo/namespaces
+    path: ./kubernetes/argo-app
     plugin:
       env:
         - name: SOPS_SECRET_FILE
-          value: ../secret.sops.yaml
+          value: ../argo/secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-# syncPolicy:
-#   automated: {}
+  syncPolicy:
+    automated: {}
