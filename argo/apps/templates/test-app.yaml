@@ -8,10 +8,10 @@ spec:
     repoURL: https://github.com/WolfeCub/home-ops
     targetRevision: argo
     path: ./argo/testing/
-    plugin:
-      env:
-          - name: SOPS_SECRET_FILE
-            value: ./secret.sops.yaml
+    # plugin:
+    #   env:
+    #       - name: SOPS_SECRET_FILE
+    #         value: ./secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: blah

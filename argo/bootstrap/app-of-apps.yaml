@@ -11,7 +11,6 @@ spec:
     plugin:
       env:
           - name: SOPS_SECRET_FILE
-            value: ./secret.sops.yaml
+            value: ../bootstrap/secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: blah
