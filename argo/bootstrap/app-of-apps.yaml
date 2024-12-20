@@ -7,10 +7,11 @@ spec:
   source:
     repoURL: https://github.com/WolfeCub/home-ops
     targetRevision: argo
-    path: ./argo/apps
+    path: ./argo/bootstrap/namespaces
     plugin:
       env:
           - name: SOPS_SECRET_FILE
-            value: ../bootstrap/secret.sops.yaml
+            value: ../secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
+    namespace: argocd
