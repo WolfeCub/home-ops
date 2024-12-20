@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fluidd
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: printer
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: https://github.com/WolfeCub/home-ops
+      targetRevision: argo
+      ref: values
+    - repoURL: https://bjw-s.github.io/helm-charts
+      chart: app-template
+      targetRevision: 3.1.0
+      helm:
+        valueFiles:
+          - $values/kubernetes/argo-apps/fluidd/values.yaml

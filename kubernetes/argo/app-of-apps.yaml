@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/WolfeCub/home-ops
     targetRevision: argo
-    path: ./kubernetes/argo-app
+    path: ./kubernetes/argo-apps
     plugin:
       env:
         - name: SOPS_SECRET_FILE
