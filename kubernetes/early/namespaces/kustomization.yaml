@@ -12,3 +12,4 @@ resources:
   - rook-ceph.yaml
   - longhorn-system.yaml
   - games.yaml
+  - printer.yaml

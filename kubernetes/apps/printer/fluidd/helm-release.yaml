@@ -2,8 +2,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: glance
-  namespace: utils
+  name: fluidd
+  namespace: printer
 spec:
   interval: 5m
   upgrade:
@@ -23,18 +23,15 @@ spec:
         containers:
           main:
             image:
-              repository: glanceapp/glance
-              tag: v0.6.3
-            env:
-              TZ: America/Toronto
-
+              repository: ghcr.io/fluidd-core/fluidd
+              tag: v1.31.2
     ingress:
       main:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:
-          - host: "glance.${domain}"
+          - host: "fluidd.${domain}"
             paths:
               - path: /
                 pathType: Prefix
@@ -45,13 +42,4 @@ spec:
         controller: main
         ports:
           http:
-            port: 8080
-
-    persistence:
-      config-file:
-        type: configMap
-        name: glance-configmap
-        globalMounts:
-          - path: /app/glance.yml
-            subPath: glance.yml
-            readOnly: true
+            port: 80
