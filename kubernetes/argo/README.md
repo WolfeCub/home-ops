@@ -13,3 +13,8 @@ Bootstrap with helm
 ```
 helm install argocd argo/argo-cd --values values.yaml --namespace argocd
 ```
+
+Apply `Application`s
+
+```
+kubectl create -f argo.yaml -f app-of-apps.yaml

@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,11 +8,13 @@ spec:
   source:
     repoURL: https://github.com/WolfeCub/home-ops
     targetRevision: argo
-    path: ./argo/bootstrap/namespaces
+    path: ./kubernetes/argo/namespaces
     plugin:
       env:
-          - name: SOPS_SECRET_FILE
-            value: ../secret.sops.yaml
+        - name: SOPS_SECRET_FILE
+          value: ../secret.sops.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
+# syncPolicy:
+#   automated: {}
