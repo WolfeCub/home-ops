@@ -28,7 +28,7 @@ spec:
             annotations:
               traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
             hosts:
-              - host: "fluidd.${domain}"
+              - host: "fluidd.<secret:domain>"
                 paths:
                   - path: /
                     pathType: Prefix
