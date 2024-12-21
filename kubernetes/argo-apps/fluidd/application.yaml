@@ -6,6 +6,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  syncPolicy:
+    automated: {}
   destination:
     namespace: printer
     server: https://kubernetes.default.svc
