@@ -1,0 +1,53 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ale-pal
+  namespace: argocd
+spec:
+  project: default
+  # syncPolicy:
+  #   automated: {}
+  destination:
+    namespace: utils
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://bjw-s.github.io/helm-charts
+    chart: app-template
+    targetRevision: 3.1.0
+    helm:
+      valuesObject:
+        controllers:
+          main:
+            containers:
+              main:
+                image:
+                  repository: ghcr.io/wolfecub/ale-pal
+                  tag: latest
+                  pullPolicy: Always
+        ingress:
+          main:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
+            hosts:
+              - host: "ale.<secret:domain>"
+                paths:
+                  - path: /
+                    pathType: Prefix
+                    service:
+                      identifier: main
+        service:
+          main:
+            controller: main
+            ports:
+              http:
+                port: 8080
+
+        persistence:
+          config:
+            existingClaim: ale-pal-data
+            globalMounts:
+              - path: /config
+                readOnly: false
