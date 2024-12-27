@@ -1,5 +1,7 @@
 ---
 configs:
+  cm:
+    kustomize.buildOptions: --load-restrictor LoadRestrictionsNone
   cmp:
     create: true
     plugins:
