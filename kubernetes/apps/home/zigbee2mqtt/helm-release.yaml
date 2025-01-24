@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: koenkk/zigbee2mqtt
-      tag: 1.42.0
+      tag: 2.0.0
     ingress:
       main:
         enabled: true
@@ -64,7 +64,8 @@ spec:
     env:
       TZ: America/Toronto
       ZIGBEE2MQTT_DATA: /data
+      ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: zstack
       ZIGBEE2MQTT_CONFIG_SERIAL_PORT: /dev/zigbee
       ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://${mqtt_ip}
-      ZIGBEE2MQTT_CONFIG_HOMEASSISTANT: true
+      ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
       # DEBUG: "zigbee-herdsman*"
