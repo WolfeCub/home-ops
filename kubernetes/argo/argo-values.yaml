@@ -1,5 +1,7 @@
 ---
 configs:
+  params:
+    server.insecure: true
   cm:
     kustomize.buildOptions: --load-restrictor LoadRestrictionsNone
   cmp:
