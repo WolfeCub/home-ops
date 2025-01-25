@@ -67,6 +67,7 @@ spec:
     persistence:
       data:
         enabled: true
+        mountPath: /unifi
         existingClaim: unifi-config
     podSecurityContext:
       fsGroup: 568
