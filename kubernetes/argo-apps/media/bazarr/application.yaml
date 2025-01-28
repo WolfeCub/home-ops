@@ -6,8 +6,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  # syncPolicy:
-  #   automated: {}
+  syncPolicy:
+    automated: {}
   destination:
     namespace: media
     server: https://kubernetes.default.svc
@@ -58,5 +58,5 @@ spec:
             type: custom
             volumeSpec:
               nfs:
-                server: "${storage_host_ip}"
+                server: "<secret:storage_host_ip>"
                 path: /raid/network_share/media/
