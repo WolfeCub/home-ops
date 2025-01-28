@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - argo-ingress.yaml
   - printer
-  - media
+# - media
