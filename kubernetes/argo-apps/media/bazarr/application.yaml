@@ -1,0 +1,62 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bazarr
+  namespace: argocd
+spec:
+  project: default
+  # syncPolicy:
+  #   automated: {}
+  destination:
+    namespace: media
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://bjw-s.github.io/helm-charts
+    chart: app-template
+    targetRevision: 3.1.0
+    helm:
+      valuesObject:
+        controllers:
+          main:
+            containers:
+              main:
+                image:
+                  repository: ghcr.io/onedr0p/bazarr
+                  tag: 1.4.5
+                securityContext:
+                  fsGroup: 568
+                  runAsUser: 568
+                  runAsGroup: 568
+                env:
+                  TZ: America/Toronto
+        ingress:
+          main:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+            hosts:
+              - host: "bazarr.<secret:domain>"
+                paths:
+                  - path: /
+                    pathType: Prefix
+                    service:
+                      identifier: main
+        service:
+          main:
+            controller: main
+            ports:
+              http:
+                port: 6767
+
+        persistence:
+          config:
+            enabled: true
+            existingClaim: bazarr-config
+          media:
+            enabled: true
+            type: custom
+            volumeSpec:
+              nfs:
+                server: "${storage_host_ip}"
+                path: /raid/network_share/media/

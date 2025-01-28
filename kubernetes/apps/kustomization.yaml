@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - admin
   - utils
-  - media
   - home
+# - media
 # - printer
 # - misc
 # - games
