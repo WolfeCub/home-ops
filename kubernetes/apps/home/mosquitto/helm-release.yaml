@@ -28,6 +28,7 @@ spec:
     service:
       main:
         type: LoadBalancer
+        loadBalancerIP: ${mqtt_ip}
         ports:
           http:
             enabled: false
