@@ -40,15 +40,15 @@ spec:
       config:
         enabled: true
         existingClaim: transmission-config
-        mountPath: /data/transmission-home
-      downloads-complete:
+        mountPath: /config
+      downloads:
         enabled: true
         type: custom
         volumeSpec:
           nfs:
             server: "${storage_host_ip}"
             path: /raid/k8s-shared/torrents/downloads
-        mountPath: /data/downloads
+        mountPath: /downloads
     podSecurityContext:
       fsGroup: 568
     env:
@@ -59,6 +59,8 @@ spec:
       LOCAL_NETWORK: "10.42.0.0/16,10.43.0.0/16,192.168.0.0/24"
       PUID: 568
       PGID: 568
+      TRANSMISSION_DOWNLOAD_DIR: /downloads
+      TRANSMISSION_INCOMPLETE_DIR_ENABLED: false
     securityContext:
       capabilities:
         add:
