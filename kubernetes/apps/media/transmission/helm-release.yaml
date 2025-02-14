@@ -47,7 +47,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${storage_host_ip}"
-            path: /raid/k8s-shared/torrents/downloads
+            path: /raid/network_share/media/Downloads
         mountPath: /downloads
     podSecurityContext:
       fsGroup: 568

@@ -40,21 +40,6 @@ spec:
       config:
         enabled: true
         existingClaim: sonarr-config
-      downloads:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${storage_host_ip}"
-            path: /raid/k8s-shared/torrents/downloads
-      media-tv:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${storage_host_ip}"
-            path: /raid/network_share/media/TV-shows
-        mountPath: /tv
       media:
         enabled: true
         type: custom
