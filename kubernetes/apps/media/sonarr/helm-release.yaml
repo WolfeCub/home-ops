@@ -46,7 +46,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${storage_host_ip}"
-            path: /raid/k8s-shared/torrents/completed
+            path: /raid/k8s-shared/torrents/downloads
       media-tv:
         enabled: true
         type: custom
