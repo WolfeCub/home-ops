@@ -41,6 +41,10 @@ spec:
         enabled: true
         existingClaim: transmission-config
         mountPath: /config
+      vpn-config:
+        enabled: true
+        existingClaim: transmission-ovpn-config
+        mountPath: /etc/openvpn/custom/
       downloads:
         enabled: true
         type: custom
@@ -49,12 +53,7 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/Downloads
         mountPath: /downloads
-      ovpn-config:
-        enabled: true
-        type: configMap
-        name: ovpn-config
-        mountPath: /etc/openvpn/custom/nl.protonvpn.udp.ovpn
-        subPath: nl.protonvpn.udp.ovpn
+
     podSecurityContext:
       fsGroup: 568
     env:
