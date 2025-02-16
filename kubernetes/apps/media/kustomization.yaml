@@ -10,4 +10,5 @@ resources:
   - prowlarr
   - flaresolverr
   - jellyfin
+  - qbittorrent
   # - readarr
