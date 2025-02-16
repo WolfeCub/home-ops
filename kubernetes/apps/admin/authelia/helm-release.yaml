@@ -100,6 +100,11 @@ spec:
             resources:
               - '^/api.*$'
 
+          - domain: "qb.${domain}"
+            policy: bypass
+            resources:
+              - '^/api.*$'
+
           ## Rules applied to everyone
           - domain: "*.${domain}"
             policy: two_factor
