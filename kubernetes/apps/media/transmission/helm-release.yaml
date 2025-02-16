@@ -57,10 +57,10 @@ spec:
     podSecurityContext:
       fsGroup: 568
     env:
-      OPENVPN_USERNAME: "${vpn_surfshark_username}"
-      OPENVPN_PASSWORD: "${vpn_surfshark_password}"
-      OPENVPN_PROVIDER: SURFSHARK
-      OPENVPN_CONFIG: lu-ste.prod.surfshark.com_udp
+      OPENVPN_USERNAME: "${vpn_proton_username}"
+      OPENVPN_PASSWORD: "${vpn_proton_password}"
+      OPENVPN_PROVIDER: CUSTOM
+      OPENVPN_CONFIG: nl.protonvpn.udp
       LOCAL_NETWORK: "10.42.0.0/16,10.43.0.0/16,192.168.0.0/24"
       PUID: 568
       PGID: 568
