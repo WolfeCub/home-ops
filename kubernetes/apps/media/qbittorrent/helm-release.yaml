@@ -92,12 +92,6 @@ spec:
                   identifier: main
 
     persistence:
-      config:
-        existingClaim: qbittorrent-config
-        advancedMounts:
-          main:
-            main:
-              - path: /config
       # Configure an emptyDir to share the port-forwarding location between containers
       gluetun-data:
         type: emptyDir
@@ -108,3 +102,20 @@ spec:
             port-forward:
               - path: /tmp/gluetun
                 readOnly: true
+      config:
+        existingClaim: qbittorrent-config
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/Downloads
+        advancedMounts:
+          main:
+            main:
+              - path: /downloads
