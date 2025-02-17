@@ -47,6 +47,8 @@ spec:
               SERVER_COUNTRIES: Netherlands
               WIREGUARD_PRIVATE_KEY: ${vpn_proton_wg_private_key}
               FIREWALL_INPUT_PORTS: 8080
+              DOT: 'off'
+              DNS_ADDRESS: 127.0.0.2
             restartPolicy: Always
             securityContext:
               capabilities:
