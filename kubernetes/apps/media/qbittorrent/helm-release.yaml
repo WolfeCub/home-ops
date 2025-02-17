@@ -20,27 +20,25 @@ spec:
       interval: 5m
   values:
     defaultPodOptions:
-      automountServiceAccountToken: false
-
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
     controllers:
-      main:
-        containers:
-          main:
+      app:
+        enabled: true
+        initContainers:
+          dnsdist:
             image:
-              repository: ghcr.io/onedr0p/qbittorrent
-              tag: 5.0.3
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
+              repository: docker.io/powerdns/dnsdist-19
+              tag: 1.9.8
+            restartPolicy: Always
 
           gluetun:
-            dependsOn: main
+            dependsOn: dnsdist
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.40.0
-            # -- environment variables.
-            # See [image docs](https://github.com/qdm12/gluetun-wiki) for more details on how to configure
-            # your VPN and how to set up port-forwarding.
             env:
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
@@ -49,38 +47,52 @@ spec:
               SERVER_COUNTRIES: Netherlands
               WIREGUARD_PRIVATE_KEY: ${vpn_proton_wg_private_key}
               FIREWALL_INPUT_PORTS: 8080
-              DOT: 'off'
+            restartPolicy: Always
             securityContext:
               capabilities:
                 add:
                   - NET_ADMIN
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 5.0.3
+            env:
+              PUID: 568
+              PGID: 568
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
 
           port-forward:
-            dependsOn: gluetun
             image:
-              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
-              tag: "1.0"
+              repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
+              tag: 0.0.4
             env:
-              - name: QBITTORRENT_SERVER
-                value: localhost
-              - name: QBITTORRENT_PORT
-                value: "8080"
-              - name: PORT_FORWARDED
-                value: "/tmp/gluetun/forwarded_port"
-        pod:
-          securityContext:
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
+              GLUETUN_CONTROL_SERVER_HOST: localhost
+              GLUETUN_CONTROL_SERVER_PORT: 8000
+              QBITTORRENT_HOST: localhost
+              QBITTORRENT_WEBUI_PORT: 8080
+              CRON_ENABLED: true
+              CRON_SCHEDULE: "*/10 * * * *"
+              LOG_TIMESTAMP: false
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
 
+    serviceAccount:
+      create: true
+      name: qbittorrent-app
     service:
-      main:
-        controller: main
+      app:
+        enabled: true
+        controller: app
+        primary: true
         ports:
           http:
             port: 8080
-
     ingress:
-      main:
+      app:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
@@ -90,24 +102,13 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
-
+                  identifier: app
     persistence:
-      # Configure an emptyDir to share the port-forwarding location between containers
-      gluetun-data:
-        type: emptyDir
-        advancedMounts:
-          main:
-            gluetun:
-              - path: /tmp/gluetun
-            port-forward:
-              - path: /tmp/gluetun
-                readOnly: true
       config:
         existingClaim: qbittorrent-config
         advancedMounts:
-          main:
-            main:
+          app:
+            app:
               - path: /config
       downloads:
         enabled: true
@@ -117,6 +118,30 @@ spec:
             server: "${storage_host_ip}"
             path: /raid/network_share/media/Downloads
         advancedMounts:
-          main:
-            main:
+          app:
+            app:
               - path: /downloads
+      tun:
+        type: hostPath
+        hostPath: /dev/net
+        hostPathType: Directory
+        advancedMounts:
+          app:
+            gluetun:
+              - path: /dev/net/tun
+                subPath: tun
+      dnsdist:
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          app:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true
+      port-forward-config:
+        type: emptyDir
+        advancedMounts:
+          app:
+            port-forward:
+              - path: /config
