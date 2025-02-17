@@ -42,13 +42,15 @@ spec:
             env:
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
-              VPN_PORT_FORWARDING: on
               VPN_SERVICE_PROVIDER: protonvpn
+              VPN_PORT_FORWARDING: on
+              PORT_FORWARD_ONLY: on
               SERVER_COUNTRIES: Netherlands
               WIREGUARD_PRIVATE_KEY: ${vpn_proton_wg_private_key}
               FIREWALL_INPUT_PORTS: 8080
               DOT: 'off'
               DNS_ADDRESS: 127.0.0.2
+              TZ: America/Toronto
             restartPolicy: Always
             securityContext:
               capabilities:
@@ -76,23 +78,16 @@ spec:
               QBITTORRENT_HOST: localhost
               QBITTORRENT_WEBUI_PORT: 8080
               CRON_ENABLED: true
-              CRON_SCHEDULE: "*/10 * * * *"
-              LOG_TIMESTAMP: false
-            securityContext:
-              runAsUser: 568
-              runAsGroup: 568
+              CRON_SCHEDULE: '*/5 * * * *'
+              LOG_TIMESTAMP: true
 
-    serviceAccount:
-      create: true
-      name: qbittorrent-app
     service:
       app:
-        enabled: true
         controller: app
-        primary: true
         ports:
           http:
             port: 8080
+
     ingress:
       app:
         enabled: true
@@ -141,6 +136,7 @@ spec:
               - path: /etc/dnsdist/dnsdist.conf
                 subPath: dnsdist.conf
                 readOnly: true
+
       port-forward-config:
         type: emptyDir
         advancedMounts:
