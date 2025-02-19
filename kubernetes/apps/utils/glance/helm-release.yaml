@@ -52,6 +52,6 @@ spec:
         type: configMap
         name: glance-configmap
         globalMounts:
-          - path: /app/glance.yml
+          - path: /app/config/glance.yml
             subPath: glance.yml
             readOnly: true
