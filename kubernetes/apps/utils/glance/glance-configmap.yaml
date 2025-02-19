@@ -46,10 +46,10 @@ data:
                     url: https://radarr.${domain}
                     check-url: http://radarr.media.svc.cluster.local:7878
                     same-tab: true
-                  - title: Transmission
-                    icon: si:transmission
-                    url: https://transmission.${domain}
-                    check-url: http://transmission.media.svc.cluster.local:9091
+                  - title: qBittorrent
+                    icon: si:qbittorrent
+                    url: https://qb.${domain}
+                    check-url: http://qbittorrent.media.svc.cluster.local:8080
                     same-tab: true
                   - title: Prowlarr
                     icon: si:prowlarr
