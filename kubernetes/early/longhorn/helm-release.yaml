@@ -22,7 +22,7 @@ spec:
       enabled: true
       host: "longhorn.${domain}"
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file,admin-forwardauth-authelia@kubernetescrd,longhorn-system-svc-longhorn-headers@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd,longhorn-system-svc-longhorn-headers@kubernetescrd"
 
     persistence:
       reclaimPolicy: Retain

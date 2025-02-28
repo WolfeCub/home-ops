@@ -24,8 +24,6 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "localOnly@file"
         hosts:
           - host: "netboot.${domain}"
             paths:

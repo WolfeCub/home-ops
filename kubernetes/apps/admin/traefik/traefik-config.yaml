@@ -12,17 +12,10 @@ data:
           basicAuth:
             users: ["${traefik_basic_auth_credentials_hash}"]
 
-        localOnly:
-          iPAllowList:
-            sourceRange:
-              - "${network_subnet}"
-              - 10.0.8.0/24
-
       routers:
         api:
           rule: "Host(`traefik.${domain}`)"
           entrypoints: ["websecure"]
           service: "api@internal"
           middlewares:
-            - "localOnly@file"
             - "admin-forwardauth-authelia@kubernetescrd"
