@@ -74,9 +74,13 @@ data:
         retain:
           days: 3
           mode: all
-        events:
+        alerts:
           retain:
-            default: 30
+            days: 30
+            mode: active_objects
+        detections:
+          retain:
+            days: 14
             mode: active_objects
 
       snapshots:
