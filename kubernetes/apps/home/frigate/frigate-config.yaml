@@ -90,3 +90,7 @@ data:
       birdseye:
         enabled: True
         mode: continuous
+
+      notifications:
+        enabled: true
+        email: "${email}"
