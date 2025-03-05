@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: jacobalberty/unifi
-      tag: v9.0.108
+      tag: v9.0.114
     hostNetwork: true
     service:
       main:
