@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/fluidd-core/fluidd
-              tag: v1.31.4
+              tag: v1.32.6
     ingress:
       main:
         enabled: true
