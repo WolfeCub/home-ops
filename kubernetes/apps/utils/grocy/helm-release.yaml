@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: linuxserver/grocy
-              tag: 4.2.0
+              tag: 4.4.2
     ingress:
       main:
         enabled: true
