@@ -6,6 +6,6 @@ resources:
   - utils
   - media
   - home
-# - printer
+  - printer
 # - misc
 # - games
