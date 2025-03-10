@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: zwavejs/zwave-js-ui
-      tag: 9.31.0
+      tag: 9.32.0
     ingress:
       main:
         enabled: true
