@@ -8,9 +8,9 @@ data:
   dynamic.yml: |
     http:
       middlewares:
-        basic:
+        spoolman-basic:
           basicAuth:
-            users: ["${traefik_basic_auth_credentials_hash}"]
+            users: ["${traefik_spoolman_basic_auth}"]
 
       routers:
         api:

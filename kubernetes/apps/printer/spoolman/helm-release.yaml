@@ -29,7 +29,7 @@ spec:
       main:
         enabled: true
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "spoolman-basic@file"
         hosts:
           - host: "spoolman.${domain}"
             paths:
