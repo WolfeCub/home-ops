@@ -31,9 +31,6 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
         hosts:
           - host: "searx.${domain}"
             paths:
