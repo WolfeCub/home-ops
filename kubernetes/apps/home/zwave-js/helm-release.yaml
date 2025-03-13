@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,16 +12,35 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 3.7.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: zwavejs/zwave-js-ui
-      tag: 9.32.0
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: zwavejs/zwave-js-ui
+              tag: 9.32.0
+            env:
+              TZ: America/Toronto
+            securityContext:
+              privileged: true
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - docker02
+
     ingress:
       main:
         enabled: true
@@ -31,39 +51,32 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  identifier: main
+
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8091
           websocket:
             enabled: true
             port: 3000
+
     persistence:
       config:
         enabled: true
         existingClaim: zwave-js-config
-        mountPath: /usr/src/app/store
+        globalMounts:
+          - path: /usr/src/app/store
+            readOnly: false
       usb:
         enabled: true
         type: hostPath
-        hostPath: /dev/ttyUSB0
-        mountPath: /dev/zwave
         hostPathType: CharDevice
-
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - docker02
-
-    podSecurityContext:
-      fsGroup: 568
-    securityContext:
-      privileged: true
-    env:
-      TZ: America/Toronto
+        hostPath: /dev/ttyUSB0
+        advancedMounts:
+          main:
+            main:
+              - path: /dev/zwave
