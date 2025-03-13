@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,16 +12,21 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 3.7.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: ghcr.io/lissy93/dashy
-      tag: 3.1.0
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/lissy93/dashy
+              tag: 3.1.0
+
     ingress:
       main:
         enabled: true
@@ -32,9 +38,12 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  identifier: main
 
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
@@ -42,7 +51,7 @@ spec:
     persistence:
       config:
         enabled: true
-        mountPath: /app/user-data
         existingClaim: dashy-config
-    podSecurityContext:
-      fsGroup: 568
+        globalMounts:
+          - path: /app/user-data
+            readOnly: false
