@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,16 +12,41 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 3.7.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: koenkk/zigbee2mqtt
-      tag: 2.1.3
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: koenkk/zigbee2mqtt
+              tag: 2.1.3
+            env:
+              TZ: America/Toronto
+              ZIGBEE2MQTT_DATA: /data
+              ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: zstack
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: /dev/zigbee
+              ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://${mqtt_ip}
+              ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
+              # DEBUG: "zigbee-herdsman*"
+            securityContext:
+              privileged: true
+        pod:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - docker02
+
     ingress:
       main:
         enabled: true
@@ -31,11 +57,16 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  identifier: main
+
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
+
     persistence:
       data:
         enabled: true
@@ -45,27 +76,7 @@ spec:
         enabled: true
         type: hostPath
         hostPath: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_7ec5690d65afed11a1253d4e71c9e8b5-if00-port0
-        mountPath: /dev/zigbee
-
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - docker02
-
-    podSecurityContext:
-      fsGroup: 568
-    securityContext:
-      privileged: true
-    env:
-      TZ: America/Toronto
-      ZIGBEE2MQTT_DATA: /data
-      ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: zstack
-      ZIGBEE2MQTT_CONFIG_SERIAL_PORT: /dev/zigbee
-      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://${mqtt_ip}
-      ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
-      # DEBUG: "zigbee-herdsman*"
+        advancedMounts:
+          main:
+            main:
+              - path: /dev/zigbee
