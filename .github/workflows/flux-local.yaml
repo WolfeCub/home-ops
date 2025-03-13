@@ -1,0 +1,42 @@
+name: flux-local-diff
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  flux-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@v2.2.3
+      - uses: allenporter/flux-local/action/diff@7.2.1
+        id: diff
+        with:
+          live-branch: master
+          path: ./kubernetes
+          resource: helmrelease
+      - name: PR Comments
+        uses: mshick/add-pr-comment@v2
+        if: ${{ steps.diff.outputs.diff != '' }}
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message-failure: Unable to post diff
+          message: |
+            `````diff
+            ${{ steps.diff.outputs.diff }}
+            `````
+
+  flux-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@v2.2.2
+      - uses: allenporter/flux-local/action/test@7.2.1
+        with:
+          path: ./kubernetes
+          enable-helm: true
