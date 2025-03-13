@@ -4,9 +4,9 @@
     <a id="image3" href="#image3"><img alt="longhorn" src="https://raw.githubusercontent.com/cncf/artwork/master/projects/longhorn/icon/color/longhorn-icon-color.png" height="100"></a>
     <a id="image4" href="#image4"><img alt="calico" src="https://www.tigera.io/app/uploads/2021/06/Calico-logo-badge.svg" height="100"></a>
     <a id="image5" href="#image5"><img alt="kube-vip" src="https://kube-vip.io/images/kube-vip.png" height="100"></a>
-    <a id="image6" href="#image6"><img alt="traefik" src="https://seeklogo.com/images/T/traefik-logo-337D318F44-seeklogo.com.png" height="100"></a>
+    <a id="image6" href="#image6"><img alt="traefik" src="https://icon.icepanel.io/Technology/svg/Traefik-Proxy.svg" height="100"></a>
     <a id="image7" href="#image7"><img alt="cert-manager" src="https://avatars.githubusercontent.com/u/39950598" height="100"></a>
-    <a id="image8" href="#image8"><img alt="renovate" src="https://d4.alternativeto.net/6JboU3aXeS4A90Tlkij_5DUVX4QCY2R4J4dw3SqRSyo/rs:fill:280:280:0/g:ce:0:0/YWJzOi8vZGlzdC9pY29ucy9yZW5vdmF0ZV8xNTgxNDcucG5n.png" height="100"></a>
+    <a id="image8" href="#image8"><img alt="renovate" src="https://avatars.githubusercontent.com/u/105765982" height="100"></a>
 </p>
 
 <h1 align="center">
