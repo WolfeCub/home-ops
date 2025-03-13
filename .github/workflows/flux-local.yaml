@@ -8,6 +8,8 @@ jobs:
   flux-diff:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@v2.2.3
       - uses: allenporter/flux-local/action/diff@7.2.1
@@ -30,6 +32,8 @@ jobs:
   flux-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Flux CLI
         uses: fluxcd/flux2/action@v2.2.2
       - uses: allenporter/flux-local/action/test@7.2.1
