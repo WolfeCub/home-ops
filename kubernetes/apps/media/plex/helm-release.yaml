@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.41.5.9522-a96edc606
+              tag: 1.41.5.9522
             securityContext:
               fsGroup: 568
               runAsUser: 568
