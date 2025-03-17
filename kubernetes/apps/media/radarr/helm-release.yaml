@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/radarr
-              tag: 5.19.3.9730
+              tag: 5.20.1.9773
             securityContext:
               fsGroup: 568
               runAsUser: 568
