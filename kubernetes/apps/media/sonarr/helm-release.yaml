@@ -24,7 +24,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/sonarr
+              repository: ghcr.io/home-operations/sonarr
               tag: 4.0.13.2932
             securityContext:
               fsGroup: 568
