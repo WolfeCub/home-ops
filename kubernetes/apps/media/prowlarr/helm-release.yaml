@@ -24,8 +24,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/home-operations/prowlarr-develop
-              tag: 1.32.1.4983
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 1.32.2.4987
             securityContext:
               fsGroup: 568
               runAsUser: 568
