@@ -41,6 +41,7 @@ spec:
       main:
         enabled: true
         annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:
           - host: "frigate.${domain}"
