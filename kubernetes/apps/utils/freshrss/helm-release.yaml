@@ -1,0 +1,56 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: freshrss
+  namespace: utils
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: freshrss/freshrss
+              tag: 1.26.1
+            env:
+              TZ: America/Toronto
+              CRON_MIN: 1,31
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
+        hosts:
+          - host: "rss.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      config:
+        existingClaim: freshrss-data
+        globalMounts:
+          - path: /var/www/FreshRSS/data
+            readOnly: false

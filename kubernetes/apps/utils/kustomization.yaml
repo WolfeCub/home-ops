@@ -10,3 +10,4 @@ resources:
   - glance
   - ollama
   - searxng
+  - freshrss
