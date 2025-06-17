@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: jacobalberty/unifi
-              tag: v9.0.114
+              tag: v9.2.87
             env:
               TZ: America/Toronto
 
