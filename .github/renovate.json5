@@ -12,33 +12,33 @@
     'legacy/**',
   ],
   helmv3: {
-    fileMatch: [
-      'charts/.+/Chart\\.ya?ml$',
+    managerFilePatterns: [
+      '/charts/.+/Chart\\.ya?ml$/',
     ],
   },
   'helm-values': {
-    fileMatch: [
-      'kubernetes/.+/helm-release\\.ya?ml$',
+    managerFilePatterns: [
+      '/kubernetes/.+/helm-release\\.ya?ml$/',
     ],
   },
   kubernetes: {
-    fileMatch: [
-      'kubernetes/.+\\.ya?ml$',
+    managerFilePatterns: [
+      '/kubernetes/.+\\.ya?ml$/',
     ],
     ignorePaths: [
       'kubernetes/bootstrap/',
     ],
   },
   flux: {
-    fileMatch: [
-      'kubernetes/.+\\.ya?ml$',
+    managerFilePatterns: [
+      '/kubernetes/.+\\.ya?ml$/',
     ],
   },
   customManagers: [
     {
       customType: 'regex',
-      fileMatch: [
-        'kubernetes/crds/cert-manager/.+\\.ya?ml$',
+      managerFilePatterns: [
+        '/kubernetes/crds/cert-manager/.+\\.ya?ml$/',
       ],
       matchStrings: [
         'registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/',
@@ -47,8 +47,8 @@
     },
     {
       customType: 'regex',
-      fileMatch: [
-        'kubernetes/crds/traefik/.+\\.ya?ml$',
+      managerFilePatterns: [
+        '/kubernetes/crds/traefik/.+\\.ya?ml$/',
       ],
       matchStrings: [
         'registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n',
