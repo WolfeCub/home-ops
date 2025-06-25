@@ -7,8 +7,9 @@
     'prIgnoreNotification',
   ],
   rebaseWhen: 'conflicted',
-  includePaths: [
-    'kubernetes/**',
+  ignorePaths: [
+    'provision/**',
+    'legacy/**',
   ],
   helmv3: {
     fileMatch: [
