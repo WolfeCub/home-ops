@@ -60,7 +60,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.0.4
+              tag: 5.1.1
             env:
               PUID: 568
               PGID: 568
