@@ -8,3 +8,4 @@ resources:
   - traefik
   - kubewall
   - capacitor
+  - ghost
