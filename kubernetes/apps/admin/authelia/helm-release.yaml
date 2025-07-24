@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: authelia/authelia
-      tag: 4.39.4
+      tag: 4.39.5
     pod:
       kind: Deployment
       strategy:
