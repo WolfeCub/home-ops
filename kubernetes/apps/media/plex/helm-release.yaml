@@ -61,7 +61,6 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-        medium: Memory
       media:
         enabled: true
         type: custom
