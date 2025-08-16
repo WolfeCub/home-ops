@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/blakeblackshear/frigate
-              tag: 0.15.1
+              tag: 0.16.0
             securityContext:
               privileged: true
         pod:
