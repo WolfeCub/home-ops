@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/plex
-              tag: 1.41.8.9834
+              tag: 1.42.1.10060
             securityContext:
               fsGroup: 568
               runAsUser: 568
