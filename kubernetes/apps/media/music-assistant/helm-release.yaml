@@ -56,3 +56,6 @@ spec:
       config:
         enabled: true
         existingClaim: music-assistant-config
+        globalMounts:
+          - path: /data
+            readOnly: false
