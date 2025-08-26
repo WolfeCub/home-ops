@@ -28,6 +28,10 @@ spec:
               tag: 2.5.8
             env:
               TZ: America/Toronto
+          ytdlp-pot:
+            image:
+              repository: brainicism/bgutil-ytdlp-pot-provider
+              tag: 1.2.2
 
     ingress:
       main:
