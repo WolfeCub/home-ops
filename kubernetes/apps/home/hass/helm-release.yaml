@@ -27,7 +27,7 @@ spec:
           main:
             image:
               repository: homeassistant/home-assistant
-              tag: 2025.8.2
+              tag: 2025.9.0
             env:
               TZ: America/Toronto
             lifecycle:
