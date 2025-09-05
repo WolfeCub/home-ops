@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: esphome/esphome
-              tag: '2025.8'
+              tag: '2025.8.3'
 
     ingress:
       main:
