@@ -46,10 +46,12 @@ spec:
           piper:
             image:
               repository: linuxserver/piper
-              tag: 1.6.3
+              tag: 1.6.3-ls75
             env:
               TZ: America/Toronto
               PIPER_VOICE: en_US-hfc_female-medium
+              WHISPER_BEAM: 5
+              STREAMING: true
 
       codeserver:
         containers:
@@ -103,6 +105,18 @@ spec:
         ports:
           http:
             port: 8080
+
+      whisper:
+        controller: speech
+        ports:
+          http:
+            port: 10300
+
+      piper:
+        controller: speech
+        ports:
+          http:
+            port: 10200
 
     persistence:
       config:
