@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: postgres
+  namespace: admin
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: postgres
+              tag: '17.6'
+            env:
+              POSTGRES_PASSWORD: '${postgres_password}'
+              PGDATA: /var/lib/postgresql/data/pgdata
+
+    service:
+      main:
+        controller: main
+        ports:
+          db:
+            port: 5432
+            protocol: TCP
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: postgres-data
+        globalMounts:
+          - path: /var/lib/postgresql/data/
+            readOnly: false
