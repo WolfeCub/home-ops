@@ -8,5 +8,4 @@ resources:
   - traefik
   - kubewall
   - capacitor
-  - postgres
-  - voidauth
+  # - postgres
