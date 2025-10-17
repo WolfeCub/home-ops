@@ -35,7 +35,8 @@ spec:
               tag: 1.6.3-ls75
             env:
               TZ: America/Toronto
-              PIPER_VOICE: en_US-hfc_female-medium
+              # PIPER_VOICE: en_US-hfc_female-medium
+              PIPER_VOICE: en_US-amy-low
               WHISPER_BEAM: 5
               STREAMING: true
 
