@@ -28,8 +28,7 @@ spec:
       reclaimPolicy: Retain
 
     defaultSettings:
-      backupTarget: s3://longhorn-backups@us-east-1/
-      backupTargetCredentialSecret: minio-credentials
+      backupTarget: nfs://${storage_host_ip}:/raid/longhorn-backups
       backupConcurrentLimit: 1
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
 
