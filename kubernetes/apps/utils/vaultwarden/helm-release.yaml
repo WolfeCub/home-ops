@@ -24,7 +24,7 @@ spec:
         containers:
           main:
             image:
-              repository: vaultwarden/server
+              repository: ghcr.io/dani-garcia/vaultwarden
               tag: 1.34.3
             env:
               DATA_FOLDER: "config"
