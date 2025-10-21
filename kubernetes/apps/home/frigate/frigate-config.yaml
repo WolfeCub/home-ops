@@ -92,5 +92,5 @@ data:
         mode: continuous
 
       notifications:
-        enabled: true
+        enabled: False
         email: "${email}"
