@@ -68,8 +68,7 @@ spec:
     persistence:
       models:
         enabled: true
-        type: hostPath
-        hostPath: /ollama/models
+        type: emptyDir
         advancedMounts:
           main:
             main:
