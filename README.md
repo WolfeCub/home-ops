@@ -1,8 +1,7 @@
 <p align="center">
-    <a id="image1" href="#image1"><img alt="k3s" src="https://raw.githubusercontent.com/cncf/artwork/master/projects/k3s/icon/color/k3s-icon-color.png" height="100"></a>
+    <a id="image1" href="#image1"><img alt="talos" src="https://avatars.githubusercontent.com/u/13804887?s=200&v=4" height="100"></a>
     <a id="image2" href="#image2"><img alt="flux" src="https://avatars.githubusercontent.com/u/52158677?s=280&v=4" height="100"></a>
     <a id="image3" href="#image3"><img alt="longhorn" src="https://raw.githubusercontent.com/cncf/artwork/master/projects/longhorn/icon/color/longhorn-icon-color.png" height="100"></a>
-    <a id="image4" href="#image4"><img alt="calico" src="https://www.tigera.io/app/uploads/2021/06/Calico-logo-badge.svg" height="100"></a>
     <a id="image5" href="#image5"><img alt="kube-vip" src="https://kube-vip.io/images/kube-vip.png" height="100"></a>
     <a id="image6" href="#image6"><img alt="traefik" src="https://icon.icepanel.io/Technology/svg/Traefik-Proxy.svg" height="100"></a>
     <a id="image7" href="#image7"><img alt="cert-manager" src="https://avatars.githubusercontent.com/u/39950598" height="100"></a>
@@ -15,10 +14,9 @@
 
 This repository contains the configurations for my gitops managed kubernetes cluster. The technology stack is as follows:
 
-- [k3s](https://k3s.io/) is the kubernetes distribution
+- [talos](https://www.talos.dev/) is the kubernetes distribution
 - [flux2](https://fluxcd.io/) handles gitops (syncing the repository state to the cluster)
 - [longhorn](https://longhorn.io/) for the storage provider
-- [calico](https://www.tigera.io/project-calico/) for the network interface
 - [kube-vip](https://kube-vip.io/) for the load balancer (running in ARP mode)
 - [traefik](https://traefik.io/traefik/) provides the `LoadBalancer` and acts as a reverse proxy
 - [cert-manager](https://cert-manager.io/) will use Let's Encrypt to provide certs to traefik for all my services
