@@ -5,9 +5,6 @@ resources:
   - vaultwarden
   - unifi
   - dashy
-  - grocy
   - ale-pal
   - glance
   - ollama
-  - searxng
-  - freshrss
