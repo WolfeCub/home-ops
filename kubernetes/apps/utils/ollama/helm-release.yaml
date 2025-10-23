@@ -39,7 +39,7 @@ spec:
                       - key: kubernetes.io/hostname
                         operator: In
                         values:
-                          - docker04
+                          - worker03
 
     ingress:
       main:
