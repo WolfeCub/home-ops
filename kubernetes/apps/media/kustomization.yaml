@@ -6,10 +6,10 @@ resources:
   - plex
   - radarr
   - sonarr
-  - transmission
   - prowlarr
   - flaresolverr
   - jellyfin
   - qbittorrent
   - music-assistant
   - cleanuparr
+# - transmission
