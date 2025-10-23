@@ -5,5 +5,5 @@ resources:
   - admin
   - utils
   - media
-# - home
+  - home
 # - printer
