@@ -146,3 +146,17 @@ spec:
     secret:
       jwt:
         value: ${authelia_jwt_secret}
+      additionalSecrets:
+        oidc-jwk:
+          items:
+            - key: private.pem
+              path: private.pem
+
+    identity_providers:
+      oidc:
+        enabled: true
+        jwks:
+          - key_id: default
+            algorithm: RS256
+            use: sig
+            key: { path: /secrets/oidc-jwk/private.pem }
