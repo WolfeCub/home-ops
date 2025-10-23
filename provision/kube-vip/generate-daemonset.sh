@@ -17,5 +17,5 @@ docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION \
     --inCluster \
     --taint \
     --services \
-    --arp \
-    --leaderElection
+    --arp
+    # --leaderElection
