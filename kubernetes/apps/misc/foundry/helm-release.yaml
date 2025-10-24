@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: felddy/foundryvtt
-              tag: "13.332"
+              tag: "13.350"
             env:
               CONTAINER_CACHE: /data/container_cache
               FOUNDRY_ADMIN_KEY: ${foundry_admin_token}
