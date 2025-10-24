@@ -26,7 +26,8 @@ spec:
               repository: ghcr.io/kubewall/kubewall
               tag: 0.0.14
     serviceAccount:
-      kubewall: {}
+      kubewall:
+        enabled: true
     ingress:
       main:
         enabled: true
