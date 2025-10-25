@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: authelia
-      version: 0.10.22
+      version: 0.10.47
       sourceRef:
         kind: HelmRepository
         name: authelia
@@ -46,15 +46,8 @@ spec:
           persistentVolumeClaim:
             claimName: authelia-data
 
-      securityContext:
-        container:
-          fsGroup: 568
-
-    domain: "${domain}"
-
     ingress:
       enabled: true
-      subdomain: login
       tls:
         enabled: false
 
@@ -75,12 +68,15 @@ spec:
           value: ${authelia_duo_secret_key}
 
       authentication_backend:
-        disable_password_reset: true
+        password_reset:
+          disable: true
         ldap:
           enabled: false
         file:
           enabled: true
           path: /config/users_database.yml
+          password:
+            algorithm: argon2
 
       access_control:
         default_policy: deny
@@ -135,28 +131,25 @@ spec:
       notifier:
         smtp:
           enabled: true
-          enabledSecret: true
           address: 'smtp://${authelia_smtp_server}:587'
           sender: "Authelia <${authelia_smtp_email}>"
           username: ${authelia_smtp_email}
           timeout: '15 seconds'
-          password:
-            value: ${authelia_smtp_password}
+          password: ${authelia_smtp_password}
+
+      identity_providers:
+        oidc:
+          enabled: true
+          jwks:
+            - key_id: default
+              algorithm: RS256
+              use: sig
+              key: { path: /secrets/oidc-jwk/private.pem }
+          clients: []
 
     secret:
-      jwt:
-        value: ${authelia_jwt_secret}
       additionalSecrets:
         oidc-jwk:
           items:
             - key: private.pem
               path: private.pem
-
-    identity_providers:
-      oidc:
-        enabled: true
-        jwks:
-          - key_id: default
-            algorithm: RS256
-            use: sig
-            key: { path: /secrets/oidc-jwk/private.pem }
