@@ -135,21 +135,22 @@ spec:
           sender: "Authelia <${authelia_smtp_email}>"
           username: ${authelia_smtp_email}
           timeout: '15 seconds'
-          password: ${authelia_smtp_password}
+          password:
+            value: ${authelia_smtp_password}
 
-      identity_providers:
-        oidc:
-          enabled: true
-          jwks:
-            - key_id: default
-              algorithm: RS256
-              use: sig
-              key: { path: /secrets/oidc-jwk/private.pem }
-          clients: []
-
-    secret:
-      additionalSecrets:
-        oidc-jwk:
-          items:
-            - key: private.pem
-              path: private.pem
+#      identity_providers:
+#        oidc:
+#          enabled: true
+#          jwks:
+#            - key_id: default
+#              algorithm: RS256
+#              use: sig
+#              key: { path: /secrets/oidc-jwk/private.pem }
+#          clients: []
+#
+#    secret:
+#      additionalSecrets:
+#        oidc-jwk:
+#          items:
+#            - key: private.pem
+#              path: private.pem
