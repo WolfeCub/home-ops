@@ -10,3 +10,13 @@ data:
       type: sqlite
       caching: true
       path: /data/gatus.db
+
+    endpoints:
+      - name: example-dns-query
+        url: "192.168.0.1"
+        dns:
+          query-name: "${domain}"
+          query-type: "A"
+        conditions:
+          - "[BODY] == ${traefik_load_balancer_ip}"
+          - "[DNS_RCODE] == NOERROR"
