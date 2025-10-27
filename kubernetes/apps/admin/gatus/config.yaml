@@ -9,7 +9,7 @@ data:
     storage:
       type: sqlite
       caching: true
-      path: /data/gatus.db
+      path: /config/gatus.db
 
     endpoints:
       - name: example-dns-query

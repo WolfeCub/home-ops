@@ -65,7 +65,7 @@ spec:
             port: 8080
 
     persistence:
-      data:
+      config:
         enabled: true
         existingClaim: gatus-data
       config-file:
