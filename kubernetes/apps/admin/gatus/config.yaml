@@ -1,5 +1,12 @@
 ---
-storage:
-  type: sqlite
-  caching: true
-  path: /data/gatus.db
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-configmap
+  namespace: admin
+data:
+  config.yaml: |
+    storage:
+      type: sqlite
+      caching: true
+      path: /data/gatus.db
