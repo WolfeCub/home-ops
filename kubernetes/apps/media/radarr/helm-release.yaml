@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 6.0.2.10271
+              tag: 6.0.2
             securityContext:
               fsGroup: 568
               runAsUser: 568
