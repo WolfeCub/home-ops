@@ -36,6 +36,8 @@ spec:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.29.0
+            env:
+              GATUS_CONFIG_PATH: /config
 
     serviceAccount:
       gatus:
@@ -46,6 +48,7 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:
           - host: "status.${domain}"
             paths:
@@ -60,3 +63,14 @@ spec:
         ports:
           http:
             port: 8080
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: gatus-data
+      config-file:
+        type: configMap
+        name: gatus-configmap
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml

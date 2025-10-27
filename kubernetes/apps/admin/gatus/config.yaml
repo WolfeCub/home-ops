@@ -1,0 +1,5 @@
+---
+storage:
+  type: sqlite
+  caching: true
+  path: /data/gatus.db

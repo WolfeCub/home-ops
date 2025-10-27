@@ -4,3 +4,8 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - rbac.yaml
+  - data-pvc.yaml
+configMapGenerator:
+  - name: gatus-configmap
+    files:
+      - config.yaml=./config.yaml
