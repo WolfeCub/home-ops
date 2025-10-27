@@ -141,6 +141,8 @@ spec:
       identity_providers:
         oidc:
           enabled: true
+          cors:
+            endpoints: ["authorization", "token", "revocation", "introspection"]
           jwks:
             - key_id: default
               algorithm: RS256
