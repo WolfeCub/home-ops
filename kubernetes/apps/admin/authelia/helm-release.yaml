@@ -138,19 +138,24 @@ spec:
           password:
             value: ${authelia_smtp_password}
 
-#      identity_providers:
-#        oidc:
-#          enabled: true
-#          jwks:
-#            - key_id: default
-#              algorithm: RS256
-#              use: sig
-#              key: { path: /secrets/oidc-jwk/private.pem }
-#          clients: []
-#
-#    secret:
-#      additionalSecrets:
-#        oidc-jwk:
-#          items:
-#            - key: private.pem
-#              path: private.pem
+      identity_providers:
+        oidc:
+          enabled: true
+          jwks:
+            - key_id: default
+              algorithm: RS256
+              use: sig
+              key: { path: /secrets/oidc-jwk/private.pem }
+          clients:
+            - client_id: qui
+              client_secret: '${authelia_qui_client_secret}'
+              public: false
+              redirect_uris:
+                - https://qui.${domain}/api/auth/oidc/callback
+
+    secret:
+      additionalSecrets:
+        oidc-jwk:
+          items:
+            - key: private.pem
+              path: private.pem
