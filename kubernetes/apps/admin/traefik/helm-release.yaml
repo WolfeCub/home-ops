@@ -23,6 +23,8 @@ spec:
     ingressRoute:
       dashboard:
         enabled: false
+    ingressClass:
+      enabled: false
     ports:
       web:
         asDefault: false
