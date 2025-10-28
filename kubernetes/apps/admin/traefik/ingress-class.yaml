@@ -5,5 +5,8 @@ metadata:
   name: traefik
   annotations:
     ingressclass.kubernetes.io/is-default-class: "true"
+    gatus.home-operations.com/endpoint: |
+      conditions:
+        - "[STATUS] == any(200, 401)"
 spec:
   controller: traefik.io/ingress-controller

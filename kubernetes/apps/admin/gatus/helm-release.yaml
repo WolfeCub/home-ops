@@ -27,7 +27,7 @@ spec:
               repository: ghcr.io/home-operations/gatus-sidecar
               tag: 0.0.9
             args:
-              - --auto-service
+              - --auto-ingress
               - --enable-ingress
               - --enable-service
             restartPolicy: Always
