@@ -8,6 +8,7 @@ metadata:
     gatus.home-operations.com/endpoint: |
       alerts:
         - type: discord
+          send-on-resolved: true
       conditions:
         - "[STATUS] == any(200, 401)"
 spec:
