@@ -31,6 +31,7 @@ spec:
     ingress:
       main:
         enabled: true
+        className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:

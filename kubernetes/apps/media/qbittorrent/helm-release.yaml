@@ -91,6 +91,7 @@ spec:
     ingress:
       app:
         enabled: true
+        className: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:

@@ -35,6 +35,7 @@ spec:
     ingress:
       main:
         enabled: true
+        className: traefik
         hosts:
           - host: "unifi.${domain}"
             paths:
