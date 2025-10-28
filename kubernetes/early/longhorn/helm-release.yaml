@@ -20,6 +20,7 @@ spec:
   values:
     ingress:
       enabled: true
+      ingressClassName: traefik
       host: "longhorn.${domain}"
       annotations:
         traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd,longhorn-system-svc-longhorn-headers@kubernetescrd"

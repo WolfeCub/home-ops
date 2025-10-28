@@ -36,6 +36,8 @@ spec:
       main:
         enabled: true
         className: traefik
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         hosts:
           - host: "unifi.${domain}"
             paths:

@@ -11,6 +11,10 @@ data:
       caching: true
       path: /config/gatus.db
 
+    alerting:
+      discord:
+        webhook-url: "${gatus_discord_webhook}"
+
     connectivity:
       checker:
         target: 1.1.1.1:53
