@@ -150,7 +150,7 @@ spec:
               key: { path: /secrets/oidc-jwk/private.pem }
           clients:
             - client_id: qui
-              client_secret: '${authelia_qui_client_secret}'
+              client_secret: '$pbkdf2-sha512$${authelia_qui_client_secret}'
               public: false
               redirect_uris:
                 - https://qui.${domain}/api/auth/oidc/callback
