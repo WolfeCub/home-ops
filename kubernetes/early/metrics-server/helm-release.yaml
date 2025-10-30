@@ -22,3 +22,7 @@ spec:
       - --kubelet-use-node-status-port
       - --metric-resolution=10s
       - --kubelet-request-timeout=2s
+    metrics:
+      enabled: true
+    serviceMonitor:
+      enabled: true
