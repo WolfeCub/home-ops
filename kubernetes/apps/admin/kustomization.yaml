@@ -9,4 +9,5 @@ resources:
   - kubewall
   - capacitor
   - gatus
+  - lldap
   # - postgres
