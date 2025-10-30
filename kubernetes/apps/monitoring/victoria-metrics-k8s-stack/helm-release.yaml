@@ -33,6 +33,7 @@ spec:
       grafana.ini:
         server:
           domain: "grafana.${domain}"
+          root_url: "https://grafana.${domain}"
 
     vmsingle:
       ingress:
