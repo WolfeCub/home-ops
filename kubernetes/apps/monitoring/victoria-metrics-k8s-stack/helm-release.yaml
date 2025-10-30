@@ -23,3 +23,17 @@ spec:
 
     prometheus-node-exporter:
       enabled: false
+
+    grafana:
+      ingress:
+        enabled: true
+        hosts:
+          - "grafana.${domain}"
+
+    vmsingle:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - "vm.${domain}"
