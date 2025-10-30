@@ -30,6 +30,10 @@ spec:
         hosts:
           - "grafana.${domain}"
 
+      grafana.ini:
+        server:
+          domain: "grafana.${domain}"
+
     vmsingle:
       ingress:
         enabled: true
