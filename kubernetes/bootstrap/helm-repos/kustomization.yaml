@@ -14,3 +14,4 @@ resources:
   - ww-gitops.yaml
   - jameswynn.yaml
   - metrics-server.yaml
+  - victoria-metrics.yaml
