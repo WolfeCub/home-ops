@@ -26,6 +26,15 @@ spec:
 
     grafana:
       enabled: false
+      forceDeployDatasource: true
+
+    defaultDashboards:
+      grafanaOperator:
+        enabled: true
+
+    defaultDatasources:
+      grafanaOperator:
+        enabled: true
 
     vmsingle:
       spec:

@@ -28,3 +28,8 @@ spec:
         hosts:
           - name: "logs.${domain}"
             path: /
+
+    dashboards:
+      enabled: true
+      grafanaOperator:
+        enabled: true
