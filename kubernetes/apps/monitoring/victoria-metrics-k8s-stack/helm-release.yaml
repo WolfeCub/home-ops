@@ -25,34 +25,7 @@ spec:
       enabled: false
 
     grafana:
-      ingress:
-        enabled: true
-        hosts:
-          - "grafana.${domain}"
-
-      # This is currently breaking sops substitution with `client_secret`
-      # Maybe a need to consider changing my approach
-      assertNoLeakedSecrets: false
-
-      grafana.ini:
-        server:
-          domain: "grafana.${domain}"
-          root_url: "https://grafana.${domain}"
-        auth.generic_oauth:
-          enabled: true
-          name: Authelia
-          client_id: grafana
-          client_secret: ${authelia_grafana_client_secret}
-          auth_url: https://login.${domain}/api/oidc/authorization
-          token_url: https://login.${domain}/api/oidc/token
-          api_url: https://login.${domain}/api/oidc/userinfo
-          scopes: "openid profile groups email"
-          login_attribute_path: preferred_username
-          name_attribute_path: name
-          groups_attribute_path: groups
-          use_pkce: true
-          allow_assign_grafana_admin: true
-          role_attribute_path: "contains(groups[*], 'admin') && 'GrafanaAdmin'"
+      enabled: false
 
     vmsingle:
       spec:
