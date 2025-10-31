@@ -17,3 +17,6 @@ spec:
         name: victoria-metrics
         namespace: flux-system
       interval: 5m
+  values:
+    serviceMonitor:
+      enabled: true

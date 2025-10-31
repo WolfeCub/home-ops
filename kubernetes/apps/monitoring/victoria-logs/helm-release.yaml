@@ -21,6 +21,9 @@ spec:
     server:
       retentionDiskSpaceUsage: 15GB
 
+      serviceMonitor:
+        enabled: true
+
       ingress:
         enabled: true
         annotations:
