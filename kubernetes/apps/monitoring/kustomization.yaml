@@ -5,3 +5,4 @@ resources:
   - victoria-metrics-operator
   - victoria-metrics-k8s-stack
   - victoria-logs
+  - victoria-logs-collector
