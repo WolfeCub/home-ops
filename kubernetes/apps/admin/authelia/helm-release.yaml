@@ -61,7 +61,7 @@ spec:
 
       authentication_backend:
         password_reset:
-          disable: true
+          disable: false
         ldap:
           enabled: true
           implementation: custom
