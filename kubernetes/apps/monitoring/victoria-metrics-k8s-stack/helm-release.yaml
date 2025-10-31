@@ -55,6 +55,8 @@ spec:
           role_attribute_path: "contains(groups[*], 'admin') && 'GrafanaAdmin'"
 
     vmsingle:
+      spec:
+        retentionPeriod: 7d
       ingress:
         enabled: true
         annotations:
