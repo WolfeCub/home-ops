@@ -51,7 +51,7 @@ spec:
           name_attribute_path: name
           groups_attribute_path: groups
           use_pkce: true
-          role_attribute_path: contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || 'Viewer'
+          role_attribute_path: "contains(groups, 'admin') && 'Admin' || contains(groups, 'editor') && 'Editor' || 'Viewer'"
 
     vmsingle:
       ingress:
