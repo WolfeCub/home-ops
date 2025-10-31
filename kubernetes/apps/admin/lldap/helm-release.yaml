@@ -45,8 +45,11 @@ spec:
       main:
         controller: main
         ports:
-          db:
+          http:
             port: 17170
+            protocol: TCP
+          ldap:
+            port: 3890
             protocol: TCP
 
     persistence:
