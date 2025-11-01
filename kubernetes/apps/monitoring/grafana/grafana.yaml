@@ -12,7 +12,7 @@ spec:
       domain: "grafana.${domain}"
       root_url: "https://grafana.${domain}"
     auth.generic_oauth:
-      enabled: 'true'
+      enabled: "true"
       name: Authelia
       client_id: grafana
       client_secret: ${authelia_grafana_client_secret}
@@ -23,8 +23,8 @@ spec:
       login_attribute_path: preferred_username
       name_attribute_path: name
       groups_attribute_path: groups
-      use_pkce: 'true'
-      allow_assign_grafana_admin: 'true'
+      use_pkce: "true"
+      allow_assign_grafana_admin: "true"
       role_attribute_path: "contains(groups[*], 'admin') && 'GrafanaAdmin'"
 
   ingress:
@@ -41,3 +41,15 @@ spec:
                       number: 3000
                 path: /
                 pathType: Prefix
+
+  deployment:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-data
+          securityContext:
+            fsGroup: 10001
+            fsGroupChangePolicy: OnRootMismatch
