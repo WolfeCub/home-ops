@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: foundry-config
   namespace: misc
+  labels:
+    recurring-job-group.longhorn.io/daily: enabled
+    recurring-job.longhorn.io/source: enabled
 spec:
   accessModes:
     - ReadWriteOnce

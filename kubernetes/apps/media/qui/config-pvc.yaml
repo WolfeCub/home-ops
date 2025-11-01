@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: qui-config
   namespace: media
+  labels:
+    recurring-job-group.longhorn.io/daily: enabled
+    recurring-job.longhorn.io/source: enabled
 spec:
   accessModes:
     - ReadWriteOnce
