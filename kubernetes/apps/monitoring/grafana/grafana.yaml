@@ -41,3 +41,12 @@ spec:
                       number: 3000
                 path: /
                 pathType: Prefix
+
+  deployment:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-data
