@@ -72,3 +72,8 @@ spec:
       spec:
         externalTrafficPolicy: Cluster
         loadBalancerIP: "${traefik_load_balancer_ip}"
+
+    metrics:
+      prometheus:
+        serviceMonitor:
+          enabled: true
