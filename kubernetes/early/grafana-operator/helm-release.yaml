@@ -7,10 +7,9 @@ metadata:
 spec:
   interval: 5m
   install:
-    crds: CreateReplace
+    crds: Skip
   upgrade:
-    crds: CreateReplace
-    cleanupOnFail: true
+    crds: Skip
     force: true
   chart:
     spec:

@@ -5,3 +5,4 @@ resources:
   - traefik
   - cert-manager
   - prometheus-operator
+  - grafana-operator
