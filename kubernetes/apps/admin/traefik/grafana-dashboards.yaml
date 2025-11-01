@@ -1,0 +1,28 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: traefik
+  namespace: admin
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: traefik-kubernetes
+  namespace: admin
+  labels:
+    dashboards: grafana
+spec:
+  allowCrossNamespaceImport: true
+  folderRef: traefik
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  grafanaCom:
+    id: 17347

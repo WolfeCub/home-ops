@@ -7,3 +7,4 @@ resources:
   - certificate.yaml
   - tls-store.yaml
   - ingress-class.yaml
+  - grafana-dashboards.yaml
