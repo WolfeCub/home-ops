@@ -25,7 +25,7 @@ spec:
           whisper:
             image:
               repository: linuxserver/faster-whisper
-              tag: 3.0.1
+              tag: 3.0.2
             env:
               TZ: America/Toronto
               WHISPER_MODEL: base-int8
