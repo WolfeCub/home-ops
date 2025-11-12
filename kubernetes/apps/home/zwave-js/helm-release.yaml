@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: zwavejs/zwave-js-ui
-              tag: 11.6.1
+              tag: 11.7.0
             env:
               TZ: America/Toronto
             securityContext:
