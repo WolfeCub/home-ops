@@ -53,6 +53,15 @@ spec:
           http:
             port: 8989
 
+    route:
+      app:
+        hostnames:
+          - sonarr.${domain}
+        parentRefs:
+          - name: envoy
+            namespace: admin
+            sectionName: internal
+
     persistence:
       config:
         enabled: true

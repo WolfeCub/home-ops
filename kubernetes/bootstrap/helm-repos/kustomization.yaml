@@ -15,3 +15,4 @@ resources:
   - jameswynn.yaml
   - metrics-server.yaml
   - victoria-metrics.yaml
+  - envoy-gateway.yaml

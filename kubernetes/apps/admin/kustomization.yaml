@@ -12,4 +12,5 @@ resources:
   - lldap
   - tiny-auth
   - pocket-id
+  - envoy-gateway
   # - postgres
