@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - envoy.yaml
+  - envoy-pocket-id-client-secret.sops.yaml
+  - oidc-pocket-id.yaml

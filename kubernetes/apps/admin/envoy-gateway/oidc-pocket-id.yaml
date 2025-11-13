@@ -1,0 +1,19 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: oidc-pocket-id
+  namespace: admin
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy
+  oidc:
+    provider:
+      issuer: "https://id.${domain}"
+    clientID: "${envoy_pocket_id_client_id}"
+    clientSecret:
+      name: envoy-pocket-id-client-secret
+    redirectURL: "https://envoy.${domain}/oidc/callback"
+    cookieDomain: "${domain}"
