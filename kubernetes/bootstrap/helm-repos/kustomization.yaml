@@ -16,3 +16,4 @@ resources:
   - metrics-server.yaml
   - victoria-metrics.yaml
   - envoy-gateway.yaml
+  - kaniop.yaml

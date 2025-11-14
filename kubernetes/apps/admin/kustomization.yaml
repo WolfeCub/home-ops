@@ -13,4 +13,5 @@ resources:
   - tiny-auth
   - pocket-id
   - envoy-gateway
+  - kanidm
   # - postgres

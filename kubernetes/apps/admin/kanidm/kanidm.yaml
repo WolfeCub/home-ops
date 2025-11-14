@@ -1,0 +1,67 @@
+---
+apiVersion: kaniop.rs/v1beta1
+kind: Kanidm
+metadata:
+  name: kanidm
+  namespace: admin
+spec:
+  domain: idm.${domain}
+  replicaGroups:
+    - name: default
+      replicas: 1
+
+  image: kanidm/server:1.8.0
+
+  # Match all namespaces
+  oauth2ClientNamespaceSelector: {}
+  groupNamespaceSelector: {}
+  personNamespaceSelector: {}
+  serviceAccountNamespaceSelector: {}
+
+  # # StorageSpec defines the configured storage for a group Kanidm servers.
+  # # If no storage option is specified, then by default an
+  # # [EmptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) will be used.
+  # #
+  # # If multiple storage options are specified, priority will be given as follows:
+  # # 1. emptyDir
+  # # 2. ephemeral
+  # # 3. volumeClaimTemplate
+  # #
+  # # Note: Kaniop does not resize PVCs until Kubernetes fix
+  # # [KEP-4650](https://github.com/kubernetes/enhancements/issues/4650).
+  # # Although, StatefulSet will be recreated if the PVC is resized.
+  # storage:
+  #   # EmptyDirVolumeSource to be used by the StatefulSet. If specified, it takes precedence over
+  #   # `ephemeral` and `volumeClaimTemplate`.
+  #   # More info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+  #   emptyDir: {}
+  #   # EphemeralVolumeSource to be used by the StatefulSet.
+  #   # More info: https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes
+  #   ephemeral: {}
+  #   # Defines the PVC spec to be used by the Kanidm StatefulSets. The easiest way to use a volume
+  #   # that cannot be automatically provisioned is to use a label selector alongside manually
+  #   # created PersistentVolumes.
+  #   volumeClaimTemplate:
+  #     # Standard object's metadata. More info:
+  #     # https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+  #     metadata: {}
+  #     # spec defines the desired characteristics of a volume requested by a pod author. More info:
+  #     # https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
+  #     spec:
+  #       # accessModes contains the desired access modes the volume should have. More info:
+  #       # https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+  #       accessModes:
+  #       - ReadWriteOnce
+  #       # resources represents the minimum resources the volume should have. If RecoverVolumeExpansionFailure feature
+  #       # is enabled users are allowed to specify resource requirements that are lower than previous value but must
+  #       # still be higher than capacity recorded in the status field of the claim. More info:
+  #       # https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+  #       resources:
+  #         # Requests describes the minimum amount of compute resources required. If Requests is omitted for a
+  #         # container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined
+  #         # value. Requests cannot exceed Limits. More info:
+  #         # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  #         requests:
+  #           storage: 100Mi
+
+  tlsSecretName: "${domain/./-}-tls"
