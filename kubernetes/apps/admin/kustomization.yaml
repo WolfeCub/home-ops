@@ -10,8 +10,6 @@ resources:
   - capacitor
   - gatus
   - lldap
-  - tiny-auth
   - pocket-id
   - envoy-gateway
-  - kanidm
   # - postgres

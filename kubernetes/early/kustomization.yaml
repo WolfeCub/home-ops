@@ -7,4 +7,3 @@ resources:
   - longhorn
   - metrics-server
   - grafana-operator
-  - kaniop
