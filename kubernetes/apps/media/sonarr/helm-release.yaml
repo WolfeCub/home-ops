@@ -56,11 +56,10 @@ spec:
     route:
       app:
         hostnames:
-          - sonarr.${domain}
+          - gw-sonarr.${domain}
         parentRefs:
-          - name: envoy
+          - name: traefik
             namespace: admin
-            sectionName: internal
 
     persistence:
       config:

@@ -20,11 +20,19 @@ spec:
   values:
     image:
       tag: v3.1.3
+
+    providers:
+      kubernetesGateway:
+        enabled: true
+    gateway:
+      name: traefik
+
     ingressRoute:
       dashboard:
         enabled: false
     ingressClass:
       enabled: false
+
     ports:
       web:
         asDefault: false
