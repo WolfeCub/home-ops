@@ -11,5 +11,4 @@ resources:
   - gatus
   - lldap
   - pocket-id
-  - envoy-gateway
   # - postgres
