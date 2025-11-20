@@ -1,0 +1,20 @@
+---
+apiVersion: ingress.pomerium.io/v1
+kind: Pomerium
+metadata:
+  name: global
+spec:
+  secrets: pomerium/bootstrap
+  authenticate:
+    url: https://auth.${domain}
+  certificates:
+    - "admin/${domain/./-}-tls"
+  identityProvider:
+    provider: oidc
+    secret: pomerium/oidc-secret
+    url: https://id.${domain}
+    scopes:
+      - openid
+      - email
+      - profile
+      - groups

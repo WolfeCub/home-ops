@@ -11,4 +11,5 @@ resources:
   - gatus
   - lldap
   - pocket-id
+  - pomerium
   # - postgres
