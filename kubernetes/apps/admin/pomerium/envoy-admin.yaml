@@ -18,7 +18,7 @@ metadata:
   name: envoy
   namespace: pomerium
   annotations:
-    ingress.pomerium.io/allowed_domains: "[${domain}]"
+    ingress.pomerium.io/policy: ${pom_admin_group}
 spec:
   ingressClassName: pomerium
   rules:

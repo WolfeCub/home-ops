@@ -2,15 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: crds
+  name: vars
   namespace: flux-system
 spec:
   interval: 10m0s
-  dependsOn:
-    - name: repos
-    - name: vars
-  path: ./kubernetes/crds
-  prune: false
+  path: ./kubernetes/bootstrap/vars/
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
