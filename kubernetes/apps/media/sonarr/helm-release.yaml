@@ -47,31 +47,6 @@ spec:
                 service:
                   identifier: main
 
-      test-pom:
-        enabled: true
-        className: pomerium
-        annotations:
-          ingress.pomerium.io/policy: ${pom_admin_group}
-        hosts:
-          - host: "sonarr.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-
-      test-pom-api:
-        enabled: true
-        className: pomerium
-        annotations:
-          ingress.pomerium.io/allow_public_unauthenticated_access: "true"
-        hosts:
-          - host: "sonarr.${domain}"
-            paths:
-              - path: /api
-                pathType: Prefix
-                service:
-                  identifier: main
     service:
       main:
         controller: main
@@ -84,8 +59,8 @@ spec:
         hostnames:
           - gw-sonarr.${domain}
         parentRefs:
-          - name: traefik
-            namespace: admin
+          - name: pomerium
+            namespace: pomerium
 
     persistence:
       config:

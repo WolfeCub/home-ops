@@ -2,7 +2,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: default
+  name: pomerium
   namespace: pomerium
 spec:
   gatewayClassName: pomerium-gateway
