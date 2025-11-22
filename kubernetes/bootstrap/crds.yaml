@@ -8,7 +8,6 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: repos
-    - name: vars
   path: ./kubernetes/crds
   prune: false
   sourceRef:
