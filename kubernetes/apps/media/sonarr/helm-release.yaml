@@ -61,6 +61,13 @@ spec:
         parentRefs:
           - name: pomerium
             namespace: pomerium
+        rules:
+          - filters:
+              - type: ExtensionRef
+                extensionRef:
+                  group: gateway.pomerium.io
+                  kind: PolicyFilter
+                  name: admin-group
 
     persistence:
       config:
