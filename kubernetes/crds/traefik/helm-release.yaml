@@ -17,5 +17,3 @@ spec:
         name: traefik
         namespace: flux-system
       interval: 5m
-  values:
-    gatewayAPI: true
