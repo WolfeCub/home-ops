@@ -15,6 +15,7 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: "${domain/./-}-tls"
+            namespace: admin
       allowedRoutes:
         namespaces:
           from: All
