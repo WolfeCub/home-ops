@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pangolin-configmap
+  namespace: admin
+data:
+  config.yml: |
+    app:
+      dashboard_url: "https://pangolin.${domain}"
+
+    domains:
+      domain1:
+        base_domain: "pangolin.${domain}"
+        cert_resolver: ""
+
+    server:
+      secret: "${pangolin_secret}"
+
+    gerbil:
+      base_endpoint: "pangolin.${domain}"
+
+    flags:
+      require_email_verification: false
+      disable_signup_without_invite: true
+      disable_user_create_org: true

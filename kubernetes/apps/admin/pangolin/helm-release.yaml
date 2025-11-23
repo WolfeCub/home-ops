@@ -1,0 +1,72 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pangolin
+  namespace: admin
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 4.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: fosrl/pangolin
+              tag: 1.12.2
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        # annotations:
+        #   traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
+        hosts:
+          - host: "pangolin.${domain}"
+            paths:
+              - path: /api/v1
+                pathType: Prefix
+                service:
+                  identifier: api
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: next
+
+    service:
+      next:
+        controller: main
+        ports:
+          http:
+            port: 3002
+      api:
+        controller: main
+        ports:
+          http:
+            port: 3000
+      internal:
+        controller: main
+        ports:
+          http:
+            port: 3001
+
+    persistence:
+      config-file:
+        type: configMap
+        name: pangolin-configmap
+        globalMounts:
+          - path: /app/config/config.yaml
+            subPath: config.yml
+            readOnly: true
