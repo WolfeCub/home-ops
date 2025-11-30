@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/cleanuparr/cleanuparr
-              tag: 2.4.5
+              tag: 2.4.7
             env:
               TZ: America/Toronto
 
