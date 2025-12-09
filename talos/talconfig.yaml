@@ -27,16 +27,62 @@ nodes:
     ipAddress: 192.168.0.211
     installDiskSelector:
       wwid: naa.5000c500e4102f15
+    nodeLabels:
+      node.longhorn.io/create-default-disk: 'true'
+    patches:
+      - &longhorn_mount |-
+        machine:
+          kubelet:
+            extraMounts:
+              - destination: /var/lib/longhorn
+                type: bind
+                source: /var/lib/longhorn
+                options:
+                  - bind
+                  - rshared
+                  - rw
 
   - hostname: worker02
     ipAddress: 192.168.0.212
     installDiskSelector:
       wwid: naa.5000c500e412aca4
+    nodeLabels:
+      node.longhorn.io/create-default-disk: 'true'
+    patches:
+      - *longhorn_mount
 
   - hostname: worker03
     ipAddress: 192.168.0.213
     installDiskSelector:
       wwid: naa.5000c500e41281be
+    nodeLabels:
+      node.longhorn.io/create-default-disk: 'true'
+    patches:
+      - *longhorn_mount
+
+  - hostname: worker04
+    ipAddress: 192.168.0.214
+    installDisk: /dev/sda
+    patches:
+      - |-
+        machine:
+          kubelet:
+            extraConfig:
+              registerWithTaints:
+                - effect: NoSchedule
+                  key: gpu
+                  value: 'yes'
+    kernelModules:
+      - name: nvidia
+      - name: nvidia_uvm
+      - name: nvidia_drm
+      - name: nvidia_modeset
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/nonfree-kmod-nvidia-lts
+            - siderolabs/nvidia-container-toolkit-lts
 
 
 worker:
@@ -59,13 +105,3 @@ worker:
           modules:
             - name: nvme_tcp
             - name: vfio_pci
-
-        kubelet:
-          extraMounts:
-            - destination: /var/lib/longhorn
-              type: bind
-              source: /var/lib/longhorn
-              options:
-                - bind
-                - rshared
-                - rw

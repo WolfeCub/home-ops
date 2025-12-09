@@ -32,6 +32,7 @@ spec:
       backupTarget: nfs://${storage_host_ip}:/raid/longhorn-backups
       backupConcurrentLimit: 1
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
+      createDefaultDiskLabeledNodes: true
 
     csi:
       kubeletRootDir: /var/lib/kubelet
