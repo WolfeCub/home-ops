@@ -27,6 +27,7 @@ spec:
               repository: linuxserver/faster-whisper
               tag: 3.0.2-gpu
             env:
+              NVIDIA_VISIBLE_DEVICES: all
               TZ: America/Toronto
               WHISPER_MODEL: small-int8
           piper:
@@ -34,6 +35,8 @@ spec:
               repository: rhasspy/wyoming-piper
               tag: 2.1.2
             args: ["--voice", "en_US-hfc_female-medium", "--update-voices", "--use-cuda", "--debug"]
+            env:
+              NVIDIA_VISIBLE_DEVICES: all
         pod:
           runtimeClassName: nvidia
           nodeSelector:
