@@ -28,6 +28,17 @@ spec:
               tag: 0.9.0-rc.2-cuda-12.6.3
             env:
               NVIDIA_VISIBLE_DEVICES: all
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/bash
+                    - -c
+                    - |
+                      curl -LsSf https://astral.sh/uv/install.sh | sh # https://github.com/speaches-ai/speaches/issues/416
+                      uvx speaches-cli model download speaches-ai/Kokoro-82M-v1.0-ONNX
+                      uvx speaches-cli model download Systran/faster-whisper-medium
+                      uvx speaches-cli model download speaches-ai/piper-en_US-hfc_female-medium
         pod:
           runtimeClassName: nvidia
           nodeSelector:
@@ -42,3 +53,9 @@ spec:
         ports:
           http:
             port: 8000
+
+    persistence:
+      downloads:
+        type: emptyDir
+        globalMounts:
+          - path: /home/ubuntu/.cache/huggingface/hub/
