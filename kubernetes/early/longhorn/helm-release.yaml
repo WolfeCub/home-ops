@@ -33,9 +33,29 @@ spec:
       backupConcurrentLimit: 1
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       createDefaultDiskLabeledNodes: true
+      taintToleration: "gpu=yes:NoSchedule"
 
     csi:
       kubeletRootDir: /var/lib/kubelet
 
+    longhornManager:
+      tolerations:
+        - key: gpu
+          operator: Equal
+          value: 'yes'
+          effect: NoSchedule
+
+    longhornDriver:
+      tolerations:
+        - key: gpu
+          operator: Equal
+          value: 'yes'
+          effect: NoSchedule
+
     longhornUI:
       replicas: 1
+      tolerations:
+        - key: gpu
+          operator: Equal
+          value: 'yes'
+          effect: NoSchedule
