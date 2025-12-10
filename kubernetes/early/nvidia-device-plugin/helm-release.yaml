@@ -19,3 +19,12 @@ spec:
       interval: 5m
   values:
     runtimeClassName: nvidia
+    tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
+      - key: gpu
+        operator: Exists
+        effect: NoSchedule

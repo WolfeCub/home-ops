@@ -33,6 +33,7 @@ spec:
               OLLAMA_HOST: 0.0.0.0:11434
               NVIDIA_VISIBLE_DEVICES: all
         pod:
+          runtimeClassName: nvidia
           nodeSelector:
             kubernetes.io/hostname: worker04
           tolerations:
