@@ -85,6 +85,10 @@ nodes:
                 - effect: NoSchedule
                   key: gpu
                   value: 'yes'
+      - |-
+        machine:
+          sysctls:
+            net.core.bpf_jit_harden: 1
     kernelModules:
       - name: nvidia
       - name: nvidia_uvm
