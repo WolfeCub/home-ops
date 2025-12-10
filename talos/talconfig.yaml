@@ -74,6 +74,8 @@ nodes:
   - hostname: worker04
     ipAddress: 192.168.0.214
     installDisk: /dev/sda
+    nodeLabels:
+      nvidia.com/gpu.present: 'true'
     patches:
       - |-
         machine:
