@@ -29,6 +29,15 @@ nodes:
       wwid: naa.5000c500e4102f15
     nodeLabels:
       node.longhorn.io/create-default-disk: 'true'
+    schematic: &worker_schematic
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/gasket-driver
+            - siderolabs/i915
+            - siderolabs/intel-ucode
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
     patches:
       - &longhorn_mount |-
         machine:
@@ -48,6 +57,7 @@ nodes:
       wwid: naa.5000c500e412aca4
     nodeLabels:
       node.longhorn.io/create-default-disk: 'true'
+    schematic: *worker_schematic
     patches:
       - *longhorn_mount
 
@@ -57,6 +67,7 @@ nodes:
       wwid: naa.5000c500e41281be
     nodeLabels:
       node.longhorn.io/create-default-disk: 'true'
+    schematic: *worker_schematic
     patches:
       - *longhorn_mount
 
@@ -81,20 +92,13 @@ nodes:
       customization:
         systemExtensions:
           officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
             - siderolabs/nonfree-kmod-nvidia-lts
             - siderolabs/nvidia-container-toolkit-lts
 
 
 worker:
-  schematic:
-    customization:
-      systemExtensions:
-        officialExtensions:
-          - siderolabs/gasket-driver
-          - siderolabs/i915
-          - siderolabs/intel-ucode
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
   patches:
     - |-
       machine:
