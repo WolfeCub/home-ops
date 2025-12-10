@@ -25,20 +25,22 @@ spec:
           whisper:
             image:
               repository: linuxserver/faster-whisper
-              tag: 3.0.2
+              tag: 3.0.2-gpu
             env:
               TZ: America/Toronto
-              WHISPER_MODEL: base-int8
+              WHISPER_MODEL: small-int8
           piper:
             image:
-              repository: linuxserver/piper
-              tag: 1.6.3-ls75
-            env:
-              TZ: America/Toronto
-              # PIPER_VOICE: en_US-hfc_female-medium
-              PIPER_VOICE: en_US-amy-low
-              WHISPER_BEAM: 5
-              STREAMING: true
+              repository: rhasspy/wyoming-piper
+              tag: 2.1.2
+            args: ["--voice", "en_US-hfc_female-medium", "--update-voices", "--use-cuda", "--debug"]
+        pod:
+          runtimeClassName: nvidia
+          nodeSelector:
+            kubernetes.io/hostname: worker04
+          tolerations:
+            - key: gpu
+              operator: Exists
 
     service:
       whisper:
