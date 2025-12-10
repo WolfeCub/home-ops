@@ -13,3 +13,4 @@ resources:
   - longhorn-system.yaml
   - games.yaml
   - printer.yaml
+  - nvidia.yaml

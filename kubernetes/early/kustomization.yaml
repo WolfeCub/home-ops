@@ -7,3 +7,4 @@ resources:
   - longhorn
   - metrics-server
   - grafana-operator
+  - nvidia-device-plugin

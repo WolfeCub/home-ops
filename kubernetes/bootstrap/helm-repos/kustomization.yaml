@@ -17,3 +17,4 @@ resources:
   - victoria-metrics.yaml
   - envoy-gateway.yaml
   - kaniop.yaml
+  - nvidia-k8s-device-plugin.yaml
