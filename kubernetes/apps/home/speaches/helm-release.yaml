@@ -40,6 +40,19 @@ spec:
                       uvx speaches-cli model download Systran/faster-whisper-medium.en
                       uvx speaches-cli model download speaches-ai/Kokoro-82M-v1.0-ONNX
                       uvx speaches-cli model download speaches-ai/piper-en_US-hfc_female-medium
+          wyoming-openai:
+            image:
+              repository: ghcr.io/roryeckel/wyoming_openai
+              tag: 0.3.10
+            env:
+              WYOMING_LANGUAGES: en
+              STT_BACKEND: "SPEACHES"
+              TTS_BACKEND: "SPEACHES"
+              STT_OPENAI_URL: http://localhost:8000/v1
+              TTS_OPENAI_URL: http://localhost:8000/v1
+              STT_MODELS: 'Systran/faster-whisper-small.en Systran/faster-whisper-medium.en'
+              TTS_MODELS: 'speaches-ai/Kokoro-82M-v1.0-ONNX speaches-ai/piper-en_US-hfc_female-medium'
+
         pod:
           runtimeClassName: nvidia
           nodeSelector:
@@ -54,6 +67,11 @@ spec:
         ports:
           http:
             port: 8000
+      wyoming-openai:
+        controller: main
+        ports:
+          http:
+            port: 10300
 
     persistence:
       downloads:
