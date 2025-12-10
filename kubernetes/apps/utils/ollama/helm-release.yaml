@@ -31,6 +31,7 @@ spec:
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
               DATABASE_URL: sqlite:////app/backend/data/webui_db/webui.db
               OLLAMA_HOST: 0.0.0.0:11434
+              NVIDIA_VISIBLE_DEVICES: all
         pod:
           nodeSelector:
             kubernetes.io/hostname: worker04
