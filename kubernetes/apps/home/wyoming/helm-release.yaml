@@ -37,6 +37,12 @@ spec:
             args: ["--voice", "en_US-hfc_female-medium", "--update-voices", "--use-cuda", "--debug"]
             env:
               NVIDIA_VISIBLE_DEVICES: all
+          openwakeword:
+            image:
+              repository: rhasspy/wyoming-openwakeword
+              tag: 2.1.0
+            env:
+              NVIDIA_VISIBLE_DEVICES: all
         pod:
           runtimeClassName: nvidia
           nodeSelector:
@@ -57,3 +63,9 @@ spec:
         ports:
           http:
             port: 10200
+
+      openwakeword:
+        controller: speech
+        ports:
+          http:
+            port: 10400
