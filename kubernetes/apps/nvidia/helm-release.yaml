@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nvidia-smi-exporter
+  namespace: nvidia
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 4.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/wolfecub/nvidia-smi-exporter
+              tag: 0.1.1
+            resources:
+              limits:
+                nvidia.com/gpu: 1
+            ports:
+              - containerPort: 9100
+                name: metrics
+        pod:
+          hostPID: true
+          runtimeClassName: nvidia
+          tolerations:
+            - key: gpu
+              operator: Exists
