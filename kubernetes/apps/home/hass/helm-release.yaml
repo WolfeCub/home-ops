@@ -27,7 +27,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-assistant/home-assistant
-              tag: 2025.12.2
+              tag: 2025.12.5
             env:
               tz: america/toronto
             lifecycle:
