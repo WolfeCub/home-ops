@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-config
+  namespace: media
+  labels:
+    recurring-job-group.longhorn.io/daily: enabled
+    recurring-job.longhorn.io/source: enabled
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn

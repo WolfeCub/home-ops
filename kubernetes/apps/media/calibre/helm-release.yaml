@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: calibre
+  namespace: media
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 4.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/crocodilestick/calibre-web-automated
+              tag: V3.1.4
+            env:
+              TZ: America/Toronto
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "calibre.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8083
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-config
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+                subPath: calibre_config
+                readOnly: false
+              - path: /config/.config/calibre/plugins
+                subPath: calibre_plugins
+                readOnly: false
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/Books
+        globalMounts:
+          - path: /calibre-library
+            readOnly: false
