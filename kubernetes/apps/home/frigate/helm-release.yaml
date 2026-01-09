@@ -51,6 +51,12 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
+      go2rtc:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        hosts:
           - host: "go2rtc.${domain}"
             paths:
               - path: /
