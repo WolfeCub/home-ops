@@ -79,6 +79,8 @@ spec:
 
     metrics:
       prometheus:
+        # Flux local was hitting: https://github.com/traefik/traefik-helm-chart/blob/master/traefik/templates/servicemonitor.yaml#L4C45-L4C60
+        disableAPICheck: true
         serviceMonitor:
           enabled: true
 
