@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.7.3
+        uses: fluxcd/flux2/action@v2.7.5
       - uses: allenporter/flux-local/action/diff@8.1.0
         id: diff
         with:
@@ -35,7 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.7.3
+        uses: fluxcd/flux2/action@v2.7.5
       - uses: allenporter/flux-local/action/test@8.1.0
         with:
           path: ./kubernetes
