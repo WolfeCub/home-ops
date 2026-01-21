@@ -108,11 +108,6 @@ spec:
             resources:
               - "^/api.*$"
 
-          - domain: "calibre.${domain}"
-            policy: bypass
-            resources:
-              - "^/opds.*$"
-
           ## Rules applied to everyone
           - domain: "*.${domain}"
             policy: two_factor
