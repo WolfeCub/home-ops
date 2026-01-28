@@ -28,6 +28,9 @@ spec:
               tag: dev@sha256:bcbe733663da0801e9c8c70ee344dc8f4985b9249b1e4714c512bb937532f28a
             env:
               TZ: America/Toronto
+              PUID: 568
+              PGID: 568
+              CWA_WATCH_MODE: poll
 
     ingress:
       main:
@@ -70,4 +73,14 @@ spec:
             path: /raid/network_share/media/Books
         globalMounts:
           - path: /calibre-library
+            readOnly: false
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/BookDownloads
+        globalMounts:
+          - path: /cwa-book-ingest
             readOnly: false
