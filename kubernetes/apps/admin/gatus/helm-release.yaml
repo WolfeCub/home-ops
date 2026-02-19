@@ -25,7 +25,7 @@ spec:
           gatus-sidecar:
             image:
               repository: ghcr.io/home-operations/gatus-sidecar
-              tag: 0.0.9
+              tag: 0.0.13
             args:
               - --auto-ingress
               - --enable-ingress
