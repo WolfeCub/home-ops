@@ -25,7 +25,7 @@ spec:
           whisper:
             image:
               repository: linuxserver/faster-whisper
-              tag: 3.0.2-gpu
+              tag: 3.1.0-gpu
             env:
               NVIDIA_VISIBLE_DEVICES: all
               TZ: America/Toronto
