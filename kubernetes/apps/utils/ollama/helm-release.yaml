@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.6.41-ollama
+              tag: v0.8.3-ollama
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
