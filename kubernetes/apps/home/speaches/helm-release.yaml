@@ -25,21 +25,10 @@ spec:
           main:
             image:
               repository: ghcr.io/speaches-ai/speaches
-              tag: 0.9.0-rc.2-cuda-12.6.3
+              tag: 0.9.0-rc.3-cuda-12.6.3
             env:
               NVIDIA_VISIBLE_DEVICES: all
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/bash
-                    - -c
-                    - |
-                      curl -LsSf https://astral.sh/uv/install.sh | sh # https://github.com/speaches-ai/speaches/issues/416
-                      uvx speaches-cli model download Systran/faster-whisper-small.en
-                      uvx speaches-cli model download Systran/faster-whisper-medium.en
-                      uvx speaches-cli model download speaches-ai/Kokoro-82M-v1.0-ONNX
-                      uvx speaches-cli model download speaches-ai/piper-en_US-hfc_female-medium
+              PRELOAD_MODELS: '["Systran/faster-whisper-small.en", "Systran/faster-whisper-medium.en", "speaches-ai/Kokoro-82M-v1.0-ONNX", "speaches-ai/piper-en_US-hfc_female-medium"]'
           wyoming-openai:
             image:
               repository: ghcr.io/roryeckel/wyoming_openai
