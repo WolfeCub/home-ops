@@ -55,4 +55,6 @@ spec:
       buildcache:
         enabled: true
         type: emptyDir
-        mountPath: /config/.esphome
+        globalMounts:
+          - path: /config/.esphome
+            readOnly: false
