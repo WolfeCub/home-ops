@@ -51,3 +51,8 @@ spec:
       config:
         enabled: true
         existingClaim: esphome-config
+
+      buildcache:
+        enabled: true
+        type: emptyDir
+        mountPath: /config/.esphome
