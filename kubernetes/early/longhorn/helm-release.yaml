@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: 1.10.1
+      version: 1.10.2
       sourceRef:
         kind: HelmRepository
         name: longhorn
@@ -21,9 +21,9 @@ spec:
     image:
       # patch the hotfix image for longhorn manager
       longhorn:
-        manager:
-          repository: longhornio/longhorn-manager
-          tag: v1.10.1-hotfix-1
+        backingImageManager:
+          repository: longhornio/backing-image-manager
+          tag: v1.10.2-hotfix-1
 
     ingress:
       enabled: true
