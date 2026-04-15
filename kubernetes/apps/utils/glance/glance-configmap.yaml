@@ -24,35 +24,45 @@ data:
                 title: Services
                 sites:
                   - title: Vaultwarden
-                    icon: si:vaultwarden
+                    icon: sh:vaultwarden
                     url: https://bw.${domain}
                     same-tab: true
                   - title: Home Assistant
-                    icon: si:homeassistant
+                    icon: sh:home-assistant
                     url: https://hass.${domain}
                     same-tab: true
+                  - title: Zigbee2MQTT
+                    icon: sh:zigbee2mqtt
+                    url: https://zigbee.${domain}
+                    check-url: http://zigbee2mqtt.home.svc.cluster.local:8080
+                    same-tab: true
+                  - title: Z-Wave JS
+                    icon: sh:z-wave-js-ui
+                    url: https://zwave.${domain}
+                    check-url: http://zwave-js.home.svc.cluster.local:8091
+                    same-tab: true
                   - title: Plex
-                    icon: si:plex
+                    icon: sh:plex
                     url: https://plex.${domain}
-                    check-url: http://plex.media.svc.cluster.local:32400
+                    check-url: http://plex.media.svc.cluster.local:32400/identity
                     same-tab: true
                   - title: Sonarr
-                    icon: si:sonarr
+                    icon: sh:sonarr
                     url: https://sonarr.${domain}
                     check-url: http://sonarr.media.svc.cluster.local:8989
                     same-tab: true
                   - title: Radarr
-                    icon: si:radarr
+                    icon: sh:radarr
                     url: https://radarr.${domain}
                     check-url: http://radarr.media.svc.cluster.local:7878
                     same-tab: true
                   - title: qBittorrent
-                    icon: si:qbittorrent
+                    icon: sh:qbittorrent
                     url: https://qb.${domain}
                     check-url: http://qbittorrent.media.svc.cluster.local:8080
                     same-tab: true
                   - title: Prowlarr
-                    icon: si:prowlarr
+                    icon: sh:prowlarr
                     url: https://prowlarr.${domain}
                     check-url: http://prowlarr.media.svc.cluster.local:9696
                     same-tab: true
