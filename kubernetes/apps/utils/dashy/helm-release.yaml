@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/lissy93/dashy
-              tag: 3.1.0
+              tag: 3.3.0
 
     ingress:
       main:
