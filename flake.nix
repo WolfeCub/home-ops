@@ -32,6 +32,8 @@
 
             talosctl
             talhelper
+
+            yaml-language-server
           ];
 
           shellHook = ''
