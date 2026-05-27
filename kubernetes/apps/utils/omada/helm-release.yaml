@@ -28,31 +28,21 @@ spec:
               tag: 6.2-openj9
             env:
               TZ: America/Toronto
+              SSL_CERT_NAME: tls.crt
+              SSL_KEY_NAME: tls.key
 
     defaultPodOptions:
       hostNetwork: true
 
-    ingress:
-      main:
-        enabled: true
-        className: traefik
-        annotations:
-          gatus.home-operations.com/enabled: "false"
-        hosts:
-          - host: "omada.${domain}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-
     service:
       main:
         controller: main
+        annotations:
+          traefik.ingress.kubernetes.io/service.serversscheme: https
         ports:
           http:
-            port: 8088
-            protocol: HTTP
+            port: 8043
+            protocol: HTTPS
 
     persistence:
       omada:
@@ -63,3 +53,8 @@ spec:
             subPath: data
           - path: /opt/tplink/EAPController/logs
             subPath: logs
+      tls:
+        type: secret
+        name: omada-tls
+        globalMounts:
+          - path: /cert
