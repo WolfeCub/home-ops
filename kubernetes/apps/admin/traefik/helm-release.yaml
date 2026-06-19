@@ -19,7 +19,7 @@ spec:
       interval: 5m
   values:
     image:
-      tag: v3.1.3
+      tag: v3.7.5
 
     ingressRoute:
       dashboard:
@@ -30,36 +30,40 @@ spec:
     ports:
       web:
         asDefault: false
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
       websecure:
         asDefault: true
-        tls:
-          enabled: true
-          options: "default"
+        http:
+          tls:
+            enabled: true
+            options: "default"
       web-ext:
         asDefault: false
         port: 9080
         exposedPort: 9080
         expose:
           default: true
-        redirections:
-          entryPoint:
-            to: websecure # Since we change the ports in NAT
-            scheme: https
-            permanent: true
+        http:
+          redirections:
+            entryPoint:
+              to: websecure # Since we change the ports in NAT
+              scheme: https
+              permanent: true
       websecure-ext:
         asDefault: false
         port: 9443
         exposedPort: 9443
         expose:
           default: true
-        tls:
-          enabled: true
-          options: "default"
+        http:
+          tls:
+            enabled: true
+            options: "default"
 
     additionalArguments:
       - "--providers.file.filename=/etc/traefik/dynamic.yml"
