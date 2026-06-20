@@ -108,6 +108,11 @@ spec:
             resources:
               - "^/api.*$"
 
+          - domain: ollama.joshwolfe.ca
+            resources:
+              - '^/ollama/.*$'
+            policy: bypass
+
           ## Rules applied to everyone
           - domain: "*.${domain}"
             policy: two_factor
