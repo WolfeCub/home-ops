@@ -8,4 +8,5 @@ resources:
   - ale-pal
   - glance
   - ollama
+  - unsloth
   - omada
