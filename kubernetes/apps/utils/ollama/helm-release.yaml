@@ -21,6 +21,32 @@ spec:
   values:
     controllers:
       main:
+        initContainers:
+          model-puller:
+            image:
+              repository: ollama/ollama
+              tag: 0.30.10
+            env:
+              OLLAMA_HOST: 0.0.0.0:11434
+              NVIDIA_VISIBLE_DEVICES: "void"
+            command:
+              - /bin/bash
+              - -c
+              - |
+                ollama serve &
+                until ollama list >/dev/null 2>&1; do sleep 2; done
+
+                ollama pull qwen3.5:9b
+                ollama pull gemma4:26b
+
+                ollama create qwen3.5:9b-150k -f <(cat <<'EOF'
+                FROM qwen3.5:9b
+                PARAMETER num_ctx 153600
+                EOF
+                )
+
+                kill %1
+
         containers:
           webui:
             image:
@@ -78,6 +104,8 @@ spec:
         advancedMounts:
           main:
             ollama:
+              - path: /root/.ollama/models
+            model-puller:
               - path: /root/.ollama/models
 
       data:
