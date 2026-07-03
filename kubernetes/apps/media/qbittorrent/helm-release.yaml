@@ -51,9 +51,6 @@ spec:
               DOT: "off"
               DNS_ADDRESS: 127.0.0.2
               TZ: America/Toronto
-              # https://github.com/qdm12/gluetun-wiki/blob/main/setup/advanced/vpn-port-forwarding.md#custom-port-forwarding-updown-command
-              VPN_PORT_FORWARDING_UP_COMMAND: /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":{{ "{{" }}PORT{{ "}}" }},\"current_network_interface\":\"{{ "{{" }}VPN_INTERFACE{{ "}}" }}\",\"random_port\":false,\"upnp\":false}" http://127.0.0.1:8080/api/v2/app/setPreferences'
-              VPN_PORT_FORWARDING_DOWN_COMMAND: /bin/sh -c 'wget -O- -nv --retry-connrefused --post-data "json={\"listen_port\":0,\"current_network_interface\":\"lo\"}" http://127.0.0.1:8080/api/v2/app/setPreferences'
             restartPolicy: Always
             securityContext:
               capabilities:
@@ -70,6 +67,13 @@ spec:
             securityContext:
               runAsUser: 568
               runAsGroup: 568
+          port-sync:
+            image:
+              repository: ghcr.io/clajiness/qbop
+              tag: v2.8.4
+            env:
+              OPN_SKIP: true
+              QBIT_ADDR: http://localhost:8080
 
     service:
       app:
