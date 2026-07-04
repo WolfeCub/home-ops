@@ -10,3 +10,4 @@ resources:
   - ollama
   - unsloth
   - omada
+  - konflate

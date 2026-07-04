@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: konflate
+  namespace: utils
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 4.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/home-operations/konflate
+              tag: 0.2.34
+            env:
+              TZ: America/Toronto
+              KONFLATE_REPO: github://WolfeCub/home-ops
+              KONFLATE_WRITE_TOKEN: "${konflate_gh_pat}"
+              KONFLATE_STATUS_CHECKS: true
+              KONFLATE_PR_COMMENTS: true
+              KONFLATE_PUBLIC_URL: "https://konflate.${domain}"
+
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+        hosts:
+          - host: "konflate.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
