@@ -32,9 +32,10 @@
         };
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
+          nativeBuildInputs = with pkgs; [
             kubectl
             kubectx
+            kubecolor
             helm-with-secrets
             fluxcd
             sops
@@ -42,6 +43,7 @@
             talhelper
             yaml-language-server
             flate
+            k9s
           ];
 
           shellHook = ''
