@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: esphome/esphome
-              tag: '2026.6.1'
+              tag: '2026.6.4'
 
     ingress:
       main:
