@@ -29,6 +29,7 @@ spec:
             env:
               TZ: America/Toronto
               APP_URL: https://id.${domain}
+              ENCRYPTION_KEY_FILE: /encryption-key/encryption_key
 
     ingress:
       main:
@@ -54,3 +55,6 @@ spec:
       data:
         enabled: true
         existingClaim: pocket-id-data
+      encryption-key:
+        type: secret
+        name: pocket-id-encryption-key
