@@ -10,6 +10,4 @@ resources:
   - capacitor
   - gatus
   - lldap
-  # - pocket-id
-  # - pangolin
-  # - postgres
+  - pocket-id
