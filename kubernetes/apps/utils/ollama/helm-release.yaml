@@ -38,6 +38,7 @@ spec:
 
                 ollama pull qwen3.5:9b
                 ollama pull gemma4:12b
+                ollama pull glm-ocr:q8_0
 
                 ollama create qwen3.5:9b-150k -f <(cat <<'EOF'
                 FROM qwen3.5:9b
