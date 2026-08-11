@@ -65,6 +65,12 @@ spec:
             env:
               OLLAMA_HOST: 0.0.0.0:11434
               NVIDIA_VISIBLE_DEVICES: all
+              # llama.cpp's prompt cache (context checkpoints) is host RAM, has
+              # no per-model override, and never gets evicted while keep_alive
+              # keeps a model loaded forever. The saved checkpoints from hours
+              # of chat sat around unreclaimed, and a receipt upload's own
+              # save pushed the node over — OOMKilled this pod once already.
+              LLAMA_ARG_CACHE_RAM: "0"
         pod:
           runtimeClassName: nvidia
           nodeSelector:
