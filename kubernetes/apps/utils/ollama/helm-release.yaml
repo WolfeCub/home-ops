@@ -52,7 +52,7 @@ spec:
           webui:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.10.2
+              tag: v0.11.0
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
