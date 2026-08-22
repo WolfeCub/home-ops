@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bookorbit
+  namespace: media
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 4.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bookorbit/bookorbit
+              tag: 2.6.0
+            env:
+              TZ: America/Toronto
+              PUID: 568
+              PGID: 568
+              APP_URL: "https://books.${domain}"
+              POSTGRES_HOST: postgres.admin.svc.cluster.local
+              POSTGRES_PORT: 5432
+              POSTGRES_USER: bookorbit
+              POSTGRES_DB: bookorbit
+              POSTGRES_PASSWORD: "${bookorbit_postgres_password}"
+              JWT_SECRET: "${bookorbit_jwt_secret}"
+              SETUP_BOOTSTRAP_TOKEN: "${bookorbit_setup_bootstrap_token}"
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        hosts:
+          - host: "books.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000
+
+    persistence:
+      data:
+        enabled: true
+        existingClaim: bookorbit-data
+        globalMounts:
+          - path: /data
+            readOnly: false
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/BookOrbit
+        globalMounts:
+          - path: /books
+            readOnly: false
