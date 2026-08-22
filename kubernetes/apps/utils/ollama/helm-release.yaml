@@ -25,7 +25,7 @@ spec:
           model-puller:
             image:
               repository: ollama/ollama
-              tag: 0.30.10
+              tag: 0.32.15
             env:
               OLLAMA_HOST: 0.0.0.0:11434
               NVIDIA_VISIBLE_DEVICES: "void"
@@ -61,7 +61,7 @@ spec:
           ollama:
             image:
               repository: ollama/ollama
-              tag: 0.30.10
+              tag: 0.32.15
             env:
               OLLAMA_HOST: 0.0.0.0:11434
               NVIDIA_VISIBLE_DEVICES: all
