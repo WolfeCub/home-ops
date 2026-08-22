@@ -24,8 +24,8 @@ spec:
         containers:
           main:
             image:
-              repository: postgres
-              tag: '18.4'
+              repository: pgvector/pgvector
+              tag: 0.8.6-pg18
             env:
               POSTGRES_PASSWORD: '${postgres_password}'
               PGDATA: /var/lib/postgresql/data/pgdata
