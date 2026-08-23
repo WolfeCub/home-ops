@@ -164,25 +164,28 @@ spec:
             - client_id: "grafana"
               client_name: "Grafana"
               client_secret: "$pbkdf2-sha512$$${authelia_grafana_client_secret_pbkdf}"
-              public: false
               require_pkce: true
               pkce_challenge_method: "S256"
+              claims_policy: "standard"
               redirect_uris:
                 - "https://grafana.${domain}/login/generic_oauth"
+              access_token_signed_response_alg: "RS256"
+            - client_id: "bookorbit"
+              client_name: "BookOrbit"
+              client_secret: "$pbkdf2-sha512$$${authelia_bookorbit_client_secret_pbkdf}"
+              token_endpoint_auth_method: "client_secret_post"
               scopes:
                 - "openid"
                 - "profile"
-                - "groups"
                 - "email"
-              response_types:
-                - "code"
-              grant_types:
-                - "authorization_code"
-              access_token_signed_response_alg: "RS256"
-              userinfo_signed_response_alg: "none"
-              token_endpoint_auth_method: "client_secret_basic"
+                - "groups"
+              require_pkce: true
+              pkce_challenge_method: "S256"
+              claims_policy: "standard"
+              redirect_uris:
+                - "https://books.${domain}/oauth2-callback"
           claims_policies:
-            grafana:
+            standard:
               id_token: ["email", "name", "groups", "preferred_username"]
 
     secret:

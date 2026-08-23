@@ -38,6 +38,7 @@ spec:
               POSTGRES_PASSWORD: "${bookorbit_postgres_password}"
               JWT_SECRET: "${bookorbit_jwt_secret}"
               SETUP_BOOTSTRAP_TOKEN: "${bookorbit_setup_bootstrap_token}"
+              OIDC_ALLOW_LOCAL_ISSUERS: true
 
     ingress:
       main:
