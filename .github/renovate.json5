@@ -9,7 +9,6 @@
   rebaseWhen: 'conflicted',
   ignorePaths: [
     'provision/**',
-    'legacy/**',
   ],
   helmv3: {
     managerFilePatterns: [
@@ -48,12 +47,26 @@
     {
       customType: 'regex',
       managerFilePatterns: [
-        '/kubernetes/crds/traefik/.+\\.ya?ml$/',
+        '/kubernetes/bootstrap/flux-operator\\.ya?ml$/',
       ],
       matchStrings: [
-        'registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n',
+        'version: "(?<currentValue>.*)"\n',
       ],
-      datasourceTemplate: 'helm',
+      depNameTemplate: 'controlplaneio-fluxcd/flux-operator',
+      datasourceTemplate: 'github-releases',
+      extractVersionTemplate: '^v(?<version>.*)$',
+    },
+    {
+      customType: 'regex',
+      managerFilePatterns: [
+        '/kubernetes/bootstrap/flux-instance\\.ya?ml$/',
+      ],
+      matchStrings: [
+        'version: "(?<currentValue>.*)"\n',
+      ],
+      depNameTemplate: 'fluxcd/flux2',
+      datasourceTemplate: 'github-releases',
+      extractVersionTemplate: '^v(?<version>.*)$',
     },
   ],
   packageRules: [
