@@ -18,4 +18,4 @@ data:
           entrypoints: ["websecure"]
           service: "api@internal"
           middlewares:
-            - "admin-forwardauth-authelia@kubernetescrd"
+            - "admin-tinyauth@kubernetescrd"

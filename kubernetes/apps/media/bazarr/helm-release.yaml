@@ -21,13 +21,15 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 568
         containers:
           main:
             image:
               repository: ghcr.io/home-operations/bazarr
               tag: 1.5.6
             securityContext:
-              fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
             env:
@@ -38,7 +40,8 @@ spec:
         enabled: true
         className: traefik
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+          tinyauth.apps.bazarr.path.allow: "^/api.*$"
         hosts:
           - host: "bazarr.${domain}"
             paths:

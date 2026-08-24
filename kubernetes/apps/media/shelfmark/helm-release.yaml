@@ -37,7 +37,7 @@ spec:
         enabled: true
         className: traefik
         annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
           - host: "shelfmark.${domain}"
             paths:

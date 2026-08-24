@@ -21,13 +21,15 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 568
         containers:
           main:
             image:
               repository: ghcr.io/home-operations/sonarr
               tag: 4.0.17
             securityContext:
-              fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
             env:

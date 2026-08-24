@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flux-operator
+  namespace: flux-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: "flux.${domain}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flux-operator
+                port:
+                  name: http-web

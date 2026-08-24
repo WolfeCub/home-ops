@@ -21,13 +21,15 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 568
         containers:
           main:
             image:
               repository: jellyfin/jellyfin
               tag: 10.11.11
             securityContext:
-              fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
             env:

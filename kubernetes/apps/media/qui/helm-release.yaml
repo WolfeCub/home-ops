@@ -28,9 +28,9 @@ spec:
               tag: v1.20.0
             env:
               QUI__OIDC_ENABLED: true
-              QUI__OIDC_ISSUER: https://login.${domain}
+              QUI__OIDC_ISSUER: https://id.${domain}
               QUI__OIDC_CLIENT_ID: qui
-              QUI__OIDC_CLIENT_SECRET: ${authelia_qui_client_secret}
+              QUI__OIDC_CLIENT_SECRET: ${pocketid_qui_client_secret}
               QUI__OIDC_REDIRECT_URL: https://qui.${domain}/api/auth/oidc/callback
               QUI__OIDC_DISABLE_BUILT_IN_LOGIN: true
 
@@ -38,8 +38,6 @@ spec:
       main:
         enabled: true
         className: traefik
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "admin-forwardauth-authelia@kubernetescrd"
         hosts:
           - host: "qui.${domain}"
             paths:
