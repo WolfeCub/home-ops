@@ -35,6 +35,8 @@ spec:
       main:
         enabled: true
         className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
         hosts:
           - host: "id.${domain}"
             paths:
@@ -55,6 +57,8 @@ spec:
       data:
         enabled: true
         existingClaim: pocket-id-data
+        globalMounts:
+          - path: /app/data
       encryption-key:
         type: secret
         name: pocket-id-encryption-key

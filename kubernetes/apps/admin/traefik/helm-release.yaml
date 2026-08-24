@@ -87,9 +87,3 @@ spec:
         disableAPICheck: true
         serviceMonitor:
           enabled: true
-
-    experimental:
-      plugins:
-        traefik-oidc-auth:
-          moduleName: "github.com/sevensolutions/traefik-oidc-auth"
-          version: "v0.20.1"

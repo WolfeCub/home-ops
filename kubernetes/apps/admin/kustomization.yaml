@@ -12,3 +12,4 @@ resources:
   - lldap
   - pocket-id
   - postgres
+  - tinyauth
