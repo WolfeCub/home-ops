@@ -13,12 +13,12 @@ spec:
       root_url: "https://grafana.${domain}"
     auth.generic_oauth:
       enabled: "true"
-      name: Authelia
+      name: Pocket ID
       client_id: grafana
-      client_secret: ${authelia_grafana_client_secret}
-      auth_url: https://login.${domain}/api/oidc/authorization
-      token_url: https://login.${domain}/api/oidc/token
-      api_url: https://login.${domain}/api/oidc/userinfo
+      client_secret: ${pocketid_grafana_client_secret}
+      auth_url: https://id.${domain}/authorize
+      token_url: https://id.${domain}/api/oidc/token
+      api_url: https://id.${domain}/api/oidc/userinfo
       scopes: "openid profile groups email"
       login_attribute_path: preferred_username
       name_attribute_path: name
