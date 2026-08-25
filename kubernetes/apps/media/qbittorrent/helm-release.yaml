@@ -70,7 +70,7 @@ spec:
           port-sync:
             image:
               repository: ghcr.io/clajiness/qbop
-              tag: v2.8.4
+              tag: v3.1.0
             env:
               OPN_SKIP: true
               QBIT_ADDR: http://localhost:8080
