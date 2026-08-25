@@ -11,20 +11,13 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: 1.10.2
+      version: 1.11.3
       sourceRef:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      # patch the hotfix image for longhorn manager
-      longhorn:
-        backingImageManager:
-          repository: longhornio/backing-image-manager
-          tag: v1.10.2-hotfix-1
-
     ingress:
       enabled: true
       ingressClassName: traefik
