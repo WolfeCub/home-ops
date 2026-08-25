@@ -25,6 +25,8 @@ spec:
             image:
               repository: ghcr.io/kubewall/kubewall
               tag: 0.0.20
+    defaultPodOptions:
+      automountServiceAccountToken: true
     serviceAccount:
       kubewall:
         enabled: true

@@ -39,6 +39,9 @@ spec:
             env:
               GATUS_CONFIG_PATH: /config
 
+    defaultPodOptions:
+      automountServiceAccountToken: true
+
     serviceAccount:
       gatus:
         enabled: true
