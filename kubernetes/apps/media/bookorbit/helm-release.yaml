@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bookorbit/bookorbit
-              tag: 2.6.0
+              tag: 2.7.0
             env:
               TZ: America/Toronto
               PUID: 568
