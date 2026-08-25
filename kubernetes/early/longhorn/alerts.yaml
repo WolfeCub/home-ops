@@ -1,0 +1,34 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: longhorn-backups
+  namespace: longhorn-system
+spec:
+  groups:
+    - name: longhorn-backups
+      rules:
+        - alert: LonghornBackupFailed
+          expr: longhorn_backup_state == 4
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Longhorn backup of {{ $labels.volume }} failed"
+            description: >-
+              Backup {{ $labels.backup }} of volume {{ $labels.volume }}
+              (job {{ $labels.recurring_job }}) is in state Error.
+
+        # Volumes at 0 have never been backed up and drop out here.
+        - alert: LonghornVolumeBackupStale
+          expr: (time() - (longhorn_volume_last_backup_at{pvc!=""} > 0)) > 86400
+          for: 1h
+          labels:
+            severity: critical
+          annotations:
+            summary: "Longhorn volume {{ $labels.pvc_namespace }}/{{ $labels.pvc }} has no recent backup"
+            description: >-
+              Volume {{ $labels.volume }} last completed a backup
+              {{ $value | humanizeDuration }} ago. There is no backup-target
+              availability metric, so this is the practical signal that the
+              NFS target is unreachable.

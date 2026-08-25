@@ -6,3 +6,5 @@ resources:
   - secret.sops.yaml
   - middleware.yaml
   - recurring-jobs.yaml
+  - grafana-dashboards.yaml
+  - alerts.yaml

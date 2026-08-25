@@ -28,6 +28,10 @@ spec:
     persistence:
       reclaimPolicy: Retain
 
+    metrics:
+      serviceMonitor:
+        enabled: true
+
     defaultSettings:
       backupTarget: nfs://${storage_host_ip}:/raid/longhorn-backups
       backupConcurrentLimit: 2
