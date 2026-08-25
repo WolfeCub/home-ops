@@ -36,6 +36,14 @@ spec:
       grafanaOperator:
         enabled: true
 
+    alertmanager:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - "alertmanager.${domain}"
+
     vmsingle:
       spec:
         retentionPeriod: 7d
@@ -44,4 +52,20 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
-          - "vm.${domain}"
+          - "metrics.${domain}"
+
+    vmalert:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - "vmalert.${domain}"
+
+    vmagent:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - "vmagent.${domain}"
