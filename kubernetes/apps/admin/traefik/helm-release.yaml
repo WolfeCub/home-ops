@@ -49,6 +49,8 @@ spec:
         expose:
           default: true
         http:
+          middlewares:
+            - admin-crowdsec@kubernetescrd
           redirections:
             entryPoint:
               to: websecure # Since we change the ports in NAT
@@ -61,9 +63,22 @@ spec:
         expose:
           default: true
         http:
+          middlewares:
+            - admin-crowdsec@kubernetescrd
           tls:
             enabled: true
             options: "default"
+
+    accessLog:
+      enabled: true
+      format: json
+
+    experimental:
+      plugins:
+        # Middleware name must stay "bouncer" to match admin/crowdsec/middleware.yaml
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.7.1
 
     additionalArguments:
       - "--providers.file.filename=/etc/traefik/dynamic.yml"

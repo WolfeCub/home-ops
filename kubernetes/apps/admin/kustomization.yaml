@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - authelia
   - blog
+  - crowdsec
+  - crowdsec-web-ui
   - flux-notifications
   - traefik
   - kubewall

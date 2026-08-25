@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: crowdsec
+  namespace: admin
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: crowdsec
+      version: 0.24.0
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: crowdsecurity/crowdsec
+      tag: v1.7.8
+
+    container_runtime: containerd
+
+    agent:
+      acquisition:
+        - namespace: admin
+          podName: traefik-*
+          program: traefik
+      env:
+        - name: TZ
+          value: America/Toronto
+        # Pulls in base-http-scenarios and http-cve transitively.
+        - name: COLLECTIONS
+          value: "crowdsecurity/traefik"
+
+    lapi:
+      env:
+        - name: TZ
+          value: America/Toronto
+        - name: BOUNCER_KEY_traefik
+          value: "${crowdsec_bouncer_key}"
+        # Registers the watcher the web UI logs in as; agents use the token instead.
+        - name: AGENT_USERNAME
+          value: crowdsec-web-ui
+        - name: AGENT_PASSWORD
+          value: "${crowdsec_web_ui_password}"
+      persistentVolume:
+        data:
+          storageClassName: longhorn
+        config:
+          storageClassName: longhorn
