@@ -30,7 +30,7 @@ spec:
 
     defaultSettings:
       backupTarget: nfs://${storage_host_ip}:/raid/longhorn-backups
-      backupConcurrentLimit: 1
+      backupConcurrentLimit: 2
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       createDefaultDiskLabeledNodes: true
       taintToleration: "gpu=yes:NoSchedule"
