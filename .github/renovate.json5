@@ -6,6 +6,8 @@
     'prIgnoreNotification',
   ],
   rebaseWhen: 'conflicted',
+  prConcurrentLimit: 0,
+  prHourlyLimit: 0,
   ignorePaths: [
     'provision/**',
   ],
@@ -95,6 +97,110 @@
         '/plex/',
       ],
       versioning: 'loose',
+    },
+    {
+      description: 'Group cohesive stacks so they land together',
+      matchPackageNames: [
+        '/^victoria-/',
+      ],
+      groupName: 'victoria-metrics',
+    },
+    {
+      matchPackageNames: [
+        'controlplaneio-fluxcd/flux-operator',
+        'fluxcd/flux2',
+      ],
+      groupName: 'flux',
+    },
+    {
+      description: 'Chart and CRDs must move together',
+      matchPackageNames: [
+        'cert-manager',
+      ],
+      groupName: 'cert-manager',
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/sonarr/',
+        '/radarr/',
+        '/prowlarr/',
+        '/bazarr/',
+        '/cleanuparr/',
+        '/flaresolverr/',
+      ],
+      groupName: 'arr',
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/plex/',
+        '/jellyfin/',
+        '/qbittorrent/',
+        '/\\/qui$/',
+      ],
+      groupName: 'media',
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/gatus/',
+        '/kubewall/',
+        '/pocket-id/',
+        '/tinyauth/',
+      ],
+      groupName: 'admin',
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/esphome/',
+        '/mosquitto/',
+        '/zigbee2mqtt/',
+        '/zwave/',
+      ],
+      groupName: 'home-automation',
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        '/wyoming/',
+        '/speaches/',
+        '/piper/',
+        '/whisper/',
+      ],
+      groupName: 'voice',
+    },
+    {
+      description: 'Last rule wins, so patches leave their stack group',
+      matchUpdateTypes: [
+        'patch',
+        'digest',
+      ],
+      matchFileNames: [
+        'kubernetes/apps/*/**',
+      ],
+      groupName: '{{{ replace "^kubernetes/apps/([^/]+)/.*$" "$1" packageFileDir }}} patches',
+    },
+    {
+      description: 'One PR for the chart across every release, patches included',
+      matchDatasources: [
+        'helm',
+      ],
+      matchPackageNames: [
+        'app-template',
+      ],
+      groupName: 'app-template',
     },
   ],
 }
