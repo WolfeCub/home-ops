@@ -71,6 +71,9 @@ spec:
     persistence:
       config:
         enabled: true
+        type: emptyDir
+      data:
+        enabled: true
         existingClaim: gatus-data
       config-file:
         type: configMap

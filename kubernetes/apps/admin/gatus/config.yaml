@@ -9,7 +9,7 @@ data:
     storage:
       type: sqlite
       caching: true
-      path: /config/gatus.db
+      path: /data/gatus.db
 
     alerting:
       discord:
