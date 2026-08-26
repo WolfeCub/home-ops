@@ -12,4 +12,3 @@ resources:
   - metrics-server.yaml
   - victoria-metrics.yaml
   - nvidia-k8s-device-plugin.yaml
-  - crowdsec.yaml

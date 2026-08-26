@@ -8,4 +8,3 @@ resources:
   - tls-store.yaml
   - ingress-class.yaml
   - grafana-dashboards.yaml
-  - crowdsec-middleware.yaml
