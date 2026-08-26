@@ -1,5 +1,5 @@
 {
-  semanticCommits: 'enabled',
+  semanticCommits: 'disabled',
   dependencyDashboard: true,
   dependencyDashboardTitle: 'Renovate Dashboard',
   suppressNotifications: [
@@ -72,6 +72,7 @@
       ],
       separateMinorPatch: true,
       ignoreDeprecated: true,
+      commitMessageTopic: 'chart {{depName}}',
       labels: [
         'renovate/helm',
         'dep/{{updateType}}',
@@ -99,25 +100,37 @@
       versioning: 'loose',
     },
     {
+      description: 'Catch-all by namespace; the stack groups below pull deps back out',
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+        'digest',
+      ],
+      matchFileNames: [
+        'kubernetes/apps/*/**',
+      ],
+      groupName: '{{{ replace "^kubernetes/apps/([^/]+)/.*$" "$1" packageFileDir }}} namespace',
+    },
+    {
       description: 'Group cohesive stacks so they land together',
       matchPackageNames: [
         '/^victoria-/',
       ],
-      groupName: 'victoria-metrics',
+      groupName: 'victoria-metrics stack',
     },
     {
       matchPackageNames: [
         'controlplaneio-fluxcd/flux-operator',
         'fluxcd/flux2',
       ],
-      groupName: 'flux',
+      groupName: 'flux stack',
     },
     {
       description: 'Chart and CRDs must move together',
       matchPackageNames: [
         'cert-manager',
       ],
-      groupName: 'cert-manager',
+      groupName: 'cert-manager stack',
     },
     {
       matchDatasources: [
@@ -131,7 +144,7 @@
         '/cleanuparr/',
         '/flaresolverr/',
       ],
-      groupName: 'arr',
+      groupName: 'arr stack',
     },
     {
       matchDatasources: [
@@ -140,22 +153,22 @@
       matchPackageNames: [
         '/plex/',
         '/jellyfin/',
-        '/qbittorrent/',
-        '/\\/qui$/',
       ],
-      groupName: 'media',
+      groupName: 'streaming stack',
     },
     {
+      description: 'The qbittorrent pod ships its own VPN and DNS sidecars',
       matchDatasources: [
         'docker',
       ],
       matchPackageNames: [
-        '/gatus/',
-        '/kubewall/',
-        '/pocket-id/',
-        '/tinyauth/',
+        '/qbittorrent/',
+        '/gluetun/',
+        '/dnsdist/',
+        '/qbop/',
+        '/\\/qui$/',
       ],
-      groupName: 'admin',
+      groupName: 'downloads stack',
     },
     {
       matchDatasources: [
@@ -167,7 +180,7 @@
         '/zigbee2mqtt/',
         '/zwave/',
       ],
-      groupName: 'home-automation',
+      groupName: 'home-automation stack',
     },
     {
       matchDatasources: [
@@ -179,18 +192,7 @@
         '/piper/',
         '/whisper/',
       ],
-      groupName: 'voice',
-    },
-    {
-      description: 'Last rule wins, so patches leave their stack group',
-      matchUpdateTypes: [
-        'patch',
-        'digest',
-      ],
-      matchFileNames: [
-        'kubernetes/apps/*/**',
-      ],
-      groupName: '{{{ replace "^kubernetes/apps/([^/]+)/.*$" "$1" packageFileDir }}} patches',
+      groupName: 'voice stack',
     },
     {
       description: 'One PR for the chart across every release, patches included',
@@ -200,7 +202,7 @@
       matchPackageNames: [
         'app-template',
       ],
-      groupName: 'app-template',
+      groupName: 'app-template chart',
     },
   ],
 }
