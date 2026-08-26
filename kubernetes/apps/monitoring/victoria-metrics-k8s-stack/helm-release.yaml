@@ -39,6 +39,7 @@ spec:
     alertmanager:
       ingress:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
@@ -49,6 +50,7 @@ spec:
         retentionPeriod: 7d
       ingress:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
@@ -57,6 +59,7 @@ spec:
     vmalert:
       ingress:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
@@ -65,6 +68,7 @@ spec:
     vmagent:
       ingress:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:

@@ -26,6 +26,7 @@ spec:
 
       ingress:
         enabled: true
+        ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
         hosts:
