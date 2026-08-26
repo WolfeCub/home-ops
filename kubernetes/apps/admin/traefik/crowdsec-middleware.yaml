@@ -10,7 +10,7 @@ spec:
       enabled: "true"
       crowdsecMode: stream
       crowdsecLapiScheme: http
-      crowdsecLapiHost: crowdsec-service.admin.svc.cluster.local:8080
+      crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiKey: "${crowdsec_bouncer_key}"
       # Fail open: a crowdsec outage must not 403 every external request.
       updateMaxFailure: "-1"

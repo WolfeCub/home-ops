@@ -31,7 +31,7 @@ spec:
               CONFIG_UI_TIME_ZONE: America/Toronto
               # tinyauth is the gate, so the app keeps no accounts of its own.
               CONFIG_AUTH_ENABLED: "false"
-              CONFIG_INSTANCE_LAPI_URL: http://crowdsec-service.admin.svc.cluster.local:8080
+              CONFIG_INSTANCE_LAPI_URL: http://crowdsec-service.crowdsec.svc.cluster.local:8080
               CONFIG_INSTANCE_LAPI_AUTH_USERNAME: crowdsec-web-ui
               CONFIG_INSTANCE_LAPI_AUTH_PASSWORD: "${crowdsec_web_ui_password}"
 

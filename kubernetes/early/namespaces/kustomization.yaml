@@ -13,3 +13,4 @@ resources:
   - games.yaml
   - printer.yaml
   - nvidia.yaml
+  - crowdsec.yaml

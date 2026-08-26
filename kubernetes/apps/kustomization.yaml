@@ -9,3 +9,4 @@ resources:
   - printer
   - monitoring
   - nvidia
+  - crowdsec
