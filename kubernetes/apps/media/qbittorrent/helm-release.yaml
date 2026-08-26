@@ -31,14 +31,14 @@ spec:
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-19
-              tag: 1.9.14
+              tag: 1.9.16
             restartPolicy: Always
 
           gluetun:
             dependsOn: dnsdist
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.41.1
+              tag: v3.41.3
             env:
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
@@ -70,7 +70,7 @@ spec:
           port-sync:
             image:
               repository: ghcr.io/clajiness/qbop
-              tag: v2.8.4
+              tag: v2.9.1
             env:
               OPN_SKIP: true
               QBIT_ADDR: http://localhost:8080
