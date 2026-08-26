@@ -1,5 +1,5 @@
 {
-  semanticCommits: 'enabled',
+  semanticCommits: 'disabled',
   dependencyDashboard: true,
   dependencyDashboardTitle: 'Renovate Dashboard',
   suppressNotifications: [
@@ -99,6 +99,18 @@
       versioning: 'loose',
     },
     {
+      description: 'Catch-all by namespace; the stack groups below pull deps back out',
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+        'digest',
+      ],
+      matchFileNames: [
+        'kubernetes/apps/*/**',
+      ],
+      groupName: '{{{ replace "^kubernetes/apps/([^/]+)/.*$" "$1" packageFileDir }}} updates',
+    },
+    {
       description: 'Group cohesive stacks so they land together',
       matchPackageNames: [
         '/^victoria-/',
@@ -180,17 +192,6 @@
         '/whisper/',
       ],
       groupName: 'voice',
-    },
-    {
-      description: 'Last rule wins, so patches leave their stack group',
-      matchUpdateTypes: [
-        'patch',
-        'digest',
-      ],
-      matchFileNames: [
-        'kubernetes/apps/*/**',
-      ],
-      groupName: '{{{ replace "^kubernetes/apps/([^/]+)/.*$" "$1" packageFileDir }}} patches',
     },
     {
       description: 'One PR for the chart across every release, patches included',
