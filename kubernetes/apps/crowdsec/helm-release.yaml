@@ -42,11 +42,25 @@ spec:
           value: America/Toronto
         - name: BOUNCER_KEY_traefik
           value: "${crowdsec_bouncer_key}"
-        # Registers the watcher the web UI logs in as; agents use the token instead.
-        - name: AGENT_USERNAME
-          value: crowdsec-web-ui
-        - name: AGENT_PASSWORD
+        - name: WEB_UI_PASSWORD
           value: "${crowdsec_web_ui_password}"
+      # The chart's LAPI entrypoint drops upstream's AGENT_USERNAME handling, so
+      # the web UI's watcher is created here instead. -f /dev/null stops cscli
+      # from clobbering local_api_credentials.yaml.
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - |
+                # postStart races the entrypoint writing /etc/crowdsec.
+                for _ in $(seq 60); do
+                  cscli machines add crowdsec-web-ui --force -f /dev/null \
+                    --password "$WEB_UI_PASSWORD" && exit 0
+                  sleep 2
+                done
+                echo "could not register the crowdsec-web-ui watcher" >&2
       persistentVolume:
         data:
           storageClassName: longhorn
