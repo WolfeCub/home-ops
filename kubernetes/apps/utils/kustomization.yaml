@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - vaultwarden
   - unifi
-  - dashy
   - ale-pal
   - glance
   - ollama
