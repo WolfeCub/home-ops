@@ -27,7 +27,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-assistant/home-assistant
-              tag: 2026.6.4
+              tag: 2026.8.3
             env:
               tz: america/toronto
             lifecycle:
@@ -40,7 +40,7 @@ spec:
             enabled: true
             image:
               repository: codercom/code-server
-              tag: 4.125.0
+              tag: 4.135.0
             workingDir: "/config"
             args:
               - --auth
