@@ -29,7 +29,7 @@ spec:
               repository: ghcr.io/home-assistant/home-assistant
               tag: 2026.6.4
             env:
-              tz: america/toronto
+              TZ: America/Toronto
             lifecycle:
               postStart:
                 exec:

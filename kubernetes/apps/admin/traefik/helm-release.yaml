@@ -68,8 +68,6 @@ spec:
     additionalArguments:
       - "--providers.file.filename=/etc/traefik/dynamic.yml"
       - "--providers.file.watch=true"
-      - "--providers.http.endpoint=http://pangolin-internal:3001/api/v1/traefik-config"
-      - "--providers.http.pollInterval=5s"
 
     volumes:
       - name: traefik-config

@@ -29,5 +29,5 @@ subjects:
     namespace: admin
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: kubewall
   apiGroup: rbac.authorization.k8s.io

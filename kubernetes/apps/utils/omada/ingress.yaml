@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: HostSNI(`omada.joshwolfe.ca`)
+    - match: HostSNI(`omada.${domain}`)
       services:
         - name: omada
           port: 8043
