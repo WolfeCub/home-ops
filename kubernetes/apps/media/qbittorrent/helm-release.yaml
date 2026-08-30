@@ -132,10 +132,3 @@ spec:
               - path: /etc/dnsdist/dnsdist.conf
                 subPath: dnsdist.conf
                 readOnly: true
-
-      port-forward-config:
-        type: emptyDir
-        advancedMounts:
-          app:
-            port-forward:
-              - path: /config
