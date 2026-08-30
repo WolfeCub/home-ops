@@ -58,21 +58,6 @@ spec:
           http:
             port: 8989
 
-    route:
-      app:
-        hostnames:
-          - gw-sonarr.${domain}
-        parentRefs:
-          - name: pomerium
-            namespace: pomerium
-        rules:
-          - filters:
-              - type: ExtensionRef
-                extensionRef:
-                  group: gateway.pomerium.io
-                  kind: PolicyFilter
-                  name: admin-group
-
     persistence:
       config:
         enabled: true
