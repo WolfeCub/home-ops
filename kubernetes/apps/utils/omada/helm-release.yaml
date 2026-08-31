@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: mbentley/omada-controller
-              tag: 6.2-openj9
+              tag: 6.3-openj9
             env:
               TZ: America/Toronto
               SSL_CERT_NAME: tls.crt
