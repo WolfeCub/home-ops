@@ -36,13 +36,19 @@ spec:
                 ollama serve &
                 until ollama list >/dev/null 2>&1; do sleep 2; done
 
-                ollama pull qwen3.5:9b
                 ollama pull gemma4:12b
                 ollama pull glm-ocr:q8_0
 
-                ollama create qwen3.5:9b-150k -f <(cat <<'EOF'
-                FROM qwen3.5:9b
-                PARAMETER num_ctx 153600
+                ollama create glm-ocr:q8_0 -f <(cat <<'EOF'
+                FROM glm-ocr:q8_0
+                PARAMETER num_ctx 8192
+                PARAMETER num_gpu 99
+                EOF
+                )
+
+                ollama create gemma4:12b -f <(cat <<'EOF'
+                FROM gemma4:12b
+                PARAMETER num_gpu 99
                 EOF
                 )
 
@@ -71,6 +77,16 @@ spec:
               # of chat sat around unreclaimed, and a receipt upload's own
               # save pushed the node over — OOMKilled this pod once already.
               LLAMA_ARG_CACHE_RAM: "0"
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/bash
+                    - -c
+                    - |
+                      until ollama list >/dev/null 2>&1; do sleep 2; done
+                      ollama run gemma4:12b "" --keepalive -1s
+                      ollama run glm-ocr:q8_0 "" --keepalive -1s
         pod:
           runtimeClassName: nvidia
           nodeSelector:
