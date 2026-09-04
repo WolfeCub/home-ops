@@ -71,6 +71,9 @@ spec:
             env:
               OLLAMA_HOST: 0.0.0.0:11434
               NVIDIA_VISIBLE_DEVICES: all
+              # Make the cache a bit smaller so everything will fit
+              OLLAMA_FLASH_ATTENTION: "1"
+              OLLAMA_KV_CACHE_TYPE: "q8_0"
               # llama.cpp's prompt cache (context checkpoints) is host RAM, has
               # no per-model override, and never gets evicted while keep_alive
               # keeps a model loaded forever. The saved checkpoints from hours
