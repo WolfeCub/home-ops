@@ -204,5 +204,13 @@
       ],
       groupName: 'app-template chart',
     },
+    {
+      description: 'Chart and CRDs must move together',
+      matchPackageNames: [
+        'traefik',
+        'traefik/traefik-helm-chart',
+      ],
+      groupName: 'traefik stack',
+    },
   ],
 }

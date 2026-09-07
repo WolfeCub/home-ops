@@ -6,3 +6,4 @@ resources:
   - prometheus-operator
   - grafana-operator
   - gateway-api
+  - traefik
