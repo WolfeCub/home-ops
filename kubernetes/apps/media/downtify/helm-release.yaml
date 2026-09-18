@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: downtify
+  namespace: media
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 5.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        pod:
+          securityContext:
+            fsGroup: 568
+        containers:
+          main:
+            image:
+              repository: ghcr.io/henriquesebastiao/downtify
+              tag: 2.13.0
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+            env:
+              TZ: America/Toronto
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - host: "downtify.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8000
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: downtify-config
+        globalMounts:
+          - path: /data
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${storage_host_ip}"
+            path: /raid/network_share/media/Music
+        globalMounts:
+          - path: /downloads
+            readOnly: false
