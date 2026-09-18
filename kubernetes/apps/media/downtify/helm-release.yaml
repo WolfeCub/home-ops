@@ -28,12 +28,17 @@ spec:
           main:
             image:
               repository: ghcr.io/henriquesebastiao/downtify
-              tag: 2.13.0
+              # 2.13.0-rc.1 swapped deno for nodejs; deno is the only JS runtime
+              # yt-dlp auto-enables, so YouTube downloads fail with cookies set.
+              tag: 2.12.0
             securityContext:
               runAsUser: 568
               runAsGroup: 568
             env:
               TZ: America/Toronto
+              # yt-dlp caches its EJS challenge solver under $HOME/.cache; the
+              # image leaves HOME as /, which uid 568 cannot write to.
+              HOME: /cache
 
     ingress:
       main:
@@ -62,6 +67,11 @@ spec:
         existingClaim: downtify-config
         globalMounts:
           - path: /data
+      cache:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /cache
       media:
         enabled: true
         type: custom
