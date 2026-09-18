@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/henriquesebastiao/downtify
               # 2.13.0-rc.1 swapped deno for nodejs; deno is the only JS runtime
               # yt-dlp auto-enables, so YouTube downloads fail with cookies set.
-              tag: 2.12.0
+              tag: 2.13.0
             securityContext:
               runAsUser: 568
               runAsGroup: 568
