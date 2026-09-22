@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ghcr.io/henriquesebastiao/downtify
-              tag: 3.0.0
+              tag: 3.1.0
             securityContext:
               runAsUser: 568
               runAsGroup: 568
