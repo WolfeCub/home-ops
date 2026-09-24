@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   inputs:
-    - version: "0.59.0"
+    - version: "0.60.0"
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
