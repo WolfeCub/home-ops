@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/donkie/spoolman
-              tag: 0.26.1
+              tag: 0.27.0
     ingress:
       main:
         enabled: true
