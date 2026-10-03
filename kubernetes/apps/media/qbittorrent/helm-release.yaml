@@ -60,7 +60,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.2.3
+              tag: 5.2.4
             env:
               PUID: 568
               PGID: 568
@@ -70,7 +70,7 @@ spec:
           port-sync:
             image:
               repository: ghcr.io/clajiness/qbop
-              tag: v3.4.0
+              tag: v3.4.1
             env:
               OPN_SKIP: true
               QBIT_ADDR: http://localhost:8080
