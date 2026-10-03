@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ghcr.io/navidrome/navidrome
-              tag: 0.64.0
+              tag: 0.64.2
             securityContext:
               runAsUser: 568
               runAsGroup: 568
