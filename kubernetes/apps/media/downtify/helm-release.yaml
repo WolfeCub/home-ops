@@ -37,6 +37,7 @@ spec:
               # yt-dlp caches its EJS challenge solver under $HOME/.cache; the
               # image leaves HOME as /, which uid 568 cannot write to.
               HOME: /cache
+              DOWNTIFY_DISABLE_AUTH: true
 
     ingress:
       main:
