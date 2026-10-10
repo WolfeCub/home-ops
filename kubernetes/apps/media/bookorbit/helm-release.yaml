@@ -44,6 +44,8 @@ spec:
       main:
         enabled: true
         className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure-ext,websecure
         hosts:
           - host: "books.${domain}"
             paths:
