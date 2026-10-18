@@ -22,14 +22,12 @@ spec:
     controllers:
       speech:
         containers:
-          # whisper:
-          #   image:
-          #     repository: linuxserver/faster-whisper
-          #     tag: 3.2.0-gpu
-          #   env:
-          #     NVIDIA_VISIBLE_DEVICES: all
-          #     TZ: America/Toronto
-          #     WHISPER_MODEL: small-int8
+          # Parakeet STT, runs on the CPU
+          parakeet:
+            image:
+              repository: rhasspy/wyoming-whisper
+              tag: 3.8.1
+            args: ["--language", "en"]
           # piper:
           #   image:
           #     repository: rhasspy/wyoming-piper
@@ -52,12 +50,12 @@ spec:
               operator: Exists
 
     service:
-      # whisper:
-      #   controller: speech
-      #   ports:
-      #     http:
-      #       port: 10300
-      #
+      parakeet:
+        controller: speech
+        ports:
+          http:
+            port: 10300
+
       # piper:
       #   controller: speech
       #   ports:
@@ -69,3 +67,11 @@ spec:
         ports:
           http:
             port: 10400
+
+    persistence:
+      parakeet-models:
+        type: emptyDir
+        advancedMounts:
+          speech:
+            parakeet:
+              - path: /data
