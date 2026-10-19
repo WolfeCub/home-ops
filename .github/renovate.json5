@@ -100,6 +100,16 @@
       versioning: 'loose',
     },
     {
+      description: 'llama-swap version and llama.cpp build; stays on the CUDA 12 root image',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/mostlygeek/llama-swap',
+      ],
+      versioning: 'regex:^v(?<major>\\d+)-cuda-b(?<minor>\\d+)$',
+    },
+    {
       description: 'Catch-all by namespace; the stack groups below pull deps back out',
       matchUpdateTypes: [
         'minor',

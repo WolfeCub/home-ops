@@ -24,22 +24,19 @@ spec:
         initContainers:
           model-puller:
             image:
-              repository: curlimages/curl
-              tag: 8.22.0
+              repository: ghcr.io/astral-sh/uv
+              tag: 0.13.2-python3.14-trixie-slim
             command:
               - /bin/sh
               - -c
               - |
                 set -eu
-                dl() {
-                  [ -f "/models/$2" ] && return 0
-                  curl -fL --retry 5 -C - -o "/models/$2.part" "https://huggingface.co/$1/resolve/main/$2"
-                  mv "/models/$2.part" "/models/$2"
-                }
+                uv pip install --system huggingface_hub
 
-                dl google/gemma-4-12B-it-qat-q4_0-gguf gemma-4-12b-it-qat-q4_0.gguf
-                dl ggml-org/GLM-OCR-GGUF GLM-OCR-Q8_0.gguf
-                dl ggml-org/GLM-OCR-GGUF mmproj-GLM-OCR-Q8_0.gguf
+                xargs -P 4 -L 1 hf download --local-dir /models <<'EOF'
+                google/gemma-4-12B-it-qat-q4_0-gguf gemma-4-12b-it-qat-q4_0.gguf
+                ggml-org/GLM-OCR-GGUF GLM-OCR-Q8_0.gguf mmproj-GLM-OCR-Q8_0.gguf
+                EOF
 
         containers:
           webui:
@@ -87,6 +84,18 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: webui
+      llama-swap:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - host: "llama-swap.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: api
     service:
       webui:
         controller: main
