@@ -26,6 +26,8 @@ spec:
             image:
               repository: ghcr.io/astral-sh/uv
               tag: 0.13.2-python3.14-trixie-slim
+            env:
+              HF_TOKEN: "${llama_hf_token}"
             command:
               - /bin/sh
               - -c
