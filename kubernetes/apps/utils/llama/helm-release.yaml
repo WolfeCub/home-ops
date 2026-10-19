@@ -1,0 +1,138 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: llama
+  namespace: utils
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 5.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        initContainers:
+          model-puller:
+            image:
+              repository: curlimages/curl
+              tag: 8.22.0
+            command:
+              - /bin/sh
+              - -c
+              - |
+                set -eu
+                dl() {
+                  [ -f "/models/$2" ] && return 0
+                  curl -fL --retry 5 -C - -o "/models/$2.part" "https://huggingface.co/$1/resolve/main/$2"
+                  mv "/models/$2.part" "/models/$2"
+                }
+
+                dl google/gemma-4-12B-it-qat-q4_0-gguf gemma-4-12b-it-qat-q4_0.gguf
+                dl ggml-org/GLM-OCR-GGUF GLM-OCR-Q8_0.gguf
+                dl ggml-org/GLM-OCR-GGUF mmproj-GLM-OCR-Q8_0.gguf
+
+        containers:
+          webui:
+            image:
+              repository: ghcr.io/open-webui/open-webui
+              tag: v0.11.4
+            env:
+              WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
+              WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
+              DATABASE_URL: sqlite:////app/backend/data/webui_db/webui.db
+              ENABLE_OLLAMA_API: "false"
+              OPENAI_API_BASE_URL: http://localhost:8081/v1
+              OPENAI_API_KEY: unused
+          llama-swap:
+            image:
+              repository: ghcr.io/mostlygeek/llama-swap
+              tag: v265-cuda-b11718
+            command:
+              - /app/llama-swap
+              - -config
+              - /config/config.yaml
+              - -listen
+              - :8081
+              - -watch-config
+            env:
+              NVIDIA_VISIBLE_DEVICES: all
+        pod:
+          runtimeClassName: nvidia
+          nodeSelector:
+            kubernetes.io/hostname: worker04
+          tolerations:
+            - key: gpu
+              operator: Exists
+
+    ingress:
+      webui:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - host: "llama.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: webui
+    service:
+      webui:
+        controller: main
+        ports:
+          http:
+            port: 8080
+      api:
+        controller: main
+        ports:
+          http:
+            port: 8081
+
+    persistence:
+      models:
+        enabled: true
+        type: emptyDir
+        advancedMounts:
+          main:
+            llama-swap:
+              - path: /models
+                readOnly: true
+            model-puller:
+              - path: /models
+
+      config:
+        enabled: true
+        type: configMap
+        name: llama-swap-config
+        advancedMounts:
+          main:
+            llama-swap:
+              - path: /config
+                readOnly: true
+
+      data:
+        enabled: true
+        existingClaim: llama-data
+        advancedMounts:
+          main:
+            webui:
+              - path: /app/backend/data/webui_db
+                subPath: webui_db
+                readOnly: false
+              - path: /app/backend/data/vector_db
+                subPath: vector_db
+                readOnly: false
+              - path: /app/backend/data/uploads
+                subPath: uploads
+                readOnly: false

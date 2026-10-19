@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llama-swap-config
+  namespace: utils
+data:
+  config.yaml: |
+    # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
+    healthCheckTimeout: 300
+
+    # Fixed sizes instead of --fit, which grabs whatever VRAM is free at load.
+    # Shares the GPU with speaches (Kokoro, ~1 GiB).
+    macros:
+      server: >-
+        /app/llama-server
+        --host 127.0.0.1 --port $${PORT}
+        --fit off --n-gpu-layers all
+        --parallel 1
+        --no-webui
+        --cache-ram 0
+
+    models:
+      # Text only; no --mmproj to save VRAM, images go to glm-ocr
+      "gemma4:12b":
+        cmd: |
+          $${server}
+          --model /models/gemma-4-12b-it-qat-q4_0.gguf
+          --ctx-size 8192
+          --flash-attn on
+          --cache-type-k q8_0 --cache-type-v q8_0
+
+      "glm-ocr:q8_0":
+        cmd: |
+          $${server}
+          --model /models/GLM-OCR-Q8_0.gguf
+          --mmproj /models/mmproj-GLM-OCR-Q8_0.gguf
+          --ctx-size 8192
+          --flash-attn on
+          --cache-type-k q8_0 --cache-type-v q8_0
+          # 28px per token, so ~a 1600px square: matches tally-ho's MAX_IMAGE_EDGE
+          --image-max-tokens 3300
+
+    routing:
+      router:
+        use: group
+        settings:
+          groups:
+            resident:
+              swap: false
+              exclusive: false
+              members:
+                - "gemma4:12b"
+                - "glm-ocr:q8_0"
+
+    hooks:
+      on_startup:
+        preload:
+          - "gemma4:12b"
+          - "glm-ocr:q8_0"
