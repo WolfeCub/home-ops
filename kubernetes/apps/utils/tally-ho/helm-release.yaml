@@ -25,10 +25,10 @@ spec:
           main:
             image:
               repository: ghcr.io/wolfecub/tally-ho
-              tag: 0.8.0
+              tag: 0.9.0
             env:
               TZ: America/Toronto
-              OLLAMA_URL: http://ollama-api.utils:11434
+              LLAMA_URL: http://llama-api.utils:8081
               CURRENCY: CAD
 
     ingress:
