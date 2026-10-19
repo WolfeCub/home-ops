@@ -28,8 +28,7 @@ data:
           --model /models/gemma-4-12b-it-qat-q4_0.gguf
           --mmproj /models/mmproj-gemma-4-12b-it-qat-q4_0.gguf
           --ctx-size 8192
-          # Two slots sharing the 8k context, so one client's long request doesn't block another or evict its cached prompt
-          --parallel 2 --kv-unified
+          --parallel 4 --kv-unified
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
         filters:
