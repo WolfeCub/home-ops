@@ -8,6 +8,8 @@ data:
   config.yaml: |
     # yaml-language-server: $schema=https://raw.githubusercontent.com/mostlygeek/llama-swap/refs/heads/main/config-schema.json
     healthCheckTimeout: 300
+    # List aliases like gemma4:12b-nothink in /v1/models so clients can pick them
+    includeAliasesInList: true
 
     # Fixed sizes instead of --fit, which grabs whatever VRAM is free at load.
     # Shares the GPU with speaches (Kokoro, ~1 GiB).
@@ -16,7 +18,6 @@ data:
         /app/llama-server
         --host 127.0.0.1 --port $${PORT}
         --fit off --n-gpu-layers all
-        --parallel 1
         --no-webui
         --cache-ram 0
 
@@ -27,8 +28,15 @@ data:
           $${server}
           --model /models/gemma-4-12b-it-qat-q4_0.gguf
           --ctx-size 8192
+          # Two slots sharing the 8k context, so one client's long request doesn't block another or evict its cached prompt
+          --parallel 2 --kv-unified
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
+        filters:
+          setParamsByID:
+            "gemma4:12b-nothink":
+              chat_template_kwargs:
+                enable_thinking: false
 
       "glm-ocr:q8_0":
         cmd: |
@@ -36,6 +44,7 @@ data:
           --model /models/GLM-OCR-Q8_0.gguf
           --mmproj /models/mmproj-GLM-OCR-Q8_0.gguf
           --ctx-size 8192
+          --parallel 1
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
           # 28px per token, so ~a 1600px square: matches tally-ho's MAX_IMAGE_EDGE
