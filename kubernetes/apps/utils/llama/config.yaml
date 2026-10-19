@@ -22,11 +22,11 @@ data:
         --cache-ram 0
 
     models:
-      # Text only; no --mmproj to save VRAM, images go to glm-ocr
       "gemma4:12b":
         cmd: |
           $${server}
           --model /models/gemma-4-12b-it-qat-q4_0.gguf
+          --mmproj /models/mmproj-gemma-4-12b-it-qat-q4_0.gguf
           --ctx-size 8192
           # Two slots sharing the 8k context, so one client's long request doesn't block another or evict its cached prompt
           --parallel 2 --kv-unified
