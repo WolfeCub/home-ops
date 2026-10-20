@@ -35,6 +35,7 @@ data:
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
           --log-prompts-dir /tmp/prompts
+          -lv 4
         filters:
           setParamsByID:
             "gemma4:12b-nothink":
