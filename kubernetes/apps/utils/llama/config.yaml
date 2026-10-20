@@ -25,8 +25,11 @@ data:
       "gemma4:12b":
         cmd: |
           $${server}
-          --model /models/gemma-4-12b-it-qat-q4_0.gguf
-          --mmproj /models/mmproj-gemma-4-12b-it-qat-q4_0.gguf
+          --model /models/gemma-4-12B-it-qat-UD-Q4_K_XL.gguf
+          --mmproj /models/mmproj-F16.gguf
+          --model-draft /models/mtp-gemma-4-12B-it.gguf
+          --spec-type draft-mtp --spec-draft-n-max 4
+          --n-gpu-layers-draft all
           --ctx-size 8192
           --parallel 4 --kv-unified
           --flash-attn on

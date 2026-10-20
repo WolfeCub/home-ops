@@ -36,7 +36,7 @@ spec:
                 uv pip install --system huggingface_hub
 
                 xargs -P 4 -L 1 hf download --local-dir /models <<'EOF'
-                google/gemma-4-12B-it-qat-q4_0-gguf gemma-4-12b-it-qat-q4_0.gguf mmproj-gemma-4-12b-it-qat-q4_0.gguf
+                unsloth/gemma-4-12B-it-qat-GGUF gemma-4-12B-it-qat-UD-Q4_K_XL.gguf mmproj-F16.gguf mtp-gemma-4-12B-it.gguf
                 ggml-org/GLM-OCR-GGUF GLM-OCR-Q8_0.gguf mmproj-GLM-OCR-Q8_0.gguf
                 EOF
 
