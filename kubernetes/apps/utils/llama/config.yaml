@@ -34,7 +34,6 @@ data:
           --parallel 4 --kv-unified
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
-          --swa-full
         filters:
           setParamsByID:
             "gemma4:12b-nothink":
