@@ -55,7 +55,7 @@ spec:
           llama-swap:
             image:
               repository: ghcr.io/mostlygeek/llama-swap
-              tag: v265-cuda-b11718
+              tag: v267-cuda-b11913
             command:
               - /app/llama-swap
               - -config
