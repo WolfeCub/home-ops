@@ -25,7 +25,7 @@ spec:
           model-puller:
             image:
               repository: ghcr.io/astral-sh/uv
-              tag: 0.13.2-python3.14-trixie-slim
+              tag: 0.13.6-python3.14-trixie-slim
             env:
               HF_TOKEN: "${llama_hf_token}"
             command:
@@ -44,7 +44,7 @@ spec:
           webui:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.11.4
+              tag: v0.12.5
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
@@ -55,7 +55,7 @@ spec:
           llama-swap:
             image:
               repository: ghcr.io/mostlygeek/llama-swap
-              tag: v265-cuda-b11718
+              tag: v265-cuda-b11804
             command:
               - /app/llama-swap
               - -config
