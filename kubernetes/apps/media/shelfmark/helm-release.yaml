@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/calibrain/shelfmark-lite
-              tag: v1.5.1
+              tag: v1.6.0
             env:
               TZ: America/Toronto
               EXT_BYPASSER_URL: http://flaresolverr:8191
