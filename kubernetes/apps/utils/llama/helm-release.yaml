@@ -55,6 +55,7 @@ spec:
           llama-swap:
             image:
               repository: ghcr.io/mostlygeek/llama-swap
+              # (llama swap release number)-cuda-(bundled llama.cpp build number)
               tag: v269-cuda-b12033
             command:
               - /app/llama-swap
