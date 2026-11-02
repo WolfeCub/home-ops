@@ -34,7 +34,7 @@ spec:
           wyoming-openai:
             image:
               repository: ghcr.io/roryeckel/wyoming_openai
-              tag: 0.7.0
+              tag: 0.8.0
             env:
               WYOMING_LANGUAGES: en
               TTS_BACKEND: "SPEACHES"
