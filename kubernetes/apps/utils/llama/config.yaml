@@ -12,10 +12,9 @@ data:
     includeAliasesInList: true
 
     # Fixed sizes instead of --fit, which grabs whatever VRAM is free at load.
-    # Shares the GPU with speaches (Kokoro, ~1 GiB).
     macros:
       server: >-
-        /app/llama-server
+        llama-server
         --host 127.0.0.1 --port $${PORT}
         --fit off --n-gpu-layers all
         --no-webui
@@ -52,6 +51,13 @@ data:
           # 28px per token, so ~a 1600px square: matches tally-ho's MAX_IMAGE_EDGE
           --image-max-tokens 3300
 
+      "kokoro":
+        cmd: |
+          audiocpp_server
+          --config /etc/llama-swap/config/audiocpp-server.json
+          --port $${PORT}
+          --no-ui
+
     routing:
       router:
         use: group
@@ -63,9 +69,31 @@ data:
               members:
                 - "gemma4:12b"
                 - "glm-ocr:q8_0"
+                - "kokoro"
 
     hooks:
       on_startup:
         preload:
           - "gemma4:12b"
           - "glm-ocr:q8_0"
+          - "kokoro"
+
+  audiocpp-server.json: |
+    {
+      "host": "127.0.0.1",
+      "backend": "cuda",
+      "device": 0,
+      "lazy_load": false,
+      "models": [
+        {
+          "id": "kokoro",
+          "family": "kokoro_tts",
+          "path": "/models/Kokoro-82M-GGUF/kokoro-82m-bf16.gguf",
+          "task": "tts",
+          "mode": "offline",
+          "default_voice_preset": {
+            "voice_id": "af_heart"
+          }
+        }
+      ]
+    }

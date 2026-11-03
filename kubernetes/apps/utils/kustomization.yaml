@@ -6,7 +6,6 @@ resources:
   - unifi
   - ale-pal
   - glance
-  - ollama
   - unsloth
   - omada
   - konflate

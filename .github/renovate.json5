@@ -100,14 +100,14 @@
       versioning: 'loose',
     },
     {
-      description: 'llama-swap version and llama.cpp build; stays on the CUDA 12 root image',
+      description: 'llama-swap release; stays on the CUDA 12 unified image',
       matchDatasources: [
         'docker',
       ],
       matchPackageNames: [
         'ghcr.io/mostlygeek/llama-swap',
       ],
-      versioning: 'regex:^v(?<major>\\d+)-cuda-b(?<minor>\\d+)$',
+      versioning: 'regex:^unified-cuda-(?<major>\\d+)$',
     },
     {
       description: 'Catch-all by namespace; the stack groups below pull deps back out',
@@ -198,7 +198,6 @@
       ],
       matchPackageNames: [
         '/wyoming/',
-        '/speaches/',
         '/piper/',
         '/whisper/',
       ],

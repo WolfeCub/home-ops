@@ -38,6 +38,7 @@ spec:
                 xargs -P 4 -L 1 hf download --local-dir /models <<'EOF'
                 unsloth/gemma-4-12B-it-qat-GGUF gemma-4-12B-it-qat-UD-Q4_K_XL.gguf mmproj-F16.gguf mtp-gemma-4-12B-it.gguf
                 ggml-org/GLM-OCR-GGUF GLM-OCR-Q8_0.gguf mmproj-GLM-OCR-Q8_0.gguf
+                audio-cpp/audio.cpp-gguf Kokoro-82M-GGUF/kokoro-82m-bf16.gguf
                 EOF
 
         containers:
@@ -55,16 +56,10 @@ spec:
           llama-swap:
             image:
               repository: ghcr.io/mostlygeek/llama-swap
-              # (llama swap release number)-cuda-(bundled llama.cpp build number)
-              tag: v269-cuda-b12033
-            command:
-              - /app/llama-swap
-              - -config
-              - /config/config.yaml
-              - -listen
-              - :8081
-              - -watch-config
+              tag: unified-cuda-269
             env:
+              # open-webui holds the default 8080 in this pod
+              LLAMA_SWAP_LISTEN: :8081
               NVIDIA_VISIBLE_DEVICES: all
         pod:
           runtimeClassName: nvidia
@@ -130,7 +125,7 @@ spec:
         advancedMounts:
           main:
             llama-swap:
-              - path: /config
+              - path: /etc/llama-swap/config
                 readOnly: true
 
       data:
