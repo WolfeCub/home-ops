@@ -24,6 +24,8 @@ spec:
         pod:
           securityContext:
             fsGroup: 568
+            # Skip recursive chown of the large config volume on every mount
+            fsGroupChangePolicy: OnRootMismatch
         containers:
           main:
             image:
