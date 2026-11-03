@@ -1,6 +1,8 @@
 ---
 clusterName: talos-homelab
 endpoint: https://192.168.0.210:6443
+talosVersion: v1.13.12
+kubernetesVersion: v1.36.3
 patches:
   - |-
     machine:
