@@ -47,6 +47,8 @@
           ];
 
           shellHook = ''
+            export TALOSCONFIG="$(git rev-parse --show-toplevel 2>/dev/null || pwd)/talos/clusterconfig/talosconfig"
+
             echo "⛵ Homelab environment loaded!"
             echo "----------------------------------------"
             CTX=$(kubectx -c 2>/dev/null || echo "Not set")
