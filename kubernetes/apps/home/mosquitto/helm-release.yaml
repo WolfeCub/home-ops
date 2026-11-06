@@ -21,6 +21,9 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 1883
         containers:
           main:
             image:
@@ -41,6 +44,10 @@ spec:
             port: 1883
 
     persistence:
+      data:
+        enabled: true
+        existingClaim: mosquitto-data
+
       config-file:
         type: configMap
         name: mosquitto-config

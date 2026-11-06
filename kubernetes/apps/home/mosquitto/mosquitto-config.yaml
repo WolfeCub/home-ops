@@ -9,3 +9,7 @@ data:
     listener 1883 0.0.0.0
     allow_anonymous true
     log_type all
+    # Saved on clean shutdown and every 30m (autosave_interval default)
+    persistence true
+    persistence_location /data/
+    persistent_client_expiration 14d
