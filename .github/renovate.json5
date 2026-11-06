@@ -110,6 +110,16 @@
       versioning: 'regex:^unified-cuda-(?<major>\\d+)$',
     },
     {
+      description: 'SearXNG tags are date plus commit hash',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'searxng/searxng',
+      ],
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-[0-9a-f]+$',
+    },
+    {
       description: 'Catch-all by namespace; the stack groups below pull deps back out',
       matchUpdateTypes: [
         'minor',

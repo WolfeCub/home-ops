@@ -12,3 +12,4 @@ resources:
   - trek
   - yarnl
   - llama
+  - searxng
