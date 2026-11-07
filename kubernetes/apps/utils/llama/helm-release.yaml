@@ -25,7 +25,7 @@ spec:
           model-puller:
             image:
               repository: ghcr.io/astral-sh/uv
-              tag: 0.13.6-python3.14-trixie-slim
+              tag: 0.13.7-python3.14-trixie-slim
             env:
               HF_TOKEN: "${llama_hf_token}"
             command:
@@ -45,7 +45,7 @@ spec:
           webui:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.12.5
+              tag: v0.13.0
             env:
               WEBUI_AUTH_TRUSTED_EMAIL_HEADER: Remote-Email
               WEBUI_AUTH_TRUSTED_NAME_HEADER: Remote-User
