@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: glanceapp/glance
-              tag: v0.8.7
+              tag: v0.8.8
             env:
               TZ: America/Toronto
 
