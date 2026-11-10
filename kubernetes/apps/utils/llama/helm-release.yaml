@@ -56,7 +56,7 @@ spec:
           llama-swap:
             image:
               repository: ghcr.io/mostlygeek/llama-swap
-              tag: unified-cuda-271
+              tag: unified-cuda-272
             env:
               # open-webui holds the default 8080 in this pod
               LLAMA_SWAP_LISTEN: :8081
