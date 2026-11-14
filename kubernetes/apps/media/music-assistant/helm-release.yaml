@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/music-assistant/server
-              tag: 2.10.9
+              tag: 2.10.11
             env:
               TZ: America/Toronto
           ytdlp-pot:
