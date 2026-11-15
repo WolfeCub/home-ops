@@ -64,6 +64,9 @@ spec:
               tag: 0.2.0
             env:
               LISTEN: 0.0.0.0:10401
+              # Consecutive 80 ms frames scoring above THRESHOLD before a wake fires.
+              # Drops brief false spikes; adds 160 ms. Real wakes hold 6-10 frames.
+              TRIGGER_LEVEL: "3"
         pod:
           runtimeClassName: nvidia
           nodeSelector:
