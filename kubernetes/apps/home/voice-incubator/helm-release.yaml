@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: voice-incubator
+  namespace: home
+spec:
+  interval: 5m
+  upgrade:
+    force: true
+  chart:
+    spec:
+      chart: app-template
+      version: 5.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/ohf-voice/voice-incubator
+              tag: 0.3.0
+            env:
+              TZ: America/Toronto
+              HASS_URL: http://home-assistant-main.home:8123
+              HASS_TOKEN: "${voice_incubator_hass_token}"
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: worker04
+          tolerations:
+            - key: gpu
+              operator: Exists
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "admin-tinyauth@kubernetescrd"
+        hosts:
+          - host: "voice.${domain}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8099
+          wyoming:
+            enabled: true
+            port: 10800
+
+    # Under /data:
+    #   models/            downloads (~530 MB: Parakeet, EmbeddingGemma, GLiNER, Piper voices, training kit)
+    #   uv-cache/          wake word trainer's Python (~2 GB, only once training is installed)
+    #   *.json             settings, commands, satellites, people, names, pronunciations
+    #   calls/             call traces and audio, only with debugging or keep_audio on
+    #   embeddings.npz     command embeddings, rebuilt at start if missing
+    #   kaldi/             Kaldi mode grammar graphs, regenerable
+    #   wake_training/     wake word training jobs (clips and features, can be large)
+    #   wake-train/        wake verifier graphs
+    # Trained wake words go to /usr/src/voice_incubator/wake_words (outside /data) unless --wake-words-dir is set
+    persistence:
+      data:
+        enabled: true
+        existingClaim: voice-incubator-data
+        globalMounts:
+          - path: /data
+
+      models:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /data/models
+
+      uv-cache:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /data/uv-cache
