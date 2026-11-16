@@ -61,12 +61,25 @@ spec:
           livekit-wakeword:
             image:
               repository: ghcr.io/wolfecub/wyoming-livekit-wakeword
-              tag: 0.2.0
+              tag: 0.3.0
             env:
               LISTEN: 0.0.0.0:10401
               # Consecutive 80 ms frames scoring above THRESHOLD before a wake fires.
               # Drops brief false spikes; adds 160 ms. Real wakes hold 6-10 frames.
               TRIGGER_LEVEL: "3"
+              VERIFIER: wyoming-wake-kaldi:10402
+          wake-kaldi:
+            image:
+              repository: ghcr.io/ohf-voice/voice-incubator
+              tag: 0.3.0
+            command: ["python3", "-m", "wyoming_wake_kaldi"]
+            args:
+              - --config
+              - wake.yaml
+              - --uri
+              - tcp://0.0.0.0:10402
+              - --decoder-daemon
+              - models/wake-kaldi-decoderd/verify_decoderd
         pod:
           runtimeClassName: nvidia
           nodeSelector:
@@ -99,6 +112,12 @@ spec:
         ports:
           http:
             port: 10401
+
+      wake-kaldi:
+        controller: main
+        ports:
+          http:
+            port: 10402
 
     persistence:
       parakeet-models:
