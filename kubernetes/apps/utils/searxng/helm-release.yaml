@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: searxng/searxng
-              tag: 2026.11.8-74418092d
+              tag: 2026.11.20-d93f57789
             env:
               TZ: America/Toronto
               SEARXNG_BASE_URL: "https://search.${domain}/"

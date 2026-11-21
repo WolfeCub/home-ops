@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: mauriceboe/trek
-              tag: 5.1.1
+              tag: 5.1.4
             env:
               TZ: America/Toronto
               APP_URL: "https://trek.${domain}"
