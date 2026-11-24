@@ -80,6 +80,8 @@ spec:
               - tcp://0.0.0.0:10402
               - --decoder-daemon
               - models/wake-kaldi-decoderd/verify_decoderd
+              - --debug-dir
+              - /debug
         pod:
           runtimeClassName: nvidia
           nodeSelector:
@@ -126,3 +128,11 @@ spec:
           main:
             parakeet:
               - path: /data
+
+      wake-debug:
+        type: emptyDir
+        sizeLimit: 1Gi
+        advancedMounts:
+          main:
+            wake-kaldi:
+              - path: /debug
