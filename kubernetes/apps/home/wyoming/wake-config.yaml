@@ -1,0 +1,86 @@
+---
+# Trimmed from https://github.com/OHF-Voice/voice-incubator/blob/v0.3.5/wake.yaml
+# Check upstream for changes when bumping the voice-incubator image.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wake-kaldi-config
+  namespace: home
+data:
+  wake.yaml: |
+    # Changed from upstream: absolute paths, since relative ones resolve
+    # against this file's directory
+    tools_dir: /usr/src/voice_incubator/models/wake-kaldi-tools
+    train_dir: /usr/src/voice_incubator/var/wake-train
+    max_window_seconds: 1.4
+    resident_decoders: true
+    decoder:
+      beam: 10.0
+      max_active: 700
+      lattice_beam: 1.0
+      groups:
+        - [kw, bg]
+        - [prefix, kwc]
+    models:
+      en_US-rhasspy:
+        # Changed from upstream: absolute path
+        directory: /usr/src/voice_incubator/models/wake-kaldi-models/en_US-rhasspy
+        language: en_US
+    defaults:
+      theta_prefix: 0.85
+      theta_last: 0.35
+      theta_competitor: 0.10
+    # Changed from upstream: okay_nabu and hey_mycroft removed, only
+    # hey_jarvis is verified
+    wake_words:
+      hey_jarvis:
+        model: en_US-rhasspy
+        description: Hey Jarvis
+        names:
+          - hey jarvis
+        phrases:
+          - hey jarvis
+        # Changed from upstream: theta_competitor raised from the 0.10 default.
+        # Real wakes here lost to confusables (mostly "java") by up to 0.257;
+        # false wakes scored 0.312 and up, and all failed theta_prefix anyway.
+        thresholds:
+          theta_competitor: 0.25
+        confusables:
+          - hey artist
+          - hey avis
+          - hey car keys
+          - hey carpet
+          - hey carver
+          - hey charles
+          - hey charlie
+          - hey chavez
+          - hey darkness
+          - hey davis
+          - hey drivers
+          - hey garlic
+          - hey garvey
+          - hey guys
+          - hey harvest
+          - hey harvey
+          - hey jackson
+          - hey janice
+          - hey jar
+          - hey jarred
+          - hey jars
+          - hey jasmine
+          - hey jasper
+          - hey java
+          - hey jaws
+          - hey jealous
+          - hey jersey
+          - hey jockey
+          - hey lavish
+          - hey marvel
+          - hey marvin
+          - hey mavis
+          - hey nervous
+          - hey parsley
+          - hey service
+          - hey starving
+          - hey travel
+          - hey travis
