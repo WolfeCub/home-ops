@@ -30,12 +30,21 @@ data:
           --spec-type draft-mtp --spec-draft-n-max 4
           --n-gpu-layers-draft all
           --ctx-size 8192
-          --parallel 4 --kv-unified
+          --parallel 2 --kv-unified
           --flash-attn on
           --cache-type-k q8_0 --cache-type-v q8_0
+        # llama.cpp has no cache priority and no way to keep unpinned requests off a
+        # slot, so everything gets pinned: voice keeps its ~4.7k prompt in slot 0 and
+        # the rest share slot 1, instead of a driveway title overwriting it.
         filters:
+          setParams:
+            id_slot: 1
           setParamsByID:
             "gemma4:12b-nothink":
+              chat_template_kwargs:
+                enable_thinking: false
+            "gemma4:12b-voice":
+              id_slot: 0
               chat_template_kwargs:
                 enable_thinking: false
 
