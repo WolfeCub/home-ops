@@ -34,6 +34,7 @@
       customType: 'regex',
       managerFilePatterns: [
         '/kubernetes/crds/cert-manager/.+\\.ya?ml$/',
+        '/kubernetes/crds/grafana-operator/.+\\.ya?ml$/',
       ],
       matchStrings: [
         'registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/',
@@ -151,6 +152,13 @@
         'cert-manager',
       ],
       groupName: 'cert-manager stack',
+    },
+    {
+      description: 'Chart and CRDs must move together',
+      matchPackageNames: [
+        'grafana-operator',
+      ],
+      groupName: 'grafana-operator stack',
     },
     {
       matchDatasources: [
